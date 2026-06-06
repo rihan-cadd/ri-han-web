@@ -214,6 +214,7 @@
     <main
       class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full space-y-10"
     >
+      <a href="/index.html" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 w-fit mb-1">← 메인으로</a>
       <!-- ===== HERO : 대회 소개 ===== -->
       <section class="reveal">
         <div
@@ -270,7 +271,7 @@
                 <p
                   class="text-gray-700 text-sm mt-1 flex-grow flex items-center justify-center"
                 >
-                  원하시는 브랜드 <b class="ml-1">치킨 상품권</b>
+                  원하시는 브랜드 치킨 상품권 <b class="ml-1">3만원권</b>
                 </p>
                 <p class="text-gray-500 text-xs mt-1">+ 누에 굿즈</p>
               </div>
@@ -311,7 +312,6 @@
           <div class="flex justify-center">
             <a
               href="/silkworm/4th_submit.html"
-              target="_blank"
               class="btn-hover inline-flex items-center justify-center text-center bg-gray-700 text-white rounded-full px-10 py-3 text-lg font-semibold hover:bg-gray-800 transition-all"
             >
               참가하기
@@ -435,7 +435,6 @@
             </div>
             <a
               href="/silkworm/1st_leaderboard.html"
-              target="_blank"
               class="mt-4 inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100 transition"
               >리더보드 보기</a
             >
@@ -469,7 +468,6 @@
             </div>
             <a
               href="/silkworm/2nd_leaderboard.html"
-              target="_blank"
               class="mt-4 inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100 transition"
               >리더보드 보기</a
             >
@@ -503,7 +501,6 @@
             </div>
             <a
               href="/silkworm/3rd_leaderboard.html"
-              target="_blank"
               class="mt-4 inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100 transition"
               >리더보드 보기</a
             >
@@ -524,7 +521,6 @@
             </p>
             <a
               href="/silkworm/4th_leaderboard.html"
-              target="_blank"
               class="mt-4 inline-flex items-center justify-center bg-gray-700 text-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-800 transition"
               >리더 보드 (준비 중)</a
             >
@@ -532,72 +528,24 @@
         </div>
       </section>
 
-      <!-- ===== 누에 정보 (접이식 버튼) ===== -->
-      <details
+      <!-- ===== 누에 정보 (클릭 → about 페이지 바로 이동) ===== -->
+      <a
+        href="/silkworm/silkworm_about.html"
         id="silkworm-info"
-        class="reveal bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+        class="reveal block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden hover:bg-gray-50 transition group"
       >
-        <summary
-          class="flex items-center justify-between p-6 select-none hover:bg-gray-50 transition"
-        >
+        <div class="flex items-center justify-between p-6">
           <span class="flex items-center gap-4">
             <span class="text-2xl">🐛</span>
             <span class="text-left">
-              <span
-                class="block text-xs font-bold text-blue-600 uppercase tracking-widest"
-                >About Silkworm</span
-              >
-              <span class="block text-xl font-bold text-gray-900"
-                >누에가 궁금하다면?</span
-              >
+              <span class="block text-xs font-bold text-blue-600 uppercase tracking-widest">About Silkworm</span>
+              <span class="block text-xl font-bold text-gray-900">누에가 궁금하다면?</span>
+              <span class="block text-sm text-gray-500 mt-1">한살이 · 생물학적 특징 · 명주실 · 암수 구별 · 연구 이야기까지 →</span>
             </span>
           </span>
-          <span class="chev text-gray-400 text-lg">▸</span>
-        </summary>
-
-        <div class="px-6 pb-8 pt-2 border-t border-gray-100">
-          <p class="text-gray-700 leading-relaxed max-w-3xl mt-5 mb-8">
-            누에(<i>Bombyx mori</i>)는 뽕잎을 먹고 자라 명주실로 고치를 짓는
-            누에나방의 애벌레입니다. 수천 년 동안 비단을 얻기 위해 길러져 온,
-            사람 손에서 살아가는 곤충이에요. 알에서 깨어나 네 번의 잠을 자며
-            자라고, 마지막에 고치를 지어 번데기를 거쳐 나방이 됩니다.
-          </p>
-
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-              <div class="text-2xl mb-2">🥚</div>
-              <h3 class="font-semibold text-gray-900">알</h3>
-              <p class="text-gray-600 mt-1 text-sm leading-relaxed">
-                좁쌀만 한 알에서 시작합니다. 따뜻해지면 새까만 애벌레가
-                깨어나요.
-              </p>
-            </div>
-            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-              <div class="text-2xl mb-2">🐛</div>
-              <h3 class="font-semibold text-gray-900">애벌레 (누에)</h3>
-              <p class="text-gray-600 mt-1 text-sm leading-relaxed">
-                뽕잎을 먹으며 네 번 허물을 벗습니다. 5령이 되면 몸이 가장
-                커져요.
-              </p>
-            </div>
-            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-              <div class="text-2xl mb-2">🧶</div>
-              <h3 class="font-semibold text-gray-900">고치</h3>
-              <p class="text-gray-600 mt-1 text-sm leading-relaxed">
-                입에서 한 가닥의 명주실을 토해 고치를 짓고 그 안에서 번데기가
-                됩니다.
-              </p>
-            </div>
-            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-              <div class="text-2xl mb-2">🦋</div>
-              <h3 class="font-semibold text-gray-900">나방</h3>
-              <p class="text-gray-600 mt-1 text-sm leading-relaxed">
-                고치를 뚫고 누에나방으로 우화합니다. 날지는 못하고 알을 남겨요.
-              </p>
-            </div>
-          </div>
+          <span class="text-gray-400 text-lg group-hover:translate-x-1 group-hover:text-blue-600 transition">→</span>
         </div>
-      </details>
+      </a>
 
       <!-- ===== 굿즈 정보 (접이식 버튼) ===== -->
       <details
