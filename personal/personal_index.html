@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ri Han | Curriculum Vitae</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; word-break: keep-all; overflow-wrap: break-word; }
+    .nav-link { transition: all 0.2s; }
+    .nav-link.active { color: #2563eb; font-weight: 600; }
+
+    /* Section heading with accent bar */
+    .cv-h { display:flex; align-items:center; gap:.55rem; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; font-weight:800; color:#1f2937; border-bottom:2px solid #eef2f7; padding-bottom:.5rem; margin-bottom:1.15rem; }
+    .cv-h::before { content:""; width:16px; height:4px; background:#2563eb; border-radius:3px; flex:none; }
+
+    /* Timeline rows: year | content with dot */
+    .tl { display:grid; grid-template-columns: 3.4rem 1fr; column-gap: 1rem; }
+    .tl .yr { text-align:right; font-size:.8rem; font-weight:800; color:#2563eb; padding-top:.05rem; font-variant-numeric:tabular-nums; }
+    .tl .ct { border-left:2px solid #eef2f7; padding-left:1.15rem; padding-bottom:1.35rem; position:relative; }
+    .tl .ct::before { content:""; position:absolute; left:-6px; top:.4rem; width:10px; height:10px; border-radius:9999px; background:#2563eb; box-shadow:0 0 0 3px #fff; }
+    .tl > .ct:last-child { padding-bottom:0; }
+
+    a.link { color:#2563eb; }
+    a.link:hover { text-decoration: underline; }
+    .kw { color:#1d4ed8; font-weight:600; }
+    .auth-me { font-weight: 700; color:#111827; }
+    .doi { display:inline-flex; align-items:center; gap:2px; font-size:.7rem; font-weight:700; color:#2563eb; border:1px solid #bfdbfe; background:#eff6ff; border-radius:9999px; padding:1px 8px; white-space:nowrap; }
+    .doi:hover { background:#dbeafe; }
+    .chip { display:inline-flex; align-items:center; font-size:.78rem; font-weight:600; border-radius:9999px; padding:.32rem .8rem; }
+    .chip-b { background:#eff6ff; color:#1d4ed8; border:1px solid #dbeafe; }
+    .chip-g { background:#f3f4f6; color:#374151; border:1px solid #e5e7eb; }
+
+    /* Year-grouped lists (Awards, Publications) */
+    .yr-band { display:flex; align-items:center; gap:.75rem; margin-bottom:.9rem; }
+    .yr-band .y { font-size:1.1rem; font-weight:800; color:#2563eb; font-variant-numeric:tabular-nums; }
+    .yr-band .ln { flex:1; height:2px; background:#eef2f7; border-radius:2px; }
+    .yr-group + .yr-group { margin-top:1.7rem; }
+    .aw { position:relative; padding-left:1.15rem; }
+    .aw::before { content:""; position:absolute; left:0; top:.5rem; width:7px; height:7px; border-radius:9999px; background:#93c5fd; }
+
+    @media print { .no-print { display:none !important; } nav { display:none !important; } body { background:#fff; } article { border:0 !important; box-shadow:none !important; padding:0 !important; } }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm no-print">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <a href="/index.html" class="flex items-center"><span class="font-bold text-xl tracking-tight text-gray-900">Ri Han</span></a>
+        <div class="flex items-center space-x-6 sm:space-x-8">
+          <a href="/index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Home</a>
+          <a href="/personal/personal_index.html" class="nav-link active text-sm sm:text-base text-gray-500 hover:text-blue-600">Personal</a>
+          <a href="/silkworm/silkworm_index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Silkworm</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+    <a href="/index.html" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 mb-5 no-print">← Home</a>
+
+    <article class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 md:p-12">
+
+      <!-- HEADER -->
+      <header class="relative pb-7 border-b border-gray-200">
+        <!-- replace href with your real CV PDF, e.g. /personal/RiHan_CV.pdf -->
+        <a href="#" class="no-print absolute top-0 right-0 inline-flex items-center gap-1.5 bg-gray-900 text-white rounded-lg px-3.5 py-2 text-xs sm:text-sm font-semibold hover:bg-gray-700 transition">↓ <span class="hidden sm:inline">Download </span>CV (PDF)</a>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+          <!-- PROFILE PHOTO: replace src with your photo, e.g. /personal/profile.jpg -->
+          <img src="https://placehold.co/240x240/eef2f7/94a3b8?text=Photo"
+               alt="Ri Han"
+               class="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover ring-4 ring-blue-50 border border-gray-200 shrink-0 mx-auto sm:mx-0" />
+          <div class="text-center sm:text-left flex-1">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">Ri Han <span class="text-gray-400 font-semibold text-2xl align-middle">한리</span></h1>
+            <p class="text-gray-700 mt-1 font-medium">Ph.D. Candidate · Computer-Aided Drug Design</p>
+            <p class="text-gray-500 text-sm">Chemical/Bioinformatics Lab · Dept. of Global Innovative Drugs, Chung-Ang University</p>
+            <div class="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1.5 mt-3 text-sm">
+              <a href="mailto:ri.han.cadd@gmail.com" class="link">✉ ri.han.cadd@gmail.com</a>
+              <a href="https://scholar.google.com/citations?user=bFx3EOIAAAAJ" target="_blank" rel="noopener" class="link">Scholar</a>
+              <a href="https://orcid.org/0000-0001-7266-7996" target="_blank" rel="noopener" class="link">ORCID</a>
+              <a href="https://github.com/rihan-cadd" target="_blank" rel="noopener" class="link">GitHub</a>
+              <a href="https://www.linkedin.com/in/ri-han/" target="_blank" rel="noopener" class="link">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- SUMMARY -->
+      <section class="mt-8">
+        <h2 class="cv-h">Summary</h2>
+        <div class="space-y-3 text-gray-700 leading-relaxed text-justify">
+          <p>
+            I am a Ph.D. student in the Department of Global Innovative Drug at
+            <a href="https://www.cau.ac.kr/index.do" target="_blank" rel="noopener" class="link">Chung-Ang University</a>,
+            conducting research in the
+            <a href="https://sites.google.com/view/cau-chembioinfo/home?authuser=0" target="_blank" rel="noopener" class="link">Chem/Bioinformatics Laboratory</a>
+            under the guidance of Professor
+            <a href="https://sites.google.com/view/cau-chembioinfo/yoonji-lee-ph-d?authuser=0" target="_blank" rel="noopener" class="link">Yoonji Lee</a>.
+          </p>
+          <p>
+            My academic focus lies in the sequence–structure analysis of <span class="kw">Purinergic receptors</span>,
+            employing computational methods such as <span class="kw">FEP (Free Energy Perturbation) calculations</span>,
+            <span class="kw">MD (Molecular Dynamics) simulations</span>, and <span class="kw">molecular docking</span>.
+          </p>
+          <p>
+            Outside the lab, I am a passionate insect enthusiast who enjoys raising silkworms and rhinoceros beetles.
+          </p>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section class="mt-9">
+        <h2 class="cv-h">Education</h2>
+        <div class="tl">
+          <div class="yr">2023</div>
+          <div class="ct">
+            <p class="font-bold text-gray-900">Ph.D. Candidate, Global Innovative Drugs</p>
+            <p class="text-gray-600 text-sm">Chung-Ang University, Seoul, South Korea</p>
+            <p class="text-gray-500 text-sm">Chemical/Bioinformatics Lab · Advisor: Prof. Yoonji Lee</p>
+            <p class="text-gray-400 text-xs mt-0.5">2023 – Present</p>
+          </div>
+          <div class="yr">2021</div>
+          <div class="ct">
+            <p class="font-bold text-gray-900">M.S., Pharmacy</p>
+            <p class="text-gray-600 text-sm">Chung-Ang University, Seoul, South Korea</p>
+            <p class="text-gray-500 text-sm">Chemical/Bioinformatics Lab · Advisor: Prof. Yoonji Lee</p>
+            <p class="text-gray-400 text-xs mt-0.5">2021 – 2023</p>
+          </div>
+          <div class="yr">2009</div>
+          <div class="ct">
+            <p class="font-bold text-gray-900">B.S., Life Sciences</p>
+            <p class="text-gray-600 text-sm">Daejin University, Pocheon, Gyeonggi, South Korea</p>
+            <p class="text-gray-400 text-xs mt-0.5">2009 – 2013</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HONORS & AWARDS -->
+      <section class="mt-9">
+        <h2 class="cv-h">Honors &amp; Awards</h2>
+
+        <div class="yr-group">
+          <div class="yr-band"><span class="y">2025</span><span class="ln"></span></div>
+          <div class="space-y-4">
+            <div class="aw">
+              <p class="font-bold text-gray-900">Best Poster Award (2nd Class)</p>
+              <p class="text-gray-600 text-sm">Asia Hub for e-Drug Discovery Symposium 2025 (AHEDD2025)</p>
+              <p class="text-gray-500 text-sm italic mt-0.5">MetaboGNN: Prediction of liver metabolic stability using graph neural networks and cross-species data</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="yr-group">
+          <div class="yr-band"><span class="y">2024</span><span class="ln"></span></div>
+          <div class="space-y-4">
+            <div class="aw">
+              <p class="font-bold text-gray-900">PSK Travel Award</p>
+              <p class="text-gray-600 text-sm">2024 Fall International Convention of the Pharmaceutical Society of Korea</p>
+              <p class="text-gray-500 text-sm italic mt-0.5">Improving Structure–Activity Relationship Predictions in Lead Optimization Using Free Energy Perturbation</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="yr-group">
+          <div class="yr-band"><span class="y">2023</span><span class="ln"></span></div>
+          <div class="space-y-4">
+            <div class="aw">
+              <p class="font-bold text-gray-900">Grand Prize <span class="text-blue-600">(Minister Award)</span></p>
+              <p class="text-gray-600 text-sm">New Drug Development AI Competition, hosted by MSIT</p>
+              <p class="text-gray-500 text-sm italic mt-0.5">The 1st New Drug Development AI Competition “JUMP AI 2023”</p>
+            </div>
+            <div class="aw">
+              <p class="font-bold text-gray-900">Best Poster Presentation Award</p>
+              <p class="text-gray-600 text-sm">14th AIMECS (AFMC International Medicinal Chemistry Symposium)</p>
+              <p class="text-gray-500 text-sm italic mt-0.5">Structural Analysis of Purinergic P1 and P2Y Receptors: Insights into Ligand Recognition and Selectivity</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PUBLICATIONS -->
+      <section class="mt-9">
+        <h2 class="cv-h">Publications</h2>
+        <p class="text-xs text-gray-400 mb-4">Author in <span class="auth-me">bold</span> = page owner. Full list on
+          <a href="https://scholar.google.com/citations?user=bFx3EOIAAAAJ" target="_blank" rel="noopener" class="link">Google Scholar</a>.</p>
+
+        <div class="yr-group">
+          <div class="yr-band"><span class="y">2025</span><span class="ln"></span></div>
+          <div class="space-y-4">
+            <div class="aw">
+              <a href="https://doi.org/10.1186/s13321-025-01089-y" target="_blank" rel="noopener" class="font-bold text-gray-900 hover:text-blue-600">MetaboGNN: predicting liver metabolic stability with graph neural networks and cross-species data</a>
+              <p class="text-gray-600 text-sm mt-0.5">J. H. Park, <span class="auth-me">R. Han</span>, J. Jang, J. Kim, J. Paik, J. Heo, Y. Lee</p>
+              <p class="text-sm mt-1"><i class="text-gray-500">Journal of Cheminformatics</i>, 17(1):140 &nbsp;<a href="https://doi.org/10.1186/s13321-025-01089-y" target="_blank" rel="noopener" class="doi">DOI ↗</a></p>
+            </div>
+            <div class="aw">
+              <a href="https://doi.org/10.1016/j.jare.2025.11.066" target="_blank" rel="noopener" class="font-bold text-gray-900 hover:text-blue-600">Unique molecular architecture of N-glycosylated TM4SF5 dimer highlights evolutionary and structural divergence among small four-transmembrane protein families</a>
+              <p class="text-gray-600 text-sm mt-0.5">Y. Lee, J. E. Kim, W. Kim, S. Kim, <span class="auth-me">R. Han</span>, <span class="text-gray-400">et al.</span></p>
+              <p class="text-sm mt-1"><i class="text-gray-500">Journal of Advanced Research</i> &nbsp;<a href="https://doi.org/10.1016/j.jare.2025.11.066" target="_blank" rel="noopener" class="doi">DOI ↗</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="yr-group">
+          <div class="yr-band"><span class="y">2023</span><span class="ln"></span></div>
+          <div class="space-y-4">
+            <div class="aw">
+              <a href="https://doi.org/10.3390/ph16091259" target="_blank" rel="noopener" class="font-bold text-gray-900 hover:text-blue-600">Revolutionizing medicinal chemistry: the application of artificial intelligence (AI) in early drug discovery</a>
+              <p class="text-gray-600 text-sm mt-0.5"><span class="auth-me">R. Han</span>, H. Yoon, G. Kim, H. Lee, Y. Lee</p>
+              <p class="text-sm mt-1"><i class="text-gray-500">Pharmaceuticals</i>, 16(9):1259 &nbsp;<a href="https://doi.org/10.3390/ph16091259" target="_blank" rel="noopener" class="doi">DOI ↗</a></p>
+            </div>
+            <div class="aw">
+              <a href="https://doi.org/10.1021/acsinfecdis.3c00166" target="_blank" rel="noopener" class="font-bold text-gray-900 hover:text-blue-600">Identification of a non-nucleoside reverse transcriptase inhibitor against human immunodeficiency virus-1</a>
+              <p class="text-gray-600 text-sm mt-0.5">M. J. Kim, K.-L. Yu, <span class="auth-me">R. Han</span>, Y. Lee, K. Oh, J.-C. You</p>
+              <p class="text-sm mt-1"><i class="text-gray-500">ACS Infectious Diseases</i>, 9(8):1582–1592 &nbsp;<a href="https://doi.org/10.1021/acsinfecdis.3c00166" target="_blank" rel="noopener" class="doi">DOI ↗</a></p>
+            </div>
+            <div class="aw">
+              <a href="https://doi.org/10.1016/j.csbj.2023.01.010" target="_blank" rel="noopener" class="font-bold text-gray-900 hover:text-blue-600">Systematic analyses of the sequence conservation and ligand interaction patterns of purinergic P1 and P2Y receptors provide a structural basis for receptor selectivity</a>
+              <p class="text-gray-600 text-sm mt-0.5"><span class="auth-me">R. Han</span>, H. Yoon, J. Yoo, Y. Lee</p>
+              <p class="text-sm mt-1"><i class="text-gray-500">Computational and Structural Biotechnology Journal</i>, 21:889–898 &nbsp;<a href="https://doi.org/10.1016/j.csbj.2023.01.010" target="_blank" rel="noopener" class="doi">DOI ↗</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="mt-9">
+        <h2 class="cv-h">Skills</h2>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Computational Chemistry</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="chip chip-b">MD Simulation</span>
+          <span class="chip chip-b">Free Energy Perturbation (FEP)</span>
+          <span class="chip chip-b">Molecular Docking</span>
+        </div>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Domains</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip chip-g">Structure-Based Drug Design</span>
+          <span class="chip chip-g">GPCR / Purinergic Receptor Modeling</span>
+          <span class="chip chip-g">AI in Early Drug Discovery</span>
+        </div>
+      </section>
+
+      <!-- LANGUAGES -->
+      <section class="mt-9">
+        <h2 class="cv-h">Languages</h2>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip chip-g">Korean — Native</span>
+          <span class="chip chip-g">English — Beginner</span>
+        </div>
+      </section>
+
+      <!-- INTERESTS -->
+      <section class="mt-9">
+        <h2 class="cv-h">Interests</h2>
+        <p class="text-sm text-gray-700 leading-relaxed text-justify">
+          Insect enthusiast — I raise silkworms and rhinoceros beetles, a hobby that grew into a recurring event among
+          labmates and friends, the Silkworm Cocoon Sex-Guessing Contest
+          (<a href="/silkworm/silkworm_index.html" class="link">event</a> ·
+          <a href="/silkworm/silkworm_about.html" class="link">about silkworms</a>).
+        </p>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-auto no-print">
+    <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+      <p>&copy; 2026 Ri Han. All rights reserved.</p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="https://github.com/rihan-cadd" target="_blank" rel="noopener" class="hover:text-blue-600 transition-colors">GitHub</a>
+        <a href="https://www.linkedin.com/in/ri-han/" target="_blank" rel="noopener" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+        <a href="https://orcid.org/0000-0001-7266-7996" target="_blank" rel="noopener" class="hover:text-blue-600 transition-colors">ORCID</a>
+        <a href="https://scholar.google.com/citations?user=bFx3EOIAAAAJ" target="_blank" rel="noopener" class="hover:text-blue-600 transition-colors">Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
