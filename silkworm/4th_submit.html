@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>참가 제출지 – 제 4회 누에 고치 성별 맞추기 대회</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+    :root{
+      --bg:#ffffff; --paper:#ffffff; --ink:#111827; --sub:#6b7280;
+      --pri:#4b5563; --muted:#e5e7eb; --ring:rgba(107,114,128,.25);
+      --shadow:0 10px 30px rgba(17,24,39,.08);
+      --green:#059669; --blue:#1e3a8a; --blue-bd:#bfdbfe; --blue-bg:#eff6ff;
+      --danger:#ef4444; --danger-bd:#fecaca; --danger-bg:#fef2f2;
+
+      /* 타입 컬러 */
+      --gold:#f59e0b; --gold-bg:#fff7ed;
+      --mimic:#7c3aed; --mimic-bg:#f5f3ff;
+      --trap:#b91c1c; --trap-bg:#fef2f2;
+      --normal:#374151; --normal-bg:#f3f4f6;
+      --bonus:#0ea5e9; --bonus-bg:#f0f9ff;
+      --dopa:#ea580c; --dopa-bg:#fff7ed;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#f9fafb;color:var(--ink);font:16px/1.6 "Inter","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    header.nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--muted);box-shadow:0 1px 2px rgba(0,0,0,.04);z-index:50}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 24px}
+    .brand{display:flex;align-items:center;text-decoration:none;color:#111827}
+    .brand strong{font-weight:800;font-size:20px;letter-spacing:-.01em}
+    .nav-links{display:flex;align-items:center;gap:24px}
+    .nav-link{font-size:15px;color:#6b7280;text-decoration:none;transition:color .2s}
+    .nav-link:hover{color:#2563eb}
+    .nav-link.active{color:#2563eb;font-weight:600}
+    /* 푸터 (silkworm 동일) */
+    .site-foot{background:#fff;border-top:1px solid var(--muted);margin-top:8px}
+    .site-foot .foot-inner{max-width:980px;margin:0 auto;padding:28px 24px;display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:space-between;color:#6b7280;font-size:14px}
+    .site-foot a{color:#6b7280;text-decoration:none;transition:color .2s}
+    .site-foot a:hover{color:#2563eb}
+    .foot-links{display:flex;gap:24px}
+    @media (min-width:768px){ .site-foot .foot-inner{flex-direction:row} }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:999px;border:1px solid var(--muted);
+      background:var(--paper);color:var(--ink);text-decoration:none;font-weight:600;text-align:center;
+    }
+    .btn.primary{background:var(--pri);color:#fff;border:0}
+    .btn.success{background:var(--green);color:#fff;border:0}
+    .btn:hover{box-shadow:0 6px 18px rgba(15,23,42,.08)}
+    .btn.lg{font-size:16px; padding:10px 18px; min-height:42px; min-width:140px}
+    @media (min-width:768px){ .btn.lg{font-size:17px; padding:12px 22px; min-width:180px} }
+
+    .hero{margin:20px auto 14px;border-radius:24px;background:
+      radial-gradient(1200px 600px at 10% -10%, #f3f4f6, transparent 60%),
+      radial-gradient(1200px 600px at 110% 10%, #eef2f7, transparent 60%),
+      var(--paper);box-shadow:var(--shadow)}
+    .hero-grid{display:grid;grid-template-columns:1fr;gap:12px;padding:24px}
+    .hero h1{margin:0;font-size:clamp(22px,4vw,32px);letter-spacing:-.3px;line-height:1.15;text-align:center}
+
+    .card{background:var(--paper);border:1px solid var(--muted);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .card .inner{padding:18px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:720px){.grid{grid-template-columns:1fr}}
+
+    label{font-weight:700;display:block;margin-bottom:6px}
+    .subnote{color:var(--sub);font-size:12px;margin-top:4px}
+    input[type="text"], input[type="tel"], input[type="email"]{
+      width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--muted); outline:none; background:#fff;
+    }
+    input:focus{box-shadow:0 0 0 3px var(--ring)}
+    input.invalid{border-color:var(--danger); box-shadow:0 0 0 2px rgba(239,68,68,.2)}
+    .checkbox-invalid{outline:2px solid rgba(239,68,68,.6); outline-offset:3px; border-radius:6px; padding:2px}
+
+    fieldset{border:1px solid var(--muted);border-radius:14px;padding:14px;transition:border-color .12s ease, box-shadow .12s ease, background .12s ease}
+    fieldset.invalid{border-color:var(--danger-bd)}
+    legend{font-weight:800;color:var(--blue);padding:0 6px}
+    .qgrid{display:grid;grid-template-columns:140px 1fr 1fr;gap:14px;align-items:center}
+    @media (max-width:900px){.qgrid{grid-template-columns:1fr}}
+    .photo{width:140px;height:140px;border-radius:12px;background:#f3f4f6;border:1px solid var(--muted);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+    .photo img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;-webkit-user-drag:none;user-select:none}
+    .name{font-weight:800}
+
+    .flag{position:absolute; left:8px; top:8px; padding:4px 8px; border-radius:999px;font-size:12px; font-weight:800; border:1px solid transparent; display:inline-flex; align-items:center; gap:6px; background:#fff;}
+    .flag i{font-style:normal}
+    .pill{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; border:1px solid transparent;font-size:12px; font-weight:800; width:fit-content}
+
+    fieldset.type-normal{border-color:#e5e7eb; background:linear-gradient(180deg,var(--normal-bg),#fff 45%);}
+    fieldset.type-gold{border-color:var(--gold); background:linear-gradient(180deg,var(--gold-bg),#fff 45%); box-shadow:0 6px 20px rgba(245,158,11,.1)}
+    fieldset.type-mimic{border-color:var(--mimic); background:linear-gradient(180deg,var(--mimic-bg),#fff 45%); box-shadow:0 6px 20px rgba(124,58,237,.08)}
+    fieldset.type-trap{border-color:var(--trap); background:linear-gradient(180deg,var(--trap-bg),#fff 45%); box-shadow:0 6px 20px rgba(185,28,28,.08)}
+    fieldset.type-bonus{border-color:var(--bonus); background:linear-gradient(180deg,var(--bonus-bg),#fff 45%); box-shadow:0 6px 20px rgba(14,165,233,.08)}
+    fieldset.dopa-on{box-shadow:0 0 0 2px var(--dopa), 0 8px 22px rgba(234,88,12,.18)}
+
+    .flag.normal{color:var(--normal); border-color:#d1d5db; background:#fff}
+    .flag.gold{color:var(--gold); border-color:#fcd34d; background:#fffdf4}
+    .flag.mimic{color:var(--mimic); border-color:#ddd6fe; background:#faf7ff}
+    .flag.trap{color:var(--trap); border-color:#fecaca; background:#fff5f5}
+    .flag.bonus{color:var(--bonus); border-color:#bae6fd; background:#f0f9ff}
+
+    .pill.normal{color:var(--normal); border-color:#d1d5db; background:#fff}
+    .pill.gold{color:var(--gold); border-color:#fcd34d; background:#fffdf4}
+    .pill.mimic{color:var(--mimic); border-color:#ddd6fe; background:#faf7ff}
+    .pill.trap{color:var(--trap); border-color:#fecaca; background:#fff5f5}
+    .pill.bonus{color:var(--bonus); border-color:#bae6fd; background:#f0f9ff}
+    .pill.dopa{color:var(--dopa); border-color:#fed7aa; background:#fff7ed}
+    .pill.disabled{color:#6b7280; border-color:#e5e7eb; background:#f9fafb}
+
+    .radios{display:flex; gap:10px; flex-wrap:wrap}
+    .radio{display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border:1px solid var(--muted); border-radius:10px; cursor:pointer}
+    .radio.selected-f{border-color:#fb7185; background:#fff1f2}
+    .radio.selected-m{border-color:#60a5fa; background:#eff6ff}
+
+    .dopa-wrap{margin-top:10px}
+    .dopa-wrap label{display:inline-flex; align-items:center; gap:7px; font-weight:800; font-size:13px; color:var(--dopa); cursor:pointer; margin:0}
+    .dopa-wrap input{width:16px; height:16px; accent-color:var(--dopa)}
+    .dopa-hint{font-size:11px; color:var(--sub); font-weight:600; margin-top:2px}
+
+    #status{min-height:24px; text-align:center; margin-top:6px}
+    .notice{font-weight:700;}
+    .notice-ok{color:#065f46}
+    .notice-err{color:#b91c1c}
+
+    .actions{display:flex;gap:12px;justify-content:center;padding:16px}
+    .agree{display:flex;gap:8px;align-items:flex-start;margin-top:10px}
+    .hp{position:absolute;left:-9999px;top:-9999px}
+    .form-section-title{ text-align:center; }
+
+    /* 점수표 카드 */
+    .sub-h{font-size:13px; font-weight:800; color:var(--sub); letter-spacing:.02em; margin:0 0 8px}
+    .score-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:10px}
+    .score-card{border:1px solid var(--muted); border-radius:14px; padding:12px; background:#fff}
+    .score-card .sc-head{display:flex; align-items:center; gap:8px; font-weight:800; margin-bottom:9px}
+    .score-card .sc-ico{font-size:18px; line-height:1}
+    .score-card .sc-name{font-size:15px}
+    .sc-vals{display:flex; gap:6px; flex-wrap:wrap}
+    .chipv{display:inline-flex; align-items:baseline; gap:5px; padding:4px 10px; border-radius:999px; font-size:13px; font-weight:800; border:1px solid}
+    .chipv small{font-size:11px; font-weight:700; opacity:.8}
+    .chipv.ok{color:#047857; background:#ecfdf5; border-color:#a7f3d0}
+    .chipv.zero{color:#6b7280; background:#f3f4f6; border-color:#e5e7eb}
+    .chipv.bad{color:#dc2626; background:#fef2f2; border-color:#fecaca}
+    .sc-full{font-size:13px; color:#0369a1; font-weight:700}
+    .score-card.sc-normal{background:#f9fafb; border-color:#e5e7eb}
+    .score-card.sc-gold{background:#fffbeb; border-color:#fde68a}
+    .score-card.sc-mimic{background:#f5f3ff; border-color:#ddd6fe}
+    .score-card.sc-trap{background:#fef2f2; border-color:#fecaca}
+    .score-card.sc-bonus{background:#eff6ff; border-color:#bfdbfe}
+    /* 특수 규칙 카드 */
+    .rule-list{display:grid; gap:10px; margin-top:16px}
+    .rule-card{display:flex; gap:12px; align-items:flex-start; border:1px solid var(--muted); border-radius:14px; padding:13px 15px; background:#fff}
+    .rule-card .rc-ico{font-size:22px; line-height:1.25; flex:0 0 auto}
+    .rule-card .rc-title{font-weight:800; margin:0 0 3px; font-size:15px}
+    .rule-card .rc-body{font-size:14px; color:#374151; line-height:1.6}
+    .rule-card .rc-body b{color:#111827}
+    .rule-card.accent-dopa{border-color:#fed7aa}
+    .rule-card.accent-clutch{border-color:#bfdbfe}
+    .rule-card.accent-bonus{border-color:#bae6fd}
+    @media (max-width:480px){
+      .score-grid{grid-template-columns:1fr 1fr}
+      .score-card{padding:10px}
+      .score-card .sc-name{font-size:14px}
+      .rule-card{padding:12px}
+    }
+
+    /* 알림 받기 */
+    .notify{ margin-top:0 }
+    .notify .row{display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end}
+    .notify .row .col{flex:1 1 260px; min-width:0}
+    .notify .or{ text-align:center; color:var(--sub); font-weight:700; margin:12px 0 8px }
+    .channel-box{ display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; padding:12px; border:1px solid #e5e7eb; border-radius:12px; background:linear-gradient(180deg,#fffbe7,#fff) }
+    .btn.kakao{ background:#FEE500; color:#111827; border:0; font-weight:800; white-space:nowrap }
+
+    .prize-box{ margin:10px 0 0; padding:12px; border:1px dashed #d1d5db; border-radius:12px; background:#fafafa }
+    .prize-box strong{ display:block; text-align:center; margin-bottom:6px }
+    .prize-list{ list-style:none; padding:0; margin:0; text-align:center; color:#111827 }
+    .prize-list li{ margin:4px 0 }
+
+    .modal-overlay{ position:fixed; inset:0; background:rgba(17,24,39,.45); backdrop-filter:saturate(180%) blur(4px); display:none; align-items:center; justify-content:center; z-index:100 }
+    .modal-overlay.open{ display:flex }
+    .modal{ background:var(--paper); border:1px solid var(--muted); border-radius:16px; box-shadow:var(--shadow); width:min(420px, calc(100% - 40px)); padding:18px; text-align:center }
+    .modal h3{ margin:6px 0 6px; font-size:18px }
+    .modal p{ margin:0; color:#6b7280 }
+    .modal-actions{ margin-top:12px; display:flex; gap:8px; justify-content:center }
+
+    fieldset.is-disabled{opacity:.72}
+    fieldset.is-disabled .qgrid{pointer-events:none}
+
+    @media (max-width:720px){ .photo{ width:100%; height:clamp(180px,58vw,260px); } }
+    @media (max-width:480px){
+      .nav-inner{ padding:0 14px; }
+      .brand strong{ font-size:16px; }
+      .nav-links{ gap:16px; }
+      .nav-link{ font-size:14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/index.html"><strong>Ri Han</strong></a>
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">Home</a>
+        <a href="/personal/personal_index.html" class="nav-link">Personal</a>
+        <a href="/silkworm/silkworm_index.html" class="nav-link active">Silkworm</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <h1>제 4회 대회 참가 제출지</h1>
+        <div class="welcome" style="margin:8px 0 0; font-size:15px; color:#111827; text-align:center">
+          <p style="margin:0"><strong>한리의 누에 고치 성별 맞추기 대회</strong>에 오신 것을 환영합니다! 🎉🐛</p>
+          <p style="margin:6px 0 0">바쁘신 와중에도 기꺼이 참가해 주셔서 진심으로 감사합니다.</p>
+          <p style="margin:6px 0 0">이번 <strong>제 4회 대회</strong>도 여러분의 <strong>따뜻한 관심과 응원</strong> 속에 즐겁게 진행됩니다.</p>
+          <p style="margin:6px 0 0"><strong>섬세한 관찰</strong>로 <strong>고치 속 비밀</strong>을 즐겁게 추측해 주세요. 🔍</p>
+          <p style="margin:6px 0 0"><strong>즐거운 참여</strong>와 <strong>선의의 경쟁</strong>을 기대합니다. 🙌🏆</p>
+          <div class="prize-box" aria-label="상품 안내">
+            <strong>🎁 상품 안내</strong>
+            <ul class="prize-list">
+              <li>🥇 1등 : 치킨 기프티콘 / 누에 굿즈 (추후 공개)</li>
+              <li>🥈 2등 : 배민 기프티콘 / 누에 굿즈</li>
+              <li>🥉 3등 : 스타벅스 기프티콘 / 누에 굿즈</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 참가자 정보 -->
+    <section class="card" aria-labelledby="hdr-info">
+      <div class="inner">
+        <h2 id="hdr-info" style="margin:0 0 12px">참가자 정보</h2>
+        <div class="grid">
+          <div>
+            <label for="nickname">참가자 닉네임 <span style="color:var(--danger)">*</span></label>
+            <input id="nickname" name="nickname" type="text" placeholder="예: 누에엥"/>
+          </div>
+          <div>
+            <label for="realname">참가자 이름 <span style="color:var(--danger)">*</span></label>
+            <input id="realname" name="realname" type="text" placeholder="예: 한리"/>
+          </div>
+          <div>
+            <label for="phone">참가자 휴대폰 번호 <span style="color:var(--danger)">*</span></label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" maxlength="13" placeholder="예: 010-1234-5678"/>
+            <div class="subnote">입력 시 자동으로 000-0000-0000 형식으로 변환됩니다.</div>
+          </div>
+          <div>
+            <label for="edition">회차</label>
+            <input id="edition" name="edition" type="text" value="제 4회" readonly/>
+          </div>
+        </div>
+        <label class="agree" id="agreeWrap"><input type="checkbox" id="agree"/> 개인정보 수집·이용에 동의합니다.</label>
+        <div class="quick" style="margin-top:12px; padding:12px; border:1px solid #e5e7eb; border-radius:12px; background:#f8fafc; text-align:center">
+          <p style="margin:0; font-size:14px; color:#374151; font-weight:600">참여 확인은 <a href="/silkworm/4th_leaderboard.html" style="color:#2563eb; font-weight:700; text-decoration:none">리더보드</a>에서 가능합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 알림 받기 -->
+    <section class="card" style="margin-top:12px">
+      <div class="inner notify">
+        <h2 style="margin:0 0 6px">🔔 알림 받기 <span style="font-size:13px; color:var(--sub); font-weight:600">(선택)</span></h2>
+        <p class="subnote" style="margin:0 0 10px">대회 <b>시작·우화 소식·수상자 발표</b>를 알려드립니다. 원하는 방법을 선택하세요.</p>
+        <div class="row">
+          <div class="col">
+            <label for="notify-email">알림 받을 이메일</label>
+            <input id="notify-email" type="email" inputmode="email" placeholder="예: nunu@example.com" autocomplete="email"/>
+            <label class="agree" id="notifyWrap" style="margin-top:8px"><input type="checkbox" id="notify-optin"/> 이메일로 대회 알림 받기에 동의합니다.</label>
+          </div>
+        </div>
+        <div class="or">또는</div>
+        <div class="channel-box">
+          <strong>실시간 알림은 카카오 채널/채팅방에서</strong>
+          <p class="subnote" style="margin:0">우화처럼 실시간으로 일어나는 소식은 채널 쪽이 더 빠릅니다.</p>
+          <a class="btn kakao lg" id="channel-link" href="#" target="_blank" rel="noopener noreferrer">🔔 카카오 채널/채팅방</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 점수 규칙 -->
+    <section class="card" style="margin-top:12px">
+      <div class="inner">
+        <h2 style="margin:0 0 10px">문항 타입 & 점수 규칙</h2>
+        <p class="sub-h">고치 종류별 점수</p>
+        <div class="score-grid">
+          <div class="score-card sc-normal">
+            <div class="sc-head"><span class="sc-ico">🐛</span><span class="sc-name">일반</span></div>
+            <div class="sc-vals"><span class="chipv ok"><small>정답</small>+1</span><span class="chipv zero"><small>오답</small>0</span></div>
+          </div>
+          <div class="score-card sc-gold">
+            <div class="sc-head"><span class="sc-ico">✨</span><span class="sc-name">황금</span></div>
+            <div class="sc-vals"><span class="chipv ok"><small>정답</small>+3</span><span class="chipv zero"><small>오답</small>0</span></div>
+          </div>
+          <div class="score-card sc-mimic">
+            <div class="sc-head"><span class="sc-ico">😏</span><span class="sc-name">미믹(위장)</span></div>
+            <div class="sc-vals"><span class="chipv ok"><small>정답</small>+2</span><span class="chipv bad"><small>오답</small>−2</span></div>
+          </div>
+          <div class="score-card sc-trap">
+            <div class="sc-head"><span class="sc-ico">⚠️</span><span class="sc-name">함정</span></div>
+            <div class="sc-vals"><span class="chipv zero"><small>정답</small>0</span><span class="chipv bad"><small>오답</small>−3</span></div>
+          </div>
+          <div class="score-card sc-bonus">
+            <div class="sc-head"><span class="sc-ico">🎁</span><span class="sc-name">보너스(예비)</span></div>
+            <div class="sc-full">죽은 고치 대체 시 채점</div>
+          </div>
+        </div>
+
+        <p class="sub-h" style="margin-top:18px">특별 규칙</p>
+        <div class="rule-list">
+          <div class="rule-card accent-dopa">
+            <div class="rc-ico">🔥</div>
+            <div>
+              <p class="rc-title">도파민 고치</p>
+              <p class="rc-body"><b>일반 고치 중 1개</b>를 직접 지정할 수 있어요(선택). 지정한 고치는 <b>정답 +3 / 오답 −3</b>으로 채점됩니다. 자신 있는 한 마리에 베팅하세요.</p>
+            </div>
+          </div>
+          <div class="rule-card accent-clutch">
+            <div class="rc-ico">⚡</div>
+            <div>
+              <p class="rc-title">클러치 고치</p>
+              <p class="rc-body"><b>가장 마지막에 우화하는 고치</b>는 자동으로 <b>점수 2배</b>! 누가 마지막일지 모르니 끝까지 순위가 흔들립니다. (사전 고지된 규칙)</p>
+            </div>
+          </div>
+          <div class="rule-card accent-bonus">
+            <div class="rc-ico">🎁</div>
+            <div>
+              <p class="rc-title">보너스(예비) 2개</p>
+              <p class="rc-body">사육 중 성별 확인이 안 되는 <b>죽은 고치</b>가 생기면 보너스가 그 자리를 대신 채점합니다.<br><b>22개 모두</b> 추측해 주시고, 최종 채점은 살아남은 <b>20개</b> 기준이에요.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <div class="rc-ico">📣</div>
+            <div>
+              <p class="rc-title">공개 순서</p>
+              <p class="rc-body">일반고치는 나방이 되는 즉시 정답과 함께 공개돼요. 특수고치(황금·미믹·함정)가 먼저 나오면 “우화”만 알리고 정답은 숨겼다가, 일반고치 공개 이후 순차로 공개·반영합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 문항 -->
+    <form id="form" class="card" enctype="multipart/form-data" style="margin-top:18px" novalidate>
+      <div class="inner">
+        <h2 class="form-section-title" style="margin:0 0 4px">문항 (<span id="qcount">총 22문항</span>)</h2>
+        <p class="subnote" style="text-align:center; margin:0 0 8px">채점 20개 + 보너스(예비) 2개 · 도파민은 일반 고치 중 1개만 지정할 수 있어요.</p>
+        <div id="questions" style="display:grid;gap:12px;margin-top:8px"></div>
+
+        <div class="actions">
+          <button type="submit" class="btn success lg" id="btn-submit">제출</button>
+          <button type="button" class="btn lg" id="btn-reset">초기화</button>
+        </div>
+        <div id="status" role="status" aria-live="polite"></div>
+        <input class="hp" type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      </div>
+    </form>
+  </main>
+
+  <footer class="site-foot">
+    <div class="foot-inner">
+      <p style="margin:0">&copy; 2026 Ri Han. All rights reserved.</p>
+      <div class="foot-links">
+        <a href="https://github.com/rihan-cadd" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/ri-han/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://orcid.org/0000-0001-7266-7996" target="_blank" rel="noopener">ORCID</a>
+        <a href="https://scholar.google.com/citations?user=bFx3EOIAAAAJ" target="_blank" rel="noopener">Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="lb-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="lb-title">
+      <div style="font-size:32px; line-height:1">✨</div>
+      <h3 id="lb-title">리더보드 준비 중</h3>
+      <p>잠시만 기다려 주십시오. 공개되면 이곳에서 확인할 수 있습니다.</p>
+      <div class="modal-actions"><button type="button" class="btn" id="lb-close">닫기</button></div>
+    </div>
+  </div>
+
+  <script type="module">
+    /* ===== Firebase ===== */
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD9TrwN_6ReC4eKdDYshf9VgPAybvhUXw0",
+      authDomain: "ri-han.firebaseapp.com",
+      projectId: "ri-han",
+      storageBucket: "ri-han.firebasestorage.app",
+      messagingSenderId: "761452386779",
+      appId: "1:761452386779:web:d9a664927f4a2dafa1affe",
+      measurementId: "G-0SHDFQ1Q02"
+    };
+    const app = initializeApp(firebaseConfig);
+    try { getAnalytics(app); } catch (_) { /* file:// 등 일부 환경에서는 무시 */ }
+    const db = getFirestore(app);
+    const USERS_COLLECTION = "4th_event_users";   // 제출 저장/중복확인 컬렉션
+
+    /* =========================================================
+       ▼▼▼ 제 4회 설정 — 여기만 수정하면 됩니다 ▼▼▼
+       1) (전송·중복확인은 Firebase Firestore '4th_event_users' 컬렉션 사용)
+       2) IMG_BASE      : 4회 사진 폴더 (예: .../4th_photo/)
+       3) CHANNEL_URL   : 카카오 채널/오픈채팅 링크 (없으면 '' 두면 버튼 숨김)
+       4) 타입 번호      : GOLD 2개 / MIMIC 4개 / TRAP 2개 채우기 (1~20 중에서)
+                          → 나머지(1~20)는 자동으로 일반(12개)
+                          → 21·22번은 보너스(예비), 자동 처리
+       5) ITEMS         : 22개 누에 이름 (사진 파일명은 "{번호}_{이름}.jpg" 자동 생성)
+       ========================================================= */
+    const IMG_BASE    = 'https://www.hanri.net/nunu/4th_photo/';
+    const CHANNEL_URL = 'https://open.kakao.com/o/gm703oRh'; // ← 4회 채널/채팅방 링크로 교체
+
+    const GOLD  = new Set([5, 16]);          // 황금 (2개)
+    const MIMIC = new Set([3, 9, 13, 18]);   // 미믹 (4개)
+    const TRAP  = new Set([7, 20]);          // 함정 (2개)
+    const BONUS = new Set([21,22]); // 보너스(예비) 2개 — 보통 그대로
+    const DISABLED = new Set([]);   // 확인 불가로 제외할 문항 (보통 비움)
+    const DOPAMINE_MAX = 1;         // 도파민 지정 가능 개수
+
+    const ITEMS = [
+      { name:'01. 누에 이름' }, { name:'02. 누에 이름' }, { name:'03. 누에 이름' }, { name:'04. 누에 이름' },
+      { name:'05. 누에 이름' }, { name:'06. 누에 이름' }, { name:'07. 누에 이름' }, { name:'08. 누에 이름' },
+      { name:'09. 누에 이름' }, { name:'10. 누에 이름' }, { name:'11. 누에 이름' }, { name:'12. 누에 이름' },
+      { name:'13. 누에 이름' }, { name:'14. 누에 이름' }, { name:'15. 누에 이름' }, { name:'16. 누에 이름' },
+      { name:'17. 누에 이름' }, { name:'18. 누에 이름' }, { name:'19. 누에 이름' }, { name:'20. 누에 이름' },
+      { name:'21. 보너스(예비) 고치' }, { name:'22. 보너스(예비) 고치' }
+    ];
+    /* ▲▲▲ 설정 끝 ▲▲▲ */
+
+    const $ = (s)=>document.querySelector(s);
+    const Q_TOTAL = ITEMS.length;
+
+    function getType(i1){
+      if(BONUS.has(i1)) return 'bonus';
+      if(GOLD.has(i1))  return 'gold';
+      if(TRAP.has(i1))  return 'trap';
+      if(MIMIC.has(i1)) return 'mimic';
+      return 'normal';
+    }
+    function typeKorean(t){
+      return t==='gold'?'황금고치':t==='trap'?'함정고치':t==='mimic'?'미믹고치':t==='bonus'?'보너스(예비)':'일반고치';
+    }
+    function typeIcon(t){
+      return t==='gold'?'✨':t==='mimic'?'😏':t==='trap'?'⚠️':t==='bonus'?'🎁':'🐛';
+    }
+    function ruleText(t){
+      switch(t){
+        case 'gold':  return '정답 +3 / 오답 0';
+        case 'mimic': return '정답 +2 / 오답 −2';
+        case 'trap':  return '정답 0 / 오답 −3';
+        case 'bonus': return '예비 · 죽은 고치 대체 시 채점';
+        default:      return '정답 +1 / 오답 0';
+      }
+    }
+    const pad2 = (n)=> String(n).padStart(2,'0');
+
+    function toFileName(idx, displayName){
+      const num = pad2(idx);
+      const raw = (displayName||'').replace(/^\s*\d+\s*[\.\-_\)]*\s*/,'');
+      const withUnderscore = raw.trim().replace(/\s+/g,'_').replace(/^_+|_+$/g,'');
+      return `${num}_${encodeURIComponent(withUnderscore)}.jpg`;
+    }
+
+    /* 문항 수 안내 */
+    let scored=0, bonus=0;
+    for(let i=1;i<=Q_TOTAL;i++){ if(DISABLED.has(i)) continue; if(getType(i)==='bonus') bonus++; else scored++; }
+    document.getElementById('qcount').textContent = `총 ${Q_TOTAL}문항 · 채점 ${scored} + 보너스 ${bonus}`;
+
+    /* 채널 링크 */
+    (function(){
+      const a = document.getElementById('channel-link');
+      if(CHANNEL_URL){ a.href = CHANNEL_URL; } else { a.closest('.channel-box').style.display='none'; document.querySelector('.notify .or').style.display='none'; }
+    })();
+
+    /* 전화 포맷 */
+    const onlyDigits = (s)=> (s||'').replace(/[^\d]/g,'');
+    function format344(d){
+      d = onlyDigits(d).slice(0,11);
+      if (d.length <= 3) return d;
+      if (d.length <= 7) return d.slice(0,3)+'-'+d.slice(3);
+      return d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);
+    }
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', ()=>{ const v=format344(phoneInput.value); phoneInput.value=v; phoneInput.setSelectionRange(v.length,v.length); });
+    phoneInput.addEventListener('blur', ()=>{ phoneInput.value = format344(phoneInput.value); });
+
+    /* 문항 렌더링 */
+    const qWrap = $('#questions');
+    ITEMS.forEach((it, idx)=>{
+      const i = idx + 1;
+      const t = getType(i);
+      const disabled = DISABLED.has(i);
+      const isNormal = (t === 'normal') && !disabled;
+      const imgUrl = IMG_BASE + toFileName(i, it.name);
+
+      const fs = document.createElement('fieldset');
+      fs.dataset.index = i;
+      fs.className = `type-${t}` + (disabled ? ' is-disabled' : '');
+      if(disabled) fs.dataset.disabled = '1';
+
+      const pillHTML = disabled
+        ? `<div class="pill disabled">제출 비활성(확인 불가)</div>`
+        : `<div class="pill ${t}">${ruleText(t)}</div>`;
+      const star = disabled ? '' : `<span style="color:#ef4444">*</span>`;
+      const helpHTML = disabled ? '' : `<div data-help style="display:none; color:#b91c1c; font-size:12px; font-weight:700; margin-top:6px">이 문항의 성별을 선택하십시오.</div>`;
+
+      // 도파민 체크박스: 일반 고치에만
+      const dopaHTML = isNormal ? `
+        <div class="dopa-wrap">
+          <label><input type="checkbox" class="dopa" data-i="${i}"> 🔥 도파민 고치로 지정 — 정답 +3 / 오답 −3</label>
+          <div class="dopa-hint">전체 ${DOPAMINE_MAX}개까지 · 선택 사항</div>
+        </div>` : '';
+
+      fs.innerHTML = `
+        <legend>문항 ${i}</legend>
+        <div class="qgrid">
+          <div class="photo">
+            <img src="${imgUrl}" alt="${it.name} 사진" draggable="false" oncontextmenu="return false" onerror="this.alt='이미지를 불러올 수 없습니다.'">
+            <span class="flag ${t}"><i>${typeIcon(t)}</i>${typeKorean(t)}</span>
+          </div>
+          <div>
+            <div class="name">${it.name}</div>
+            ${pillHTML}
+            <div class="subnote">${disabled ? '이 문항의 고치는 성별을 확인할 수 없습니다.' : '이미지를 참고하여 성별을 선택하십시오.'}</div>
+          </div>
+          <div>
+            <label>성별 선택 ${star}</label>
+            <div class="radios" role="radiogroup" aria-label="${it.name} 성별 선택">
+              <label class="radio" data-type="F"><input type="radio" name="q${i}_gender" value="F" ${disabled?'disabled':''}/><span>암컷</span></label>
+              <label class="radio" data-type="M"><input type="radio" name="q${i}_gender" value="M" ${disabled?'disabled':''}/><span>수컷</span></label>
+            </div>
+            ${helpHTML}
+            ${dopaHTML}
+          </div>
+        </div>`;
+      qWrap.appendChild(fs);
+    });
+
+    /* 이미지 보호 */
+    document.addEventListener('contextmenu', (e)=>{ if(e.target && e.target.tagName==='IMG') e.preventDefault(); });
+    document.addEventListener('dragstart', (e)=>{ if(e.target && e.target.tagName==='IMG') e.preventDefault(); });
+
+    /* 성별 선택 표시 */
+    function paintGroup(group){
+      group.querySelectorAll('.radio').forEach(lb => lb.classList.remove('selected-f','selected-m'));
+      const checked = group.querySelector('input[type="radio"]:checked');
+      if(!checked) return;
+      checked.closest('.radio').classList.add(checked.value==='F'?'selected-f':'selected-m');
+      const fs = group.closest('fieldset');
+      fs.classList.remove('invalid');
+      const help = fs.querySelector('[data-help]'); if(help) help.style.display='none';
+    }
+    qWrap.addEventListener('change', (e)=>{
+      const t=e.target;
+      if(t.matches('input[type="radio"][name$="_gender"]')){ paintGroup(t.closest('.radios')); }
+      if(t.matches('input.dopa')){ enforceDopamine(t); }
+    });
+
+    /* 도파민 1개 제한 */
+    function enforceDopamine(changed){
+      const all = Array.from(document.querySelectorAll('input.dopa'));
+      const checked = all.filter(c=>c.checked);
+      if(changed.checked && checked.length > DOPAMINE_MAX){
+        // 가장 오래된 선택을 해제 (최신 선택 우선)
+        const toUncheck = checked.filter(c=>c!==changed).slice(0, checked.length - DOPAMINE_MAX);
+        toUncheck.forEach(c=>{ c.checked=false; });
+      }
+      all.forEach(c=>{
+        const fs = c.closest('fieldset');
+        if(fs) fs.classList.toggle('dopa-on', c.checked);
+      });
+    }
+
+    /* 초기화 */
+    $('#btn-reset').addEventListener('click', ()=>{
+      $('#form').reset();
+      document.querySelectorAll('.radio').forEach(lb=>lb.classList.remove('selected-f','selected-m'));
+      document.querySelectorAll('fieldset').forEach(fs=>fs.classList.remove('invalid','dopa-on'));
+      document.querySelectorAll('[data-help]').forEach(el=>el.style.display='none');
+      ['nickname','realname','phone'].forEach(id=>$('#'+id).classList.remove('invalid'));
+      $('#agreeWrap').classList.remove('checkbox-invalid');
+      $('#status').textContent='';
+    });
+
+    /* 검증 */
+    function validateAllWithAlert(){
+      const issues=[]; const nickname=$('#nickname'), realname=$('#realname'), phone=$('#phone'), agree=$('#agree');
+      [nickname,realname,phone].forEach(i=>i.classList.remove('invalid'));
+      $('#agreeWrap').classList.remove('checkbox-invalid');
+      const phoneDigits = onlyDigits(phone.value);
+      if(!nickname.value.trim()){ issues.push('닉네임'); nickname.classList.add('invalid'); }
+      if(!realname.value.trim()){ issues.push('이름'); realname.classList.add('invalid'); }
+      if(!phoneDigits){ issues.push('휴대폰 번호'); phone.classList.add('invalid'); }
+      else if(phoneDigits.length!==11){ issues.push('휴대폰 번호(11자리)'); phone.classList.add('invalid'); }
+      else { phone.value = format344(phone.value); }
+      if(!agree.checked){ issues.push('개인정보 동의'); $('#agreeWrap').classList.add('checkbox-invalid'); }
+
+      const missing=[];
+      for(let i=1;i<=Q_TOTAL;i++){
+        if(DISABLED.has(i)) continue;
+        const fs=document.querySelector(`fieldset[data-index="${i}"]`);
+        const checked=document.querySelector(`input[name="q${i}_gender"]:checked`);
+        const help=fs.querySelector('[data-help]');
+        if(!checked){ missing.push(i); fs.classList.add('invalid'); if(help) help.style.display='block'; }
+        else{ fs.classList.remove('invalid'); if(help) help.style.display='none'; }
+      }
+      if(issues.length || missing.length){
+        let msg='';
+        if(issues.length) msg += `미입력 항목: ${issues.join(', ')}\n`;
+        if(missing.length) msg += `미선택 문항: ${missing.join(', ')}`;
+        alert(msg.trim());
+        if(missing[0]) document.querySelector(`fieldset[data-index="${missing[0]}"]`).scrollIntoView({behavior:'smooth',block:'center'});
+        else if(issues.length) (nickname.classList.contains('invalid')?nickname:realname.classList.contains('invalid')?realname:phone).focus();
+        return {ok:false};
+      }
+      return {ok:true};
+    }
+
+    const showStatusError=(m)=>{ $('#status').innerHTML=`<span class="notice notice-err">${m}</span>`; };
+    const showStatusOk   =(m)=>{ $('#status').innerHTML=`<span class="notice notice-ok">${m}</span>`; };
+
+    /* 중복 확인 — Firestore 4th_event_users 에서 phone_norm 일치 검색 */
+    async function checkPhoneDuplicate(phoneRaw){
+      const digits = onlyDigits(phoneRaw).slice(0,11);
+      if(!digits) return false;
+      const qy = query(collection(db, USERS_COLLECTION), where('phone_norm','==',digits));
+      const snap = await getDocs(qy);   // 오류 시 throw → 호출부에서 처리
+      return !snap.empty;
+    }
+
+    /* 참여 확인(퀵 체크) */
+    const quickPhone=document.getElementById('quick-phone');
+    if(quickPhone){
+      quickPhone.addEventListener('input', ()=>{ const v=format344(quickPhone.value); quickPhone.value=v; quickPhone.setSelectionRange(v.length,v.length); });
+      quickPhone.addEventListener('blur', ()=>{ quickPhone.value=format344(quickPhone.value); });
+    }
+    const quickBtn=document.getElementById('btn-quick-check');
+    if(quickBtn){
+      quickBtn.addEventListener('click', async ()=>{
+        const st=document.getElementById('quick-status');
+        const digits=onlyDigits(quickPhone?.value||'').slice(0,11);
+        st.innerHTML='';
+        if(digits.length!==11){ st.innerHTML='<span class="notice notice-err">휴대폰 번호 11자리를 입력하십시오.</span>'; quickPhone?.focus(); return; }
+        const prev=quickBtn.textContent; quickBtn.disabled=true; quickBtn.textContent='확인 중…';
+        try{
+          const ex=await checkPhoneDuplicate(digits);
+          st.innerHTML= ex
+            ? '<span class="notice notice-ok">이미 참여 기록이 있습니다. <a href="/silkworm/4th_leaderboard.html">리더보드</a>에서 확인하십시오.</span>'
+            : '<span class="notice">아직 제출 기록이 없습니다. 지금 참여해 주십시오!</span>';
+        }catch(e){ st.innerHTML='<span class="notice notice-err">확인 중 오류가 발생했습니다.</span>'; }
+        finally{ quickBtn.disabled=false; quickBtn.textContent=prev; }
+      });
+    }
+
+    /* 제출 데이터 (Firestore 저장용 객체 — 기존 폼 데이터 구조 유지) */
+    function buildSubmission(){
+      const data = {};
+      data.edition    = ($('#edition')||{}).value?.trim?.() || '제 4회';
+      data.nickname   = $('#nickname').value.trim();
+      data.name       = $('#realname').value.trim();
+      data.phone      = $('#phone').value.trim();
+      data.phone_norm = onlyDigits($('#phone').value.trim());
+      data.submittedAt = new Date().toISOString();
+
+      // 알림(선택)
+      const ne = ($('#notify-email').value||'').trim();
+      data.notify_email = ne;
+      data.notify_optin = (($('#notify-optin').checked) && ne) ? 'true' : 'false';
+
+      // 도파민 지정 (일반 중 1개)
+      const dopa = document.querySelector('input.dopa:checked');
+      const dopaIdx = dopa ? Number(dopa.dataset.i) : 0;
+      data.dopamine_pick = dopaIdx ? `q${dopaIdx}` : '';
+
+      for(let i=1;i<=Q_TOTAL;i++){
+        const disabled = DISABLED.has(i);
+        const t = getType(i);
+        const name = ITEMS[i-1].name;
+        const imgUrl = IMG_BASE + toFileName(i,name);
+        const g = disabled ? '' : ((document.querySelector(`input[name="q${i}_gender"]:checked`)||{}).value || '');
+        data[`q${i}_name`]     = name;
+        data[`q${i}_imageUrl`] = imgUrl;
+        data[`q${i}_gender`]   = g;
+        data[`q${i}_type`]     = t;
+        data[`q${i}_bonus`]    = t==='bonus' ? 'true' : 'false';
+        data[`q${i}_dopamine`] = (dopaIdx===i) ? 'true' : 'false';
+        data[`q${i}_disabled`] = disabled ? 'true' : 'false';
+      }
+      return data;
+    }
+
+    /* 제출 */
+    $('#form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      $('#status').textContent='';
+      const {ok}=validateAllWithAlert();
+      if(!ok) return;
+      const phoneDigits=onlyDigits($('#phone').value);
+      const btn=$('#btn-submit'); btn.disabled=true; btn.textContent='중복 확인 중…';
+      try{
+        if(await checkPhoneDuplicate(phoneDigits)){
+          alert('이미 동일한 휴대폰 번호로 제출된 기록이 있습니다. 중복 제출은 불가합니다.');
+          showStatusError('중복 번호로 제출 차단'); btn.disabled=false; btn.textContent='제출'; return;
+        }
+      }catch(err){
+        alert('중복 확인에 실패했습니다. 잠시 후 다시 시도하십시오.');
+        showStatusError('중복 확인 실패'); btn.disabled=false; btn.textContent='제출'; return;
+      }
+      btn.disabled=true; btn.textContent='전송 중…';
+      try{
+        await addDoc(collection(db, USERS_COLLECTION), buildSubmission());
+        showStatusOk('제출 완료되었습니다. 감사합니다!');
+        alert('제출이 완료되었습니다. 감사합니다!');
+        $('#form').reset();
+        document.querySelectorAll('.radio').forEach(lb=>lb.classList.remove('selected-f','selected-m'));
+        document.querySelectorAll('fieldset').forEach(fs=>fs.classList.remove('invalid','dopa-on'));
+        document.querySelectorAll('[data-help]').forEach(el=>el.style.display='none');
+        ['nickname','realname','phone'].forEach(id=>$('#'+id).classList.remove('invalid'));
+        $('#agreeWrap').classList.remove('checkbox-invalid');
+      }catch(err){
+        console.error(err); showStatusError('전송 중 오류가 발생했습니다.'); alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      }finally{ btn.disabled=false; btn.textContent='제출'; }
+    });
+
+    /* 리더보드(참여 명단)는 이제 공개되어 있으므로 링크는 그대로 이동합니다.
+       (과거 '준비 중' 모달 인터셉트 제거) */
+  </script>
+</body>
+</html>

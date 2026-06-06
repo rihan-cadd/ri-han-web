@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ri Han | Leaderboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+    .nav-link { transition: all 0.2s; }
+    .nav-link.active { color: #2563eb; font-weight: 600; }
+    .reveal { animation: fadeIn 0.5s ease-in-out both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* 1위 골드 효과 */
+    .gold-card { position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #fffef6 0%, #fff3b0 38%, #ffe169 62%, #fffae0 100%);
+      border: 1px solid #ffcf45; }
+    .gold-card::after { content: ""; position: absolute; top: 0; left: -160%;
+      width: 45%; height: 100%; transform: skewX(-20deg);
+      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,1) 50%, transparent 100%);
+      animation: goldShine 3.6s ease-in-out infinite; }
+    @keyframes goldShine { 0% { left: -160%; } 55% { left: 160%; } 100% { left: 160%; } }
+    @media (prefers-reduced-motion: reduce) { .gold-card::after { display: none; } }
+
+    /* 제출지 그리드 / 칩 (정답=파랑, 오답=빨강) */
+    .table-wrap { overflow:auto; border:1px solid #e5e7eb; border-radius:14px; background:#fff; }
+    table { width:100%; border-collapse:separate; border-spacing:0; }
+    thead th { position:sticky; top:0; background:#f8fafc; border-bottom:1px solid #e5e7eb;
+      text-align:left; padding:11px 14px; font-size:13px; font-weight:700; color:#475569; white-space:nowrap; }
+    tbody td { padding:11px 14px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+    tbody tr:hover { background:#fafafa; }
+    tbody tr:last-child td { border-bottom:0; }
+    .col-rank { width:90px; font-weight:800; white-space:nowrap; }
+    .col-name { font-weight:600; white-space:nowrap; }
+    .col-score { font-weight:800; white-space:nowrap; }
+    .answers { display:grid; gap:6px; } /* grid-template-columns + min-width: JS에서 주입 */
+    .chip { display:inline-flex; align-items:center; justify-content:center; height:28px; min-width:34px;
+      padding:0 6px; border-radius:8px; border:1px solid #e5e7eb; background:#fff;
+      font-weight:700; font-size:13px; color:#9ca3af; }
+    .chip.correct { color:#1d4ed8; background:#eff6ff; border-color:#bfdbfe; }
+    .chip.wrong   { color:#dc2626; background:#fef2f2; border-color:#fecaca; }
+
+    details > summary { list-style:none; cursor:pointer; }
+    details > summary::-webkit-details-marker { display:none; }
+    .chev { transition: transform .2s ease; }
+    details[open] .chev { transform: rotate(90deg); }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+  <!-- ===== NAV ===== -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <a href="/index.html" class="flex items-center">
+          <span class="font-bold text-xl tracking-tight text-gray-900">Ri Han</span>
+        </a>
+        <div class="flex items-center space-x-6 sm:space-x-8">
+            <a href="/index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Home</a>
+            <a href="/personal/personal_index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Personal</a>
+            <a href="/silkworm/silkworm_index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Silkworm</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-6">
+
+    <!-- ===== HEADER ===== -->
+    <section class="reveal">
+      <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10 text-center">
+        <span class="inline-block text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full mb-4">Leaderboard</span>
+        <h1 id="lb-title" class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">🏆 리더보드</h1>
+        <p id="lb-sub" class="text-gray-500 text-sm mt-2"></p>
+        <div id="lb-stats" class="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-gray-600 mt-4"></div>
+        <div class="text-xs text-gray-500 mt-5 max-w-xl mx-auto leading-relaxed">
+          제출지는 칸마다 <b>암/수</b>로 표기하며,
+          <b class="text-blue-700">파랑은 정답</b> · <b class="text-red-600">빨강은 오답</b>이에요.
+          칸에 마우스를 올리면 <b>누에 이름</b>이 보입니다.
+          동점자는 같은 순위이고, 다음 순위는 연속으로 이어집니다.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PODIUM ===== -->
+    <section class="reveal">
+      <div id="podium" class="grid grid-cols-3 gap-3 sm:gap-4 items-end"></div>
+    </section>
+
+    <!-- ===== 정답표 ===== -->
+    <details class="reveal bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      <summary class="flex items-center justify-between p-5 select-none hover:bg-gray-50 transition">
+        <span>
+          <span class="block text-xs font-bold text-blue-600 uppercase tracking-widest">Answer Key</span>
+          <span class="block text-lg font-bold text-gray-900">정답표 · 누에별 정답</span>
+        </span>
+        <span class="chev text-gray-400 text-lg">▸</span>
+      </summary>
+      <div id="answer-key" class="px-5 pb-6 pt-4 border-t border-gray-100 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+    </details>
+
+    <!-- ===== 전체 순위 ===== -->
+    <section class="reveal">
+      <div class="border-b border-gray-200 pb-4 mb-5">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Ranking</span>
+        <h2 class="text-2xl font-bold text-gray-900 mt-1">전체 순위</h2>
+      </div>
+      <div class="table-wrap" id="tableWrap"><div class="p-4 text-sm text-gray-400">로딩 중…</div></div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-white border-t border-gray-200 mt-auto">
+    <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+      <p>&copy; 2026 Ri Han. All rights reserved.</p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="https://github.com/rihan-cadd" target="_blank" class="hover:text-blue-600 transition-colors">GitHub</a>
+        <a href="https://www.linkedin.com/in/ri-han/" target="_blank" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+        <a href="https://orcid.org/0000-0001-7266-7996" target="_blank" class="hover:text-blue-600 transition-colors">ORCID</a>
+        <a href="https://scholar.google.com/citations?user=bFx3EOIAAAAJ" target="_blank" class="hover:text-blue-600 transition-colors">Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+/* =========================================================
+   회차 정보 / 누에 이름 / 정답표 / 참가자
+   ans: 'A'=암컷, 'S'=수컷  (20칸)
+   점수는 제공된 공식 점수를 그대로 사용하고,
+   칸 색은 정답표와 비교해 표시합니다.
+   ========================================================= */
+const META = { round: "제2회", title: "누에 고치 성별 맞추기 대회", date: "2025.08" };
+
+const SILKWORMS = ["01. 누누","02. 누추한 분이 귀한곳에","03. 누짱","04. 누쿤","05. 누진세","06. 누말썽이","07. 누렁이","08. 누명을 쓴 누에","09. 누먹보","10. 누여명","11. 누재윤","12. 누앙이","13. 누텔라","14. 누구인가","15. 누가 기침소리를 내었는가","16. 누룩곰팡이","17. 누짱구","18. 누칼협","19. 누명스명스한 상황","20. 누른자"];
+
+const ANSWER_KEY = "ASSASASSSSSAAAAAASSS".split('');
+
+const PARTICIPANTS = [
+  {name:"다크엔젤",score:8,ans:"SSAAAAASASSSASSASAAA"},
+  {name:"김서윤",score:14,ans:"SASASSAASSSAAAASASSA"},
+  {name:"지혜뿡뿡",score:12,ans:"SASAAASASASASAAASSSA"},
+  {name:"부녀자",score:9,ans:"SAASAASSAAASAAAASASS"},
+  {name:"위치킹",score:8,ans:"SAASSSAAASSAASAASASA"},
+  {name:"파태편",score:12,ans:"ASSSSASSAASAASSASASA"},
+  {name:"율탱",score:11,ans:"AAASAAAASASAAAAASASS"},
+  {name:"웨스트",score:8,ans:"SAASASSSASSSASASSAAS"},
+  {name:"단팥빵",score:14,ans:"ASSASASSAASSSSASASSA"},
+  {name:"배",score:12,ans:"AASASASSSSAASSASSAAA"},
+  {name:"용드래곤",score:10,ans:"SASSAAASASAASAAAAAAS"},
+  {name:"단드래곤",score:10,ans:"SASSAAASSSAASAAASASA"},
+  {name:"헤일리",score:11,ans:"SSSAAASSSSSSSSSSSAAS"},
+  {name:"오넨지",score:8,ans:"SAASSSSASAAAASSSAASA"},
+  {name:"누울래용",score:11,ans:"SAASSASASASASAASASAA"},
+  {name:"231",score:11,ans:"ASSSSAASSAAASASSAAAA"},
+  {name:"누클리어웨폰",score:11,ans:"SSAAAAASSSSSASSASSAS"},
+  {name:"기명하",score:9,ans:"AAAAAAAAAAAAAAAAAAAA"},
+  {name:"동천불주먹",score:9,ans:"SSAASSAASSAASASASASA"},
+  {name:"끼욧",score:9,ans:"ASASASASASSAAASSSAAA"},
+  {name:"럭키조",score:10,ans:"SASSAASASSAAASSSAAAS"},
+  {name:"삼학년",score:6,ans:"SSASASSASAASSASSSASA"},
+  {name:"유냉",score:11,ans:"SASSSSSSSSSSSSSSSSSS"},
+  {name:"카이제로스",score:8,ans:"AAASSSSASSSASSSASAAA"},
+  {name:"sun",score:8,ans:"SASSSSSSAAAASASSAAAA"},
+  {name:"심피티",score:9,ans:"AASSSSSAAAAAAASAAAAA"},
+  {name:"예리무",score:8,ans:"SAAASSSAAASAASSSAAAA"},
+  {name:"막둥이 마미",score:12,ans:"SAASSSSSSSSSASAASSSS"},
+  {name:"토끼검객",score:12,ans:"SSSSSSSSSSSSSSSSSSSS"},
+  {name:"사이다맛귤",score:10,ans:"AASAASAASAASASAASSSS"},
+  {name:"양념게장",score:10,ans:"SSASAASSSASAASSSAAAA"},
+  {name:"빈이",score:13,ans:"SASAAASASASAAAAAAASA"},
+  {name:"무적엘지창기야사랑한드아아악",score:10,ans:"SAASSASASASSASSAASAS"},
+  {name:"서호",score:6,ans:"SAASSSSAASSSSSSASSAA"},
+  {name:"콩",score:12,ans:"SSSASSSSSSSSSSSSSASS"},
+  {name:"집게사장",score:12,ans:"SSASSASSSASSSASASSSS"},
+  {name:"야 서강준",score:9,ans:"SSAASSAASSAASSAASSAA"},
+  {name:"유한우",score:10,ans:"ASSASSAAAASASSASSAAS"},
+  {name:"누에사랑",score:10,ans:"SSASAASASSASAASASSSA"},
+  {name:"가나초코",score:11,ans:"AAASSAASSASASASSAASA"},
+  {name:"도롱빵",score:7,ans:"SAASAAAAAAASASAASSSS"},
+  {name:"지산부인",score:12,ans:"SASASSSSSSSASASSAAAA"},
+  {name:"단댕이",score:12,ans:"AASSSASASASASAAAAAAA"},
+  {name:"김가희동생",score:12,ans:"SSASAASASSAAASASASAS"},
+  {name:"박O형",score:13,ans:"ASASAASAASSSAAASAASS"},
+  {name:"브라이언",score:12,ans:"AASSSSSASSSAAASSSSAA"},
+  {name:"누에누에앨갰샙니대",score:11,ans:"ASSAASSAAASSASAAASAA"},
+  {name:"류이지",score:10,ans:"SAASAASSSSSSSAASSASA"},
+  {name:"다갱이",score:9,ans:"SSSSAAASAASAASSASSAA"},
+  {name:"엄윤경",score:9,ans:"SSAASSAASSAASSAASSAA"},
+  {name:"호루류",score:9,ans:"SSSSAASSSAAAASSSSAAA"},
+  {name:"이O지",score:10,ans:"SAAAASSSSASAASASAAAA"},
+  {name:"바닐라라떼",score:8,ans:"SAASAASSSSAASSSSSAAS"},
+  {name:".....",score:10,ans:"SAASSAASSAASAAASAAAS"}
+];
+
+/* ---------- 로직 ---------- */
+const norm = v => { v=(v||'').trim(); if(!v) return ''; if(v==='A') return '암'; if(v==='S') return '수'; return v.indexOf('수')>-1?'수':'암'; };
+const N = ANSWER_KEY.length;
+const keyN = ANSWER_KEY.map(norm);
+
+// 공식 점수 사용 + 정렬 + 밀집 순위(1,2,3,3,4…)
+const scored = PARTICIPANTS.map(p => ({ name:p.name, answers:p.ans.split(''), score:p.score }))
+  .sort((a,b)=> b.score - a.score);
+
+let rank = 0, prevScore = null;
+scored.forEach(p => { if (p.score !== prevScore){ rank++; prevScore = p.score; } p.rank = rank; });
+
+const medal = r => r===1?'🥇':r===2?'🥈':r===3?'🥉':'';
+const rankLabel = r => (r<=3 ? medal(r)+' ' : '') + r + '등';
+
+// 헤더
+document.getElementById('lb-title').textContent = `🏆 ${META.round} 리더보드`;
+document.getElementById('lb-sub').textContent = `${META.title} · ${META.date}`;
+document.getElementById('lb-stats').innerHTML =
+  `<span>참가자 <b class="text-gray-900">${scored.length}</b>명</span>` +
+  `<span>누에 <b class="text-gray-900">${N}</b>마리</span>` +
+  `<span>암컷 <b class="text-gray-900">${keyN.filter(v=>v==='암').length}</b> · 수컷 <b class="text-gray-900">${keyN.filter(v=>v==='수').length}</b></span>`;
+
+// 정답표
+document.getElementById('answer-key').innerHTML = SILKWORMS.map((name,i)=>`
+  <div class="flex items-center justify-between gap-2 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
+    <span class="text-sm text-gray-600 truncate" title="${name}">${name}</span>
+    <span class="chip" style="background:#fff">${keyN[i]||'-'}</span>
+  </div>`).join('');
+
+// 시상대 (2위·1위·3위)
+const byRank = r => scored.filter(p=>p.rank===r);
+const order = [2,1,3];
+const heights = {1:'pt-6 pb-8',2:'pt-5 pb-6',3:'pt-4 pb-5'};
+document.getElementById('podium').innerHTML = order.map(r=>{
+  const grp = byRank(r); const p = grp[0];
+  if(!p) return '<div></div>';
+  const gold = r===1;
+  const cls = gold ? 'gold-card shadow-md' : (r===2 ? 'bg-white border border-gray-200' : 'bg-white border border-orange-200');
+  const extra = grp.length>1 ? `<div class="text-[11px] ${gold?'text-amber-700':'text-gray-400'} mt-0.5">외 ${grp.length-1}명</div>` : '';
+  return `
+    <div class="rounded-2xl ${cls} ${heights[r]} px-3 text-center flex flex-col items-center justify-end">
+      <div class="text-3xl sm:text-4xl mb-1">${medal(r)}</div>
+      <div class="text-xs font-bold ${gold?'text-amber-700':'text-gray-400'} uppercase tracking-wider">${r}등</div>
+      <div class="font-bold text-gray-900 mt-0.5 truncate max-w-full">${p.name}</div>
+      <div class="text-sm ${gold?'text-amber-800':'text-gray-500'} mt-0.5"><b>${p.score}</b>/${N}</div>
+      ${extra}
+    </div>`;
+}).join('');
+
+// 순위 테이블
+(function(){
+  const minW = Math.max(560, N*40);
+  const dyn = document.createElement('style');
+  dyn.textContent = `.answers{grid-template-columns:repeat(${N},1fr);min-width:${minW}px}`;
+  document.head.appendChild(dyn);
+
+  let body = '';
+  scored.forEach(p=>{
+    const goldRow = p.rank===1 ? 'background:#fffdf3' : '';
+    let cells = '';
+    for(let i=0;i<N;i++){
+      const a = norm(p.answers[i]);
+      const ok = a && a === keyN[i];
+      const cls = a ? (ok ? 'correct' : 'wrong') : '';
+      const tip = `${SILKWORMS[i]} · 선택 ${a||'미응답'} / 정답 ${keyN[i]}`;
+      cells += `<span class="chip ${cls}" title="${tip}">${a||'-'}</span>`;
+    }
+    body += `<tr style="${goldRow}">
+      <td class="col-rank">${rankLabel(p.rank)}</td>
+      <td class="col-name">${p.name}</td>
+      <td class="col-score">${p.score}<span class="text-gray-400 font-normal">/${N}</span></td>
+      <td><div class="answers">${cells}</div></td>
+    </tr>`;
+  });
+
+  document.getElementById('tableWrap').innerHTML = `
+    <table>
+      <thead><tr><th class="col-rank">순위</th><th>닉네임</th><th>점수</th><th>제출지</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table>`;
+})();
+</script>
+</body>
+</html>

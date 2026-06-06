@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ri Han | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+      body { font-family: "Inter", sans-serif; }
+      .page-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+      .page-section.active { display: block; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .nav-link { transition: all 0.2s; }
+      .nav-link.active { color: #2563eb; font-weight: 600; }
+      .btn-hover { transition: all 0.3s ease; }
+      .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center cursor-pointer" onclick="navigateTo('home')">
+            <span class="font-bold text-xl tracking-tight text-gray-900">Ri Han</span>
+          </div>
+          <div class="flex items-center space-x-6 sm:space-x-8">
+            <a href="ri-han.com/index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Home</a>
+            <a href="ri-han.com/personal/personal_index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Personal</a>
+            <a href="ri-han.com/silkworm/silkworm_index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Silkworm</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <section id="home" class="page-section active">
+        <div class="text-center max-w-3xl mx-auto mt-10">
+          <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-2">
+            Hi, I'm <span class="text-blue-600">Ri Han</span>
+          </h1>
+          <h2 class="text-xl sm:text-2xl font-medium text-gray-700 mb-6">
+            Ph.D. Student | Chem/Bioinformatics Lab @ CAU
+          </h2>
+          <p class="text-lg text-gray-600 mb-8 font-light leading-relaxed max-w-3xl mx-auto text-balance">
+            I research computer-aided drug discovery and molecular simulation.<br />
+            An insect enthusiast raising silkworms, rhinoceros beetles, and stag beetles.
+          </p>
+
+          <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+            <a href="ri-han.com/about/about_index.html" class="btn-hover inline-block text-center bg-white border-2 border-gray-400 text-gray-700 rounded-full px-10 py-3 text-lg font-semibold hover:bg-gray-700 hover:text-white transition-all">
+              About Me
+            </button>
+            <!-- ✅ Silkworm → 별도 페이지(silkworm.html)로 이동 -->
+            <a href="ri-han.com/silkworm/silkworm_index.html" class="btn-hover inline-block text-center bg-white border-2 border-gray-400 text-gray-700 rounded-full px-10 py-3 text-lg font-semibold hover:bg-gray-700 hover:text-white transition-all">
+              Silkworm
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-20 border-t border-gray-200 pt-10">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Recent Activities</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <span class="text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Research</span>
+              <h3 class="text-lg font-medium text-gray-900 mt-3">Ph.D. Proposal Completed</h3>
+              <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                Successfully completed my Ph.D. research proposal and have now entered the main phase of my dissertation research.
+              </p>
+            </div>
+            <a href="silkworm.html" class="block bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-gray-300 transition">
+              <span class="text-xs font-bold text-pink-600 uppercase tracking-wider bg-pink-50 px-2 py-1 rounded">Hobby</span>
+              <h3 class="text-lg font-medium text-gray-900 mt-3">Silkworm Cocoon Sex-Guessing Contest</h3>
+              <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                Now in its 4th year, I'm organizing the "Silkworm Cocoon Sex-Guessing Contest," preparing a fun event together with the community.
+              </p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="personal" class="page-section">
+        <div class="mb-8 border-b border-gray-200 pb-5">
+          <h1 class="text-3xl font-bold text-gray-900">About Me</h1>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div class="col-span-1">
+            <div class="w-full aspect-square bg-gray-200 rounded-2xl overflow-hidden relative shadow-inner">
+              <img src="https://placehold.co/400x400/e2e8f0/94a3b8?text=Profile+Photo" alt="Ri Han" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div class="col-span-1 md:col-span-2 space-y-8">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">Biography</h2>
+              <p class="text-gray-700 leading-relaxed">
+                I am a Ph.D. student in the Department of Global Pharmaceutical Industry at Chung-Ang University, conducting research in the Chem/Bioinformatics Lab under the supervision of Professor Yoonji Lee.
+              </p>
+              <p class="text-gray-700 leading-relaxed mt-4">
+                My work centers on the sequence–structure analysis of purinergic receptors, carrying out computational research including FEP, MD simulations, and molecular docking.
+              </p>
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">Interests</h2>
+              <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                <h3 class="font-semibold text-gray-900">🐛 Insect Rearing (Silkworms, Rhinoceros Beetles, Stag Beetles)</h3>
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  I raise a variety of insects and am captivated by the unique design and ecology of living creatures. Running the Silkworm Cocoon Sex-Guessing Contest, now in its 4th year, is one of my greatest joys.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+      <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+        <p>&copy; 2026 Ri Han. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="https://github.com/rihan-cadd" target="_blank" class="hover:text-blue-600 transition-colors">GitHub</a>
+          <a href="https://www.linkedin.com/in/ri-han/" target="_blank" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+          <a href="https://orcid.org/0000-0001-7266-7996" target="_blank" class="hover:text-blue-600 transition-colors">ORCID</a>
+          <a href="https://scholar.google.com/citations?user=bFx3EOIAAAAJ" target="_blank" class="hover:text-blue-600 transition-colors">Scholar</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function navigateTo(pageId) {
+        document.querySelectorAll(".page-section").forEach((section) => section.classList.remove("active"));
+        document.querySelectorAll(".nav-link").forEach((link) => { link.classList.remove("active", "text-blue-600"); });
+        const page = document.getElementById(pageId);
+        if (page) page.classList.add("active");
+        const target = document.getElementById("nav-" + pageId);
+        if (target) { target.classList.add("active", "text-blue-600"); }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // silkworm.html에서 "Personal" 링크(index.html#personal)로 돌아오면 해당 섹션 열기
+      window.addEventListener("DOMContentLoaded", function () {
+        const id = location.hash.replace("#", "");
+        const el = id && document.getElementById(id);
+        if (el && el.classList.contains("page-section")) {
+          navigateTo(id);
+        }
+      });
+    </script>
+  </body>
+</html>
