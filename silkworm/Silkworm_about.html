@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ri Han | 누에 이야기</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+    .nav-link { transition: all 0.2s; }
+    .nav-link.active { color: #2563eb; font-weight: 600; }
+    .reveal { animation: fadeIn 0.5s ease-in-out both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    details > summary { list-style:none; cursor:pointer; }
+    details > summary::-webkit-details-marker { display:none; }
+    .chev { transition: transform .2s ease; }
+    details[open] .chev { transform: rotate(90deg); }
+    /* 사진 자리(실제 사진으로 교체) */
+    .ph { position:relative; width:100%; background:#eef2f7; border:1px dashed #cbd5e1; border-radius:14px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .ph img { width:100%; height:100%; object-fit:cover; display:block; }
+    .ph .ph-cap { position:absolute; left:8px; bottom:8px; background:rgba(17,24,39,.72); color:#fff; font-size:11px; font-weight:600; padding:3px 8px; border-radius:999px; }
+    .ratio-4x3 { aspect-ratio:4/3; }
+    .ratio-1x1 { aspect-ratio:1/1; }
+    .ratio-16x9 { aspect-ratio:16/9; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <a href="/index.html" class="flex items-center"><span class="font-bold text-xl tracking-tight text-gray-900">Ri Han</span></a>
+        <div class="flex items-center space-x-6 sm:space-x-8">
+          <a href="/index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Home</a>
+          <a href="/personal/personal_index.html" class="nav-link text-sm sm:text-base text-gray-500 hover:text-blue-600">Personal</a>
+          <a href="/silkworm/silkworm_index.html" class="nav-link active text-sm sm:text-base text-gray-500 hover:text-blue-600">Silkworm</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-10">
+    <a href="/silkworm/silkworm_index.html" class="reveal inline-flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 w-fit">← 이벤트 페이지로</a>
+    <!-- HERO -->
+    <section class="reveal">
+      <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12">
+        <span class="inline-block text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full mb-4">About Silkworm</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">🐛 누에 이야기</h1>
+        <p class="text-gray-700 leading-relaxed max-w-3xl">
+          누에(<i>Bombyx mori</i>)는 뽕잎을 먹고 자라 명주실로 고치를 짓는 누에나방의 애벌레입니다.
+          수천 년 동안 비단을 얻기 위해 길러져 온, <b>사람 손에서만 살아가는 가축화된 곤충</b>이에요.
+          야생에서는 스스로 살아남지 못하고, 다 자란 나방조차 날지 못합니다. 그만큼 오래도록 사람과 함께해 온 작은 생명이죠.
+          이 페이지에서는 누에의 한살이부터 고치·명주실, 그리고 대회의 핵심인 암수 구별 포인트까지 차근차근 소개합니다.
+        </p>
+        <div class="ph ratio-16x9 mt-6">
+          <!-- 교체: 5령 누에 또는 사육 상자 전경 사진 -->
+          <img src="https://placehold.co/1200x675/eef2f7/94a3b8?text=%F0%9F%90%9B+%EB%88%84%EC%97%90+%EC%82%AC%EC%A7%84" alt="누에 대표 사진" />
+          <span class="ph-cap">사진 자리 · 5령 누에 / 사육 상자</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 독특한 사실 -->
+    <section class="reveal">
+      <div class="border-b border-gray-200 pb-4 mb-6">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Fun Records</span>
+        <h2 class="text-2xl font-bold text-gray-900 mt-1">누에에 대한 독특한 사실</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+          <div class="text-2xl mb-2">🥇</div>
+          <h3 class="font-bold text-gray-900 text-sm">세계 최초의 페로몬</h3>
+          <p class="text-gray-700 text-sm mt-1 leading-relaxed">1959년, 누에나방 암컷에서 '봄비콜'이 밝혀졌어요. <b>인류가 구조를 알아낸 최초의 곤충 페로몬</b>으로, 암컷 50만 마리가 넘는 추출물에서 겨우 얻어냈습니다.</p>
+        </div>
+        <div class="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+          <div class="text-2xl mb-2">🦋</div>
+          <h3 class="font-bold text-gray-900 text-sm">날개가 있어도 못 난다</h3>
+          <p class="text-gray-700 text-sm mt-1 leading-relaxed">오랜 가축화로 비행 능력과 야생성을 잃었어요. 사람의 보살핌 없이는 살아남지 못하는, 완전히 길든 곤충입니다.</p>
+        </div>
+        <div class="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+          <div class="text-2xl mb-2">🧶</div>
+          <h3 class="font-bold text-gray-900 text-sm">고치 하나 = 실 1km+</h3>
+          <p class="text-gray-700 text-sm mt-1 leading-relaxed">고치는 끊기지 않은 단 한 가닥의 실로 되어 있고, 풀면 그 길이가 <b>1km를 훌쩍 넘습니다.</b></p>
+        </div>
+        <div class="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+          <div class="text-2xl mb-2">🏯</div>
+          <h3 class="font-bold text-gray-900 text-sm">5천 년의 동행</h3>
+          <p class="text-gray-700 text-sm mt-1 leading-relaxed">약 5,000년 전 중국에서 길들이기 시작해, 지금까지 사람과 함께 살아온 가장 오래된 가축 곤충 중 하나예요.</p>
+        </div>
+        <div class="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+          <div class="text-2xl mb-2">🧪</div>
+          <h3 class="font-bold text-gray-900 text-sm">실험실의 스타</h3>
+          <p class="text-gray-700 text-sm mt-1 leading-relaxed">키우기 쉽고 유전 정보가 잘 정리돼 있어, 나비·나방 연구의 '실험용 생쥐' 같은 표준 모델 곤충이 됐습니다.</p>
+        </div>
+        <div class="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+          <div class="text-2xl mb-2">🍃</div>
+          <h3 class="font-bold text-gray-900 text-sm">거의 뽕잎만 먹는 편식가</h3>
+          <p class="text-gray-700 text-sm mt-1 leading-relaxed">누에는 사실상 뽕잎만 먹습니다. 뽕잎 속 냄새 물질에 이끌려 먹이를 찾는 까다로운 입맛의 소유자예요.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 한살이 -->
+    <section class="reveal">
+      <div class="border-b border-gray-200 pb-4 mb-6">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Life Cycle</span>
+        <h2 class="text-2xl font-bold text-gray-900 mt-1">누에의 한살이</h2>
+        <p class="text-gray-500 text-sm mt-1">알에서 나방까지, 보통 6~8주에 걸쳐 완전변태합니다.</p>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="ph ratio-4x3"><img src="https://placehold.co/400x300/eef2f7/94a3b8?text=%F0%9F%A5%9A+%EC%95%8C" alt="알"><span class="ph-cap">알 사진</span></div>
+          <div class="p-4">
+            <div class="text-xl mb-1">🥚</div>
+            <h3 class="font-bold text-gray-900">① 알</h3>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">좁쌀만 한 알에서 시작합니다. 따뜻해지면 1~2주 안에 새까만 애벌레(개미누에)가 깨어나요.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="ph ratio-4x3"><img src="https://placehold.co/400x300/eef2f7/94a3b8?text=%F0%9F%90%9B+%EC%95%A0%EB%B2%8C%EB%A0%88" alt="애벌레"><span class="ph-cap">1~5령 누에 사진</span></div>
+          <div class="p-4">
+            <div class="text-xl mb-1">🐛</div>
+            <h3 class="font-bold text-gray-900">② 애벌레 (누에)</h3>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">뽕잎을 먹으며 <b>네 번의 잠(허물벗기)</b>을 거쳐 1령→5령으로 자랍니다. 5령에서 몸이 가장 커지고 식욕도 왕성해요.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="ph ratio-4x3"><img src="https://placehold.co/400x300/eef2f7/94a3b8?text=%F0%9F%A7%B6+%EA%B3%A0%EC%B9%98" alt="고치"><span class="ph-cap">고치 짓는 모습 사진</span></div>
+          <div class="p-4">
+            <div class="text-xl mb-1">🧶</div>
+            <h3 class="font-bold text-gray-900">③ 고치 · 번데기</h3>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">5령 끝에 입에서 <b>한 가닥의 명주실</b>을 토해 고치를 짓고, 그 안에서 번데기가 됩니다.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="ph ratio-4x3"><img src="https://placehold.co/400x300/eef2f7/94a3b8?text=%F0%9F%A6%8B+%EB%82%98%EB%B0%A9" alt="나방"><span class="ph-cap">우화한 나방 사진</span></div>
+          <div class="p-4">
+            <div class="text-xl mb-1">🦋</div>
+            <h3 class="font-bold text-gray-900">④ 나방</h3>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">고치를 뚫고 누에나방으로 우화합니다. 날지는 못하고, 짝짓기 후 알을 남기며 한살이를 마칩니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 암수 구별 포인트 (대회 핵심) -->
+    <section class="reveal">
+      <div class="border-b border-gray-200 pb-4 mb-6">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Quiz Point</span>
+        <h2 class="text-2xl font-bold text-gray-900 mt-1">🔍 암수 구별 포인트</h2>
+        <p class="text-gray-500 text-sm mt-1">대회의 핵심! 고치만 보고 암수를 맞히는 건 생각보다 까다로워서 더 재미있어요.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="ph ratio-1x1"><img src="https://placehold.co/400x400/eef2f7/94a3b8?text=%EA%B3%A0%EC%B9%98+%EB%B9%84%EA%B5%90" alt="고치 비교"><span class="ph-cap">암·수 고치 비교 사진</span></div>
+          <div class="p-5">
+            <h3 class="font-bold text-gray-900">고치로 보기</h3>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">일반적으로 <b>암컷 고치는 더 크고 통통</b>, <b>수컷은 갸름</b>한 편이라고 해요. 다만 개체차가 커서 확신하긴 어렵습니다.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="ph ratio-1x1"><img src="https://placehold.co/400x400/eef2f7/94a3b8?text=%EB%B2%88%EB%8D%B0%EA%B8%B0" alt="번데기 배마디"><span class="ph-cap">번데기 배마디 사진</span></div>
+          <div class="p-5">
+            <h3 class="font-bold text-gray-900">번데기로 보기</h3>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">배 아랫면 마디의 무늬로 구분합니다. <b>암컷은 가는 선(X자) 자국</b>, <b>수컷은 작은 점</b>이 있는 식이에요(전문가용 방법).</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="ph ratio-1x1"><img src="https://placehold.co/400x400/eef2f7/94a3b8?text=%EB%82%98%EB%B0%A9" alt="나방"><span class="ph-cap">암·수 나방 사진</span></div>
+          <div class="p-5">
+            <h3 class="font-bold text-gray-900">나방으로 보기</h3>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed">우화 후엔 비교적 또렷해요. <b>암컷은 배가 알로 가득 차 통통</b>, <b>수컷은 날렵하고 더 부산하게 날갯짓</b>합니다.</p>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-gray-400 mt-3">※ 대회 채점 기준의 정답은 우화 이후 실제 성별로 확정됩니다.</p>
+    </section>
+
+    <!-- 생태 + 명주실 (이미지 + 텍스트) -->
+    <section class="reveal grid md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="ph ratio-16x9"><img src="https://placehold.co/800x450/eef2f7/94a3b8?text=%F0%9F%8D%83+%EB%BD%95%EC%9E%8E" alt="뽕잎"><span class="ph-cap">뽕잎 먹는 누에 사진</span></div>
+        <div class="p-6">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Ecology</span>
+          <h2 class="text-xl font-bold text-gray-900 mt-1 mb-2">무엇을 먹고 어떻게 자랄까?</h2>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            누에는 거의 <b>뽕잎만</b> 먹습니다. 신선한 뽕잎을 충분히 주는 것이 건강의 핵심이에요.
+            온도는 대략 23~28℃, 통풍이 잘 되고 청결한 환경을 좋아합니다. 5령이 되면 하루에도 엄청난 양의
+            뽕잎을 먹어 치우고, 몸이 투명해지기 시작하면 곧 고치를 지을 준비가 된 신호예요.
+          </p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="ph ratio-16x9"><img src="https://placehold.co/800x450/eef2f7/94a3b8?text=%F0%9F%A7%B5+%EB%AA%85%EC%A3%BC%EC%8B%A4" alt="명주실"><span class="ph-cap">고치·명주실 사진</span></div>
+        <div class="p-6">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Silk</span>
+          <h2 class="text-xl font-bold text-gray-900 mt-1 mb-2">고치와 명주실</h2>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            고치 하나는 끊기지 않은 <b>한 가닥의 실</b>로 이루어져 있고, 풀면 그 길이가 <b>1km가 훌쩍 넘습니다.</b>
+            이 실을 모아 삶고 뽑아낸 것이 바로 비단(명주)이에요. 고치 색은 품종과 색소에 따라 흰색·노란색·연두색 등으로 달라집니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 재미있는 사실 / 색 차이 -->
+    <section class="reveal">
+      <div class="border-b border-gray-200 pb-4 mb-5">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Did you know?</span>
+        <h2 class="text-2xl font-bold text-gray-900 mt-1">알아두면 재미있는 이야기</h2>
+      </div>
+      <div class="space-y-3">
+        <details class="bg-white rounded-xl border border-gray-200">
+          <summary class="flex items-center justify-between p-4 font-semibold text-gray-800">왜 고치 색이 다른가요? <span class="chev text-gray-400">▸</span></summary>
+          <div class="px-4 pb-4 text-sm text-gray-600 leading-relaxed">
+            뽕잎에서 들어온 색소가 실을 만드는 기관(실샘)까지 얼마나 잘 옮겨져 쌓이느냐에 따라 색이 달라집니다.
+            타고난 유전자에 따라 색소를 실어 나르는 능력이 달라서, 능력이 좋으면 노랑·금빛, 약하면 하얀 고치가 돼요.
+            색소는 주로 겉부분에 머물러, 삶아 겉을 벗기는 과정에서 빠져나가 하얀 실만 남습니다.
+          </div>
+        </details>
+        <details class="bg-white rounded-xl border border-gray-200">
+          <summary class="flex items-center justify-between p-4 font-semibold text-gray-800">누에나방은 왜 못 날까요? <span class="chev text-gray-400">▸</span></summary>
+          <div class="px-4 pb-4 text-sm text-gray-600 leading-relaxed">
+            오랜 세월 사람이 비단을 얻기 위해 길들이면서, 야생성과 비행 능력을 잃었습니다. 날개는 있지만 몸을 띄우지 못해
+            사람의 보살핌 없이는 살기 어려운, 완전히 가축화된 곤충이에요.
+          </div>
+        </details>
+        <details class="bg-white rounded-xl border border-gray-200">
+          <summary class="flex items-center justify-between p-4 font-semibold text-gray-800">누에똥(잠사)도 쓸모가 있나요? <span class="chev text-gray-400">▸</span></summary>
+          <div class="px-4 pb-4 text-sm text-gray-600 leading-relaxed">
+            네! 뽕잎만 먹은 누에의 똥은 깨끗한 편이라 차·베개 충전재·비료 등으로 쓰이기도 합니다.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 키우기 팁 -->
+    <section class="reveal bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+      <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Care Tips</span>
+      <h2 class="text-2xl font-bold text-gray-900 mt-1 mb-4">누에 키우기 작은 팁</h2>
+      <div class="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-gray-700">
+        <div class="flex gap-3"><span>🍃</span><p><b>신선한 뽕잎</b>을 충분히. 물기는 살짝 말려서 주세요(과습 주의).</p></div>
+        <div class="flex gap-3"><span>🌡️</span><p><b>23~28℃</b>의 따뜻하고 통풍 좋은 곳. 직사광선은 피해요.</p></div>
+        <div class="flex gap-3"><span>🧹</span><p><b>청결</b>이 중요. 똥(잠사)과 마른 잎은 자주 치워 곰팡이를 막아요.</p></div>
+        <div class="flex gap-3"><span>😴</span><p><b>잠(허물벗기)</b> 중엔 움직임이 멈춰요. 이때는 건드리지 말고 두세요.</p></div>
+        <div class="flex gap-3"><span>🧶</span><p>몸이 투명해지고 두리번거리면 곧 고치 지을 신호. <b>섶(고치 자리)</b>을 만들어 줘요.</p></div>
+        <div class="flex gap-3"><span>✋</span><p>만질 땐 손을 깨끗이. 일부 사람은 누에 가루에 <b>알레르기</b>가 있으니 주의해요.</p></div>
+      </div>
+    </section>
+
+    <!-- 생물학적 특징 -->
+    <section class="reveal">
+      <div class="border-b border-gray-200 pb-4 mb-6">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Biology</span>
+        <h2 class="text-2xl font-bold text-gray-900 mt-1">누에의 생물학적 특징</h2>
+        <p class="text-gray-500 text-sm mt-1">숫자로 보는 누에 — 작은 몸 안에 꽤 많은 이야기가 들어 있어요.</p>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
+          <div class="text-3xl font-extrabold text-blue-600">13</div>
+          <h3 class="font-bold text-gray-900 mt-1 text-sm">몸의 마디</h3>
+          <p class="text-gray-600 text-xs mt-1 leading-relaxed">애벌레 몸통은 가슴 3마디 + 배 10마디 = 13마디로 이루어져 있어요(머리는 별도).</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
+          <div class="text-3xl font-extrabold text-blue-600">3+5쌍</div>
+          <h3 class="font-bold text-gray-900 mt-1 text-sm">다리</h3>
+          <p class="text-gray-600 text-xs mt-1 leading-relaxed">가슴에 진짜 다리 3쌍, 배에 무는 힘이 센 헛다리(배다리)가 여러 쌍 있어요.</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
+          <div class="text-3xl font-extrabold text-blue-600">28</div>
+          <h3 class="font-bold text-gray-900 mt-1 text-sm">염색체 (n)</h3>
+          <p class="text-gray-600 text-xs mt-1 leading-relaxed">누에의 염색체는 28개(반수, n=28). 사람(23)보다 많아요.</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
+          <div class="text-3xl font-extrabold text-blue-600">≈4.5억</div>
+          <h3 class="font-bold text-gray-900 mt-1 text-sm">유전체 염기쌍</h3>
+          <p class="text-gray-600 text-xs mt-1 leading-relaxed">유전체 크기는 약 4.5억 염기쌍(≈460 Mb), 단백질 유전자는 약 1만 6천~1만 8천 개로 추정돼요.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-4">
+        <p class="text-gray-700 text-sm leading-relaxed">
+          누에는 <b>2004년에 나비목(나비·나방) 곤충 가운데 최초로 유전체 초안이 해독</b>된 동물이에요(중국·일본 공동 연구).
+          이후 2008년 염색체 수준, 2019년 고품질, 2024년에는 빈틈없는 <b>완전체(T2T) 유전체</b>까지 완성되며,
+          나비목을 대표하는 <b>모델 곤충</b>으로 자리 잡았습니다. 작지만 유전학·발생학 연구의 든든한 주인공이죠.
+        </p>
+      </div>
+    </section>
+
+    <!-- 연구 분야 -->
+    <section class="reveal">
+      <div class="border-b border-gray-200 pb-4 mb-6">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Research</span>
+        <h2 class="text-2xl font-bold text-gray-900 mt-1">누에로 어떤 연구를 할까?</h2>
+        <p class="text-gray-500 text-sm mt-1">실 한 가닥에서 시작해, 지금은 의학·유전학·화학까지 닿아 있어요.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-3">
+          <span class="text-xl">🧵</span>
+          <div><h3 class="font-bold text-gray-900 text-sm">실크 단백질 · 생체재료</h3>
+          <p class="text-gray-600 text-sm mt-1 leading-relaxed">고치를 이루는 단백질(피브로인·세리신)은 몸에 잘 맞아 수술용 실, 약물 전달, 인공 조직 같은 의료용 소재로 연구됩니다.</p></div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-3">
+          <span class="text-xl">🧬</span>
+          <div><h3 class="font-bold text-gray-900 text-sm">단백질 공장 (형질전환)</h3>
+          <p class="text-gray-600 text-sm mt-1 leading-relaxed">유전자를 넣어 약용 단백질이나 심지어 거미줄 단백질을 누에가 대신 만들게 하는 연구가 이뤄져요. 누에 = 살아있는 생산 공장.</p></div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-3">
+          <span class="text-xl">🔬</span>
+          <div><h3 class="font-bold text-gray-900 text-sm">나비목 모델 곤충</h3>
+          <p class="text-gray-600 text-sm mt-1 leading-relaxed">농작물 해충 다수가 나비목이라, 키우기 쉬운 누에가 그들을 이해하는 유전학·발생학의 표준 모델로 쓰입니다.</p></div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-3">
+          <span class="text-xl">👃</span>
+          <div><h3 class="font-bold text-gray-900 text-sm">페로몬 · 후각</h3>
+          <p class="text-gray-600 text-sm mt-1 leading-relaxed">암컷이 내는 냄새 분자 '봄비콜'과 수컷이 그것을 맡는 수용체(BmOR-1) 연구는 곤충의 화학적 소통을 밝히는 출발점이 됐어요.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 더 알고 싶다면 (유튜브) -->
+    <section class="reveal">
+      <div class="bg-gradient-to-br from-rose-50 to-white rounded-3xl border border-rose-100 shadow-sm p-8 text-center">
+        <div class="text-3xl mb-2">📺</div>
+        <h2 class="text-xl font-bold text-gray-900">누에에 대한 정보를 더 알고 싶다면?</h2>
+        <p class="text-gray-600 text-sm mt-2">누에 사육과 이야기를 다루는 <b>이주한누에연구소</b> 유튜브 채널에서 더 생생하게 만나보세요.</p>
+        <!-- ▼ 실제 채널 주소로 교체하세요. (예: https://www.youtube.com/@채널핸들) ▼ -->
+        <a
+          href="https://www.youtube.com/results?search_query=이주한누에연구소"
+          target="_blank" rel="noopener"
+          class="inline-flex items-center justify-center gap-2 bg-red-600 text-white rounded-full px-7 py-3 text-sm font-semibold hover:bg-red-700 transition mt-5"
+        >
+          ▶ 이주한누에연구소 유튜브 채널 바로가기
+        </a>
+        <p class="text-[11px] text-gray-400 mt-3">※ 현재는 검색 링크로 임시 연결돼 있어요. 정확한 채널 주소(예: youtube.com/@핸들)를 알려주시면 바로 연결해 드릴게요.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="reveal">
+      <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 text-center">
+        <h2 class="text-xl font-bold text-gray-900">이제 직접 맞혀볼까요? 🐛</h2>
+        <p class="text-gray-600 text-sm mt-2">고치만 보고 암수를 추측하는 누에 고치 성별 맞추기 대회에 참여해 보세요.</p>
+        <div class="flex flex-wrap justify-center gap-3 mt-5">
+          <a href="/silkworm/4th_submit.html" class="inline-flex items-center justify-center bg-blue-600 text-white rounded-full px-7 py-3 text-sm font-semibold hover:bg-blue-700 transition">제4회 참가하기</a>
+          <a href="/silkworm/silkworm_index.html" class="inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 rounded-full px-7 py-3 text-sm font-semibold hover:bg-gray-100 transition">이벤트 페이지로</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-auto">
+    <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+      <p>&copy; 2026 Ri Han. All rights reserved.</p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="https://github.com/rihan-cadd" target="_blank" class="hover:text-blue-600 transition-colors">GitHub</a>
+        <a href="https://www.linkedin.com/in/ri-han/" target="_blank" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+        <a href="https://orcid.org/0000-0001-7266-7996" target="_blank" class="hover:text-blue-600 transition-colors">ORCID</a>
+        <a href="https://scholar.google.com/citations?user=bFx3EOIAAAAJ" target="_blank" class="hover:text-blue-600 transition-colors">Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
