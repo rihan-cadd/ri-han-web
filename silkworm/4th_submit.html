@@ -23,13 +23,13 @@
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:#f9fafb;color:var(--ink);font:16px/1.6 "Inter","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    .wrap{max-width:1024px;margin:0 auto;padding:24px}
     header.nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--muted);box-shadow:0 1px 2px rgba(0,0,0,.04);z-index:50}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 24px}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1024px;margin:0 auto;padding:0 24px}
     .brand{display:flex;align-items:center;text-decoration:none;color:#111827}
-    .brand strong{font-weight:800;font-size:20px;letter-spacing:-.01em}
+    .brand strong{font-weight:700;font-size:20px;letter-spacing:-.025em}
     .nav-links{display:flex;align-items:center;gap:24px}
-    .nav-link{font-size:15px;color:#6b7280;text-decoration:none;transition:color .2s}
+    .nav-link{font-size:16px;color:#6b7280;text-decoration:none;transition:color .2s}
     .nav-link:hover{color:#2563eb}
     .nav-link.active{color:#2563eb;font-weight:600}
     /* 푸터 (silkworm 동일) */
@@ -50,11 +50,9 @@
     .btn.lg{font-size:16px; padding:10px 18px; min-height:42px; min-width:140px}
     @media (min-width:768px){ .btn.lg{font-size:17px; padding:12px 22px; min-width:180px} }
 
-    .hero{margin:20px auto 14px;border-radius:24px;background:
-      radial-gradient(1200px 600px at 10% -10%, #f3f4f6, transparent 60%),
-      radial-gradient(1200px 600px at 110% 10%, #eef2f7, transparent 60%),
-      var(--paper);box-shadow:var(--shadow)}
-    .hero-grid{display:grid;grid-template-columns:1fr;gap:12px;padding:24px}
+    .hero{margin:4px auto 14px;border-radius:24px;background:var(--paper);border:1px solid #eef0f3;box-shadow:var(--shadow)}
+    .hero-grid{display:grid;grid-template-columns:1fr;gap:12px;padding:32px 24px}
+    .hero .eyebrow{display:inline-block;font-size:12px;font-weight:800;color:#2563eb;text-transform:uppercase;letter-spacing:.14em;background:#eff6ff;padding:5px 12px;border-radius:999px}
     .hero h1{margin:0;font-size:clamp(22px,4vw,32px);letter-spacing:-.3px;line-height:1.15;text-align:center}
 
     .card{background:var(--paper);border:1px solid var(--muted);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
@@ -206,8 +204,10 @@
   </header>
 
   <main class="wrap">
+    <a href="/silkworm/silkworm_index.html" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;text-decoration:none;font-size:14px;margin:2px 0 10px">← 이벤트 페이지로</a>
     <section class="hero">
       <div class="hero-grid">
+        <div style="text-align:center"><span class="eyebrow">Submit · 제 4회</span></div>
         <h1>제 4회 대회 참가 제출지</h1>
         <div class="welcome" style="margin:8px 0 0; font-size:15px; color:#111827; text-align:center">
           <p style="margin:0"><strong>한리의 누에 고치 성별 맞추기 대회</strong>에 오신 것을 환영합니다! 🎉🐛</p>
