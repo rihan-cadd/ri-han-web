@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    body { font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+    body { font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; word-break: keep-all; overflow-wrap: break-word; }
     .nav-link { transition: all 0.2s; }
     .nav-link.active { color: #2563eb; font-weight: 600; }
     .reveal { animation: fadeIn 0.5s ease-in-out both; }
@@ -47,7 +47,7 @@
       <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12">
         <span class="inline-block text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full mb-4">About Silkworm</span>
         <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">🐛 누에 이야기</h1>
-        <p class="text-gray-700 leading-relaxed max-w-3xl">
+        <p class="text-gray-700 leading-relaxed text-justify break-keep">
           누에(<i>Bombyx mori</i>)는 뽕잎을 먹고 자라 명주실로 고치를 짓는 누에나방의 애벌레입니다.
           수천 년 동안 비단을 얻기 위해 길러져 온, <b>사람 손에서만 살아가는 가축화된 곤충</b>이에요.
           야생에서는 스스로 살아남지 못하고, 다 자란 나방조차 날지 못합니다. 그만큼 오래도록 사람과 함께해 온 작은 생명이죠.
@@ -299,6 +299,11 @@
           <div class="text-2xl mb-2">🤐</div>
           <h3 class="font-bold text-gray-900 text-sm">나방은 평생 먹지 않는다</h3>
           <p class="text-gray-700 text-sm mt-1 leading-relaxed">누에나방은 <b>입이 퇴화</b>해 우화 후 아무것도 먹지 않아요. 애벌레 때 모은 양분만으로 짝짓기와 산란(암컷은 알 약 500~600개)을 마치고 1~2주 안에 생을 다합니다.</p>
+        </div>
+        <div class="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+          <div class="text-2xl mb-2">📈</div>
+          <h3 class="font-bold text-gray-900 text-sm">한 달 만에 몸무게 1만 배</h3>
+          <p class="text-gray-700 text-sm mt-1 leading-relaxed">알에서 깬 작은 개미누에는 5령이 될 때까지 약 한 달 동안 몸무게가 <b>8천~1만 배가량</b> 불어나요. 짧은 시간에 폭발적으로 자라는 셈이죠.</p>
         </div>
       </div>
     </section>
