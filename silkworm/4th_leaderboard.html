@@ -21,8 +21,21 @@
     tbody tr:last-child td { border-bottom:0; }
     .col-date { width:160px; color:#475569; white-space:nowrap; font-variant-numeric:tabular-nums; }
     .col-name { font-weight:700; white-space:nowrap; }
-    .answers { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 4px; width: 100%; }
-    @media (min-width: 768px) {.answers { grid-template-columns: repeat(22, minmax(0, 1fr)); }}
+/* 모바일: 11칸씩 2줄로 고정하고 옆으로 슬라이드 */
+    .answers { 
+      display: grid; 
+      /* 각 칸의 너비를 28px로 고정하여 절대 찌그러지지 않게 함 */
+      grid-template-columns: repeat(11, 28px); 
+      gap: 4px; 
+      /* 내용물이 좁아지지 않고 표의 가로 스크롤(슬라이드)을 유도함 */
+      width: max-content; 
+    }
+    
+    /* PC/태블릿 (화면이 넓을 때): 22칸 1줄로 표시 */
+    @media (min-width: 768px) {
+      .answers { grid-template-columns: repeat(22, 28px); }
+    }
+
     .chip { 
       position: relative; display: inline-flex; align-items: center; justify-content: center; 
       height: 24px; width: 100%; 
