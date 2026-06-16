@@ -661,6 +661,8 @@
       data.name       = $('#realname').value.trim();
       data.phone      = $('#phone').value.trim();
       data.phone_norm = onlyDigits($('#phone').value.trim());
+      data.phone_middle = data.phone_norm.slice(3, 7); // 가운데 4자리
+      data.phone_last   = data.phone_norm.slice(7, 11); // 끝 4자리
       data.submittedAt = new Date().toISOString();
 
       // 알림(선택)
