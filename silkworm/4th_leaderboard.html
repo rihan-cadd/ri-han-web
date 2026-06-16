@@ -21,7 +21,7 @@
     tbody tr:last-child td { border-bottom:0; }
     .col-date { width:160px; color:#475569; white-space:nowrap; font-variant-numeric:tabular-nums; }
     .col-name { font-weight:700; white-space:nowrap; }
-    .answers { display:grid; gap:4px; }
+    .answers { display: flex; flex-wrap: wrap; gap: 4px; }
     .chip { position:relative; display:inline-flex; align-items:center; justify-content:center; height:24px; min-width:24px;
       border-radius:6px; border:1px solid #e5e7eb; background:#f3f4f6; color:#374151; font-weight:700; font-size:12px; overflow:hidden; }
     .chip.f { color:#be123c; background:#fff1f2; border-color:#fecdd3; }
@@ -177,11 +177,6 @@
   let ROWS = [];
 
   function renderTable(rows){
-    const minW = Math.max(620, Q_TOTAL*32);
-    const dyn = document.createElement('style');
-    dyn.textContent = `.answers{grid-template-columns:repeat(${Q_TOTAL},1fr);min-width:${minW}px}`;
-    document.head.appendChild(dyn);
-
     if(!rows.length){
       $('#tableWrap').innerHTML = '<div class="p-6 text-center text-sm text-gray-400">아직 참여자가 없습니다.</div>';
       return;
