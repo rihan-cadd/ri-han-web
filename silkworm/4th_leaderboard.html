@@ -119,17 +119,10 @@
 <script type="module">
   /* =========================================================
      제4회 참여 명단 — 데이터 소스: Firebase Firestore
-     순위/정답표 없이 "참여 일자 · 닉네임 · 도파민 · 제출지"만 표시합니다.
-     제출지(4th_submit.html)와 동일한 'ri-han' 프로젝트 · '4th_event_users' 컬렉션 사용.
-     --------------------------------------------------------
-     읽는 제출 문서(4th_event_users/{docId})
-       {
-         nickname: "누에엥",
-         submittedAt: "2026-06-10T12:34:56.000Z",  // ISO 문자열
-         q1_gender: "F", q2_gender: "M", ... q22_gender: "F",
-         dopamine_pick: "q7"   // 없으면 ""
-       }
      ========================================================= */
+
+  // 👉 [핵심] 대회 종료 후 이 값을 true 로 바꾸면 정답과 도파민이 짠! 하고 공개됩니다.
+  const IS_PUBLIC = false; 
 
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyD9TrwN_6ReC4eKdDYshf9VgPAybvhUXw0",
@@ -142,7 +135,7 @@
   };
   const SUBMISSIONS_COLLECTION = "4th_event_users";
 
-  /* 고정 설정(제출지와 동일) */
+  /* 고정 설정 */
   const Q_TOTAL = 22;
   const GOLD  = new Set([5, 16]);
   const MIMIC = new Set([3, 9, 13, 18]);
@@ -173,8 +166,11 @@
   function chipFor(i1, ans, dopaPick){
     const idx=i1-1, c=CATS[idx], a=norm(ans?ans[idx]:'');
     let cls='unknown', label='?';
-    if(a){ label=a; cls = (a==='F')?'f':'m'; }
-    const dopa = (dopaPick===i1) ? ' dopa' : '';
+    
+    // IS_PUBLIC이 true일 때만 실제 정답 클래스(f, m) 적용, false면 무조건 '?' 유지
+    if(a && IS_PUBLIC){ label=a; cls = (a==='F')?'f':'m'; }
+    
+    const dopa = (IS_PUBLIC && dopaPick===i1) ? ' dopa' : '';
     return `<span class="chip ${cls}${dopa}" data-cat="${c}" data-qi="${idx}">${label}</span>`;
   }
 
@@ -194,14 +190,22 @@
     rows.forEach(p=>{
       let cells='';
       for(let i=1;i<=Q_TOTAL;i++) cells += chipFor(i, p.ans, p.dopaPick);
+      
       let dopaCell;
-      if(p.nick==='?') dopaCell = '<span class="text-gray-400">?</span>';
-      else if(p.dopaPick) dopaCell = `<span class="dopa-tag">🔥 ${p.dopaPick}번</span>`;
-      else dopaCell = '<span class="text-gray-300">—</span>';
-      body += `<tr data-nick="${(p.nick||'').toLowerCase()}"><td class="col-date">${fmtDate(p.date)}</td><td class="col-name">${p.nick}</td><td class="col-dopa">${dopaCell}</td><td><div class="answers">${cells}</div></td></tr>`;
+      if (!IS_PUBLIC) {
+        // 공개 전: 모두 '?' 로 표시
+        dopaCell = '<span class="text-gray-400 font-bold text-base">?</span>';
+      } else {
+        // 공개 후: 지정한 도파민 번호 표시
+        if(p.nick==='?') dopaCell = '<span class="text-gray-400">?</span>';
+        else if(p.dopaPick) dopaCell = `<span class="dopa-tag">🔥 ${p.dopaPick}번</span>`;
+        else dopaCell = '<span class="text-gray-300">—</span>';
+      }
+
+      body += `<tr data-nick="${(p.displayNick||'').toLowerCase()}"><td class="col-date">${fmtDate(p.date)}</td><td class="col-name">${p.displayNick}</td><td class="col-dopa text-center">${dopaCell}</td><td><div class="answers">${cells}</div></td></tr>`;
     });
     $('#tableWrap').innerHTML =
-      `<table><thead><tr><th class="col-date">참여 일자</th><th>닉네임</th><th class="col-dopa">🔥 도파민</th><th>제출지</th></tr></thead><tbody>${body}</tbody></table>`;
+      `<table><thead><tr><th class="col-date">참여 일자</th><th>닉네임</th><th class="col-dopa text-center">🔥 도파민</th><th>제출지</th></tr></thead><tbody>${body}</tbody></table>`;
 
     const card = $('#hovercard'), wrapEl = $('#tableWrap');
     wrapEl.addEventListener('mousemove', e=>{
@@ -227,7 +231,7 @@
   }
 
   function placeholderRows(n){
-    return Array.from({length:n}, ()=>({ date:null, nick:'?', ans:null, dopaPick:0 }));
+    return Array.from({length:n}, ()=>({ date:null, displayNick:'?', ans:null, dopaPick:0 }));
   }
 
   /* 닉네임 검색 */
@@ -255,15 +259,39 @@
       const db = getFirestore(app);
       const snap = await getDocs(collection(db, SUBMISSIONS_COLLECTION));
       ROWS = [];
+      
+      // 1. 데이터 먼저 불러오기
       snap.forEach(s=>{
         const d = s.data();
-        // 제출지는 q{i}_gender 로 저장 (구버전 q{i} 도 호환)
         const ans = Array.from({length:Q_TOTAL}, (_,k)=> norm(d['q'+(k+1)+'_gender'] ?? d['q'+(k+1)]));
         const dp = d.dopamine_pick ? parseInt(String(d.dopamine_pick).replace(/[^0-9]/g,''),10) : 0;
-        ROWS.push({ nick: d.nickname || '익명', date: d.submittedAt || d.createdAt || null, ans, dopaPick: dp||0 });
+        ROWS.push({ 
+          rawNick: d.nickname || '익명', 
+          phoneLast: d.phone_last || '', // 이전 단계에서 추가한 뒷자리 필드
+          date: d.submittedAt || d.createdAt || null, 
+          ans, 
+          dopaPick: dp||0 
+        });
       });
-      // 참여 일자 빠른 순(오래된 → 최신)
+
+      // 2. 닉네임 중복 횟수 카운트
+      const nickCounts = {};
+      ROWS.forEach(r => {
+        nickCounts[r.rawNick] = (nickCounts[r.rawNick] || 0) + 1;
+      });
+
+      // 3. 중복된 경우에만 뒤에 (전화번호 뒷자리) 붙여주기
+      ROWS.forEach(r => {
+        if (nickCounts[r.rawNick] > 1 && r.phoneLast) {
+          r.displayNick = `${r.rawNick} (${r.phoneLast})`;
+        } else {
+          r.displayNick = r.rawNick;
+        }
+      });
+
+      // 4. 참여 일자 빠른 순(오래된 → 최신) 정렬
       ROWS.sort((a,b)=> new Date(a.date||0) - new Date(b.date||0));
+      
       setStats(ROWS.length);
       renderTable(ROWS);
       $('#status-banner').style.display = 'none';
