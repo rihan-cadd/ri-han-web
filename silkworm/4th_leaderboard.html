@@ -31,11 +31,13 @@
       width: max-content; 
     }
     
-    /* PC/태블릿 (화면이 넓을 때): 22칸 1줄로 표시 */
+    /* PC/태블릿 (화면이 넓을 때): 스크롤 없이 창 크기에 맞춰 22칸 1줄로 꽉 채움 */
     @media (min-width: 768px) {
-      .answers { grid-template-columns: repeat(22, 28px); }
+      .answers { 
+        grid-template-columns: repeat(22, minmax(0, 1fr)); 
+        width: 100%; 
+      }
     }
-
     .chip { 
       position: relative; display: inline-flex; align-items: center; justify-content: center; 
       height: 24px; width: 100%; 
