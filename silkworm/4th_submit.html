@@ -118,6 +118,16 @@
     .notice-ok{color:#065f46}
     .notice-err{color:#b91c1c}
 
+    /* 제출 마감 상단 배너 */
+    .closed-banner{
+      margin:4px auto 14px; padding:20px 22px; border-radius:18px;
+      background:linear-gradient(135deg,#fff7ed,#ffedd5); border:1px solid #fdba74;
+      box-shadow:0 10px 30px rgba(234,88,12,.12); color:#7c2d12;
+      text-align:center; font-weight:800; line-height:1.55;
+      font-size:clamp(15px,2.8vw,19px); letter-spacing:-.2px;
+    }
+    @media (max-width:480px){ .closed-banner{ padding:16px 14px } }
+
     .actions{display:flex;gap:12px;justify-content:center;padding:16px}
     .agree{display:flex;gap:8px;align-items:flex-start;margin-top:10px}
     .hp{position:absolute;left:-9999px;top:-9999px}
@@ -418,6 +428,14 @@
     const DISABLED = new Set([]);   // 확인 불가로 제외할 문항 (보통 비움)
     const DOPAMINE_MAX = 1;         // 도파민 지정 가능 개수
 
+    /* ▼▼ 제출 잠금 — 이 값만 바꾸면 됩니다 ▼▼
+       true  : 제출 막힘(접수 마감) — 버튼 비활성 + 제출 시도 차단
+       false : 정상 접수
+    */
+    const SUBMISSIONS_CLOSED = true;
+    const CLOSED_MESSAGE     = '🦋 누에 나방이 우화를 시작하여 제출을 마감하겠습니다. 참여해 주셔서 감사합니다!';
+    /* ▲▲ 제출 잠금 끝 ▲▲ */
+
     const ITEMS = [
       { name:'01. 누구 물어본사람 어쩔누에 저쩔고치' }, { name:'02. 누전차단기' }, { name:'03. 누갈!' }, { name:'04. 누구나 가슴속에 뽕잎 세장쯤은 있잖아' },
       { name:'05. 누누누누누누누누누으르' }, { name:'06. 누키비키' }, { name:'07. 누나 차 뽑았다 널 데리러가' }, { name:'08. 누랑이' },
@@ -471,6 +489,33 @@
     (function(){
       const a = document.getElementById('channel-link');
       if(CHANNEL_URL){ a.href = CHANNEL_URL; } else { a.closest('.channel-box').style.display='none'; document.querySelector('.notify .or').style.display='none'; }
+    })();
+
+    /* 제출 잠금 표시 (SUBMISSIONS_CLOSED === true 일 때) */
+    (function(){
+      if(!SUBMISSIONS_CLOSED) return;
+
+      // 상단 마감 배너 (히어로 바로 위에 삽입)
+      const main = document.querySelector('main.wrap');
+      if(main){
+        const banner = document.createElement('div');
+        banner.className = 'closed-banner';
+        banner.setAttribute('role','status');
+        banner.textContent = CLOSED_MESSAGE;
+        const hero = main.querySelector('.hero');
+        if(hero) main.insertBefore(banner, hero); else main.prepend(banner);
+      }
+
+      const btn = document.getElementById('btn-submit');
+      if(btn){
+        btn.disabled = true;
+        btn.textContent = '제출 마감';
+        btn.setAttribute('aria-disabled','true');
+        btn.style.opacity = '.55';
+        btn.style.cursor = 'not-allowed';
+      }
+      const st = document.getElementById('status');
+      if(st){ st.innerHTML = `<span class="notice notice-err">${CLOSED_MESSAGE}</span>`; }
     })();
 
     /* 전화 포맷 */
@@ -695,6 +740,7 @@
     /* 제출 */
     $('#form').addEventListener('submit', async (e)=>{
       e.preventDefault();
+      if(SUBMISSIONS_CLOSED){ alert(CLOSED_MESSAGE); showStatusError(CLOSED_MESSAGE); return; }
       $('#status').textContent='';
       const {ok}=validateAllWithAlert();
       if(!ok) return;
