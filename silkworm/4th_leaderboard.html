@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ri Han | 참여 명단 · 제4회</title>
+  <title>Ri Han | 리더보드 · 제4회</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -12,53 +12,91 @@
     .nav-link.active { color: #2563eb; font-weight: 600; }
     .reveal { animation: fadeIn 0.5s ease-in-out both; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .table-wrap { overflow-x:auto; border:1px solid #e5e7eb; border-radius:14px; background:#fff; }
-    table { width:100%; border-collapse:separate; border-spacing:0; }
+
+    /* 표: 가로 스크롤 없이 한 줄에 들어오도록 (overflow 제거) */
+    .table-wrap { overflow:hidden; border:1px solid #e5e7eb; border-radius:14px; background:#fff; }
+    table { width:100%; border-collapse:separate; border-spacing:0; table-layout:auto; }
     thead th { position:sticky; top:0; background:#f8fafc; border-bottom:1px solid #e5e7eb;
-      text-align:left; padding:11px 14px; font-size:13px; font-weight:700; color:#475569; white-space:nowrap; }
-    tbody td { padding:11px 14px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+      text-align:left; padding:10px 12px; font-size:12.5px; font-weight:700; color:#475569; white-space:nowrap; }
+    tbody td { padding:9px 12px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
     tbody tr:hover { background:#fafafa; }
     tbody tr:last-child td { border-bottom:0; }
-    .col-date { width:160px; color:#475569; white-space:nowrap; font-variant-numeric:tabular-nums; }
-    .col-name { font-weight:700; white-space:nowrap; }
-.answers { 
-      display: grid; 
-      grid-template-columns: repeat(11, 28px); 
-      gap: 4px; 
-      width: max-content; 
+
+    /* 컬럼 폭: 순위·점수는 고정, 닉네임은 내용, 제출지가 남는 폭을 모두 차지 */
+    .col-rank  { width:52px; text-align:center; }
+    .col-score { width:66px; text-align:center; }
+    .col-name  { white-space:nowrap; }
+    .col-ans   { width:100%; }              /* 남은 가로폭 흡수 */
+
+    .nick-main{ display:flex; align-items:center; gap:6px; font-weight:700; max-width:170px; overflow:hidden; text-overflow:ellipsis; }
+    .nick-date{ display:block; color:#94a3b8; font-size:11px; margin-top:1px; font-variant-numeric:tabular-nums; }
+    .dopa-mini{ flex:0 0 auto; display:inline-flex; align-items:center; padding:1px 6px; border-radius:999px;
+      font-size:10px; font-weight:800; color:#c2410c; background:#fff7ed; border:1px solid #fed7aa; }
+
+    .medal{ font-size:20px; line-height:1; }
+    .rank-num{ font-weight:800; color:#64748b; font-size:15px; }
+    .score{ font-weight:800; font-size:15px; font-variant-numeric:tabular-nums; }
+    .score.pos{ color:#047857; } .score.neg{ color:#dc2626; } .score.zero{ color:#9ca3af; }
+
+    /* 제출지 칸: 22칸을 한 줄에, 화면 폭에 맞춰 칸이 늘었다 줄었다 (가로 스크롤 없음) */
+    .answers { display:grid; grid-template-columns:repeat(22, minmax(0,1fr)); gap:3px; width:100%; }
+    .chip {
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      width:100%; aspect-ratio:1/1; min-width:0;
+      border-radius:5px; border:1px solid #e5e7eb; background:#f3f4f6; color:#374151;
+      font-weight:700; font-size:clamp(8px, 1.35vw, 11px); line-height:1; overflow:hidden;
     }
-    
-    /* PC (화면 넓을 때): 22칸 1줄, 칸 크기 그대로 28px 유지 */
-    @media (min-width: 768px) {
-      .answers { grid-template-columns: repeat(22, 28px); }
-    }
-    .chip { 
-      position: relative; display: inline-flex; align-items: center; justify-content: center; 
-      height: 24px; width: 100%; 
-      border-radius: 6px; border: 1px solid #e5e7eb; background: #f3f4f6; color: #374151; font-weight: 700; font-size: 11px; overflow: hidden; 
-    }
-    .chip.f { color:#be123c; background:#fff1f2; border-color:#fecdd3; }
-    .chip.m { color:#1d4ed8; background:#eff6ff; border-color:#bfdbfe; }
-    .chip.unknown { color:#9ca3af; background:#f8fafc; border-color:#e5e7eb; }
+    .chip.right   { color:#047857; background:#ecfdf5; border-color:#a7f3d0; }   /* 정답 */
+    .chip.wrong   { color:#dc2626; background:#fef2f2; border-color:#fecaca; }   /* 오답 */
+    .chip.unknown { color:#9ca3af; background:#f8fafc; border-color:#e5e7eb; }   /* 미공개 */
+    .chip.dead    { color:#9ca3af; background:#f3f4f6; border-color:#e5e7eb; text-decoration:line-through; } /* 폐사 */
+
     /* 카테고리 모서리 삼각형 */
     .chip::after{ content:""; position:absolute; top:0; left:0; width:0; height:0;
-      border-top:9px solid transparent; border-left:9px solid transparent; }
-    .chip[data-cat="gold"]::after{ border-top-color:#f59e0b; border-left-color:#f59e0b; }
+      border-top:7px solid transparent; border-left:7px solid transparent; }
+    .chip[data-cat="gold"]::after { border-top-color:#f59e0b; border-left-color:#f59e0b; }
     .chip[data-cat="mimic"]::after{ border-top-color:#8b5cf6; border-left-color:#8b5cf6; }
-    .chip[data-cat="trap"]::after{ border-top-color:#b91c1c; border-left-color:#b91c1c; }
+    .chip[data-cat="trap"]::after { border-top-color:#b91c1c; border-left-color:#b91c1c; }
     .chip[data-cat="bonus"]::after{ border-top-color:#0ea5e9; border-left-color:#0ea5e9; }
     .chip[data-cat="normal"]::after{ display:none; }
+
+    /* 도파민(주황) / 클러치(앰버 링) 표식 */
     .chip.dopa{ box-shadow:0 0 0 2px #ea580c inset; }
     .chip.dopa::before{ content:""; position:absolute; right:0; bottom:0; width:0; height:0;
-      border-bottom:9px solid #ea580c; border-left:9px solid transparent; }
-    .col-dopa{ width:96px; white-space:nowrap; }
-    .dopa-tag{ display:inline-flex; align-items:center; gap:3px; padding:2px 9px; border-radius:999px;
-      font-size:12px; font-weight:800; color:#c2410c; background:#fff7ed; border:1px solid #fed7aa; }
+      border-bottom:7px solid #ea580c; border-left:7px solid transparent; }
+    .chip.clutch{ box-shadow:0 0 0 2px #d97706; }
+    .chip.dopa.clutch{ box-shadow:0 0 0 2px #ea580c inset, 0 0 0 2px #d97706; }
+
     .legend-dot{ width:10px;height:10px;border-radius:3px;display:inline-block }
+    .legend-chip{ width:16px;height:16px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;border:1px solid }
+    .legend-chip.right{ color:#047857; background:#ecfdf5; border-color:#a7f3d0; }
+    .legend-chip.wrong{ color:#dc2626; background:#fef2f2; border-color:#fecaca; }
+    .legend-chip.unknown{ color:#9ca3af; background:#f8fafc; border-color:#e5e7eb; }
+
     .hovercard{ position:fixed; z-index:1000; pointer-events:none; opacity:0; transform:translateY(6px);
       transition:opacity .12s ease, transform .12s ease; background:#111827; color:#fff; border-radius:8px;
       box-shadow:0 12px 28px rgba(2,6,23,.18); padding:7px 11px; font-size:13px; font-weight:600; white-space:nowrap; }
     .hovercard.show{ opacity:1; transform:translateY(0); }
+
+    /* 칸 클릭/탭 → 사진 모달 (고치 + 나방) */
+    .chip{ cursor:pointer; }
+    .photo-modal{ position:fixed; inset:0; background:rgba(17,24,39,.7); backdrop-filter:blur(3px);
+      display:none; align-items:center; justify-content:center; z-index:1100; padding:20px; }
+    .photo-modal.open{ display:flex; }
+    .photo-card{ position:relative; background:#fff; border-radius:18px; overflow:hidden;
+      width:100%; max-width:min(560px,94vw); box-shadow:0 24px 60px rgba(0,0,0,.35); }
+    .photo-close{ position:absolute; top:10px; right:10px; z-index:2; width:34px; height:34px; border-radius:999px;
+      border:0; background:rgba(255,255,255,.92); color:#374151; font-size:15px; font-weight:800; cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,.18); line-height:1; }
+    .photo-pair{ display:grid; grid-template-columns:1fr 1fr; gap:2px; background:#eef2f7; }
+    .photo-slot{ margin:0; background:#fff; display:flex; flex-direction:column; }
+    .photo-slot figcaption{ padding:8px 6px; text-align:center; font-weight:800; font-size:13px; color:#475569; }
+    .photo-imgwrap{ position:relative; width:100%; aspect-ratio:1/1; background:#f3f4f6;
+      display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .photo-imgwrap img{ width:100%; height:100%; object-fit:cover; display:block; -webkit-user-drag:none; user-select:none; }
+    .photo-noimg{ color:#cbd5e1; font-weight:800; font-size:46px; line-height:1; }
+    .photo-cap{ padding:13px 16px; text-align:center; font-weight:800; color:#111827; border-top:1px solid #f1f5f9; }
+    .photo-cap .pc-meta{ display:block; margin-top:3px; font-size:12px; font-weight:600; color:#6b7280; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
@@ -80,33 +118,42 @@
 
     <section class="reveal">
       <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10 text-center">
-        <span class="inline-block text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full mb-4">Participants</span>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">🐛 제4회 참여 명단</h1>
+        <span class="inline-block text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full mb-4">Leaderboard</span>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">🏆 제4회 리더보드</h1>
         <p class="text-gray-500 text-sm mt-2">누에 고치 성별 맞추기 대회 · 2026.06</p>
         <div id="stats" class="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-gray-600 mt-4"></div>
         <div id="status-banner" class="mt-5 inline-flex items-center gap-2 rounded-full bg-gray-100 text-gray-600 text-sm font-semibold px-4 py-2">
-          🔒 준비 중 — 접수가 시작되면 참여 명단이 표시됩니다.
+          🔒 우화 대기 중 — 우화가 시작되면 채점과 순위가 자동 반영됩니다.
         </div>
         <p class="text-xs text-gray-500 mt-4 max-w-xl mx-auto leading-relaxed">
-          참여 여부 확인용 명단입니다. <b>정답·순위는 대회 종료 후</b> 별도로 공개됩니다.
-          제출지 칸에 마우스를 올리면 문항·종류가 보이고, 각자 지정한 <span class="text-orange-500 font-bold">🔥 도파민</span> 고치는 별도 열과 주황 표식으로 표시됩니다.
+          🦋 <b>우화하여 성별이 확인된 고치만</b> 채점됩니다. 우화가 진행될수록 점수와 순위가 갱신돼요.
+          칸에 마우스를 올리면 문항·이름·종류·정답 여부가 보이고, <b>칸을 클릭(모바일은 탭)하면 고치와 나방 사진</b>을 볼 수 있어요.
+          각자 지정한 <span class="text-orange-500 font-bold">🔥 도파민</span> 고치는 닉네임 옆 배지와 주황 표식으로 표시됩니다.
         </p>
-        <div class="flex flex-wrap justify-center gap-3 mt-4 text-xs text-gray-500">
+        <div class="flex flex-wrap justify-center gap-x-3 gap-y-2 mt-4 text-xs text-gray-500">
+          <span class="inline-flex items-center gap-1.5"><span class="legend-chip right">F</span>정답</span>
+          <span class="inline-flex items-center gap-1.5"><span class="legend-chip wrong">M</span>오답</span>
+          <span class="inline-flex items-center gap-1.5"><span class="legend-chip unknown">?</span>미공개</span>
+          <span class="text-gray-300">|</span>
           <span class="inline-flex items-center gap-1.5"><span class="legend-dot" style="background:#f59e0b"></span>황금</span>
           <span class="inline-flex items-center gap-1.5"><span class="legend-dot" style="background:#8b5cf6"></span>미믹</span>
           <span class="inline-flex items-center gap-1.5"><span class="legend-dot" style="background:#b91c1c"></span>함정</span>
           <span class="inline-flex items-center gap-1.5"><span class="legend-dot" style="background:#0ea5e9"></span>보너스</span>
-          <span class="inline-flex items-center gap-1.5"><span class="chip f" style="height:16px;min-width:16px;font-size:10px">F</span>암</span>
-          <span class="inline-flex items-center gap-1.5"><span class="chip m" style="height:16px;min-width:16px;font-size:10px">M</span>수</span>
+          <span class="inline-flex items-center gap-1.5"><span class="legend-dot" style="background:#ea580c"></span>🔥도파민</span>
         </div>
+        <p class="text-[11px] text-gray-400 mt-3">칸 안의 글자는 참가자가 제출한 성별 · <b>F</b>=암컷, <b>M</b>=수컷</p>
       </div>
+    </section>
+
+    <section class="reveal" id="notice-sec" style="display:none">
+      <div id="notice" class="rounded-2xl border px-5 py-4 text-sm leading-relaxed"></div>
     </section>
 
     <section class="reveal">
       <div class="border-b border-gray-200 pb-4 mb-5 flex items-end justify-between gap-3">
         <div>
-          <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">List</span>
-          <h2 class="text-2xl font-bold text-gray-900 mt-1">참여 명단</h2>
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Ranking</span>
+          <h2 class="text-2xl font-bold text-gray-900 mt-1">순위표</h2>
         </div>
         <input id="search" type="text" placeholder="닉네임 검색…" class="hidden sm:block text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-100" />
       </div>
@@ -129,13 +176,81 @@
 
   <div id="hovercard" class="hovercard">—</div>
 
+  <!-- 누에 사진 모달 (칸 클릭/탭 시): 고치 + 내가 찍은 나방 -->
+  <div id="photo-modal" class="photo-modal" aria-hidden="true">
+    <div class="photo-card">
+      <button class="photo-close" id="photo-close" aria-label="닫기">✕</button>
+      <div class="photo-pair">
+        <figure class="photo-slot">
+          <div class="photo-imgwrap">
+            <img id="photo-img-cocoon" alt="" draggable="false" oncontextmenu="return false">
+            <div class="photo-noimg" id="noimg-cocoon" style="display:none">?</div>
+          </div>
+          <figcaption>🐛 고치</figcaption>
+        </figure>
+        <figure class="photo-slot">
+          <div class="photo-imgwrap">
+            <img id="photo-img-moth" alt="" draggable="false" oncontextmenu="return false">
+            <div class="photo-noimg" id="noimg-moth" style="display:none">?</div>
+          </div>
+          <figcaption>🦋 나방</figcaption>
+        </figure>
+      </div>
+      <div class="photo-cap" id="photo-cap"></div>
+    </div>
+  </div>
+
 <script type="module">
   /* =========================================================
-     제4회 참여 명단 — 데이터 소스: Firebase Firestore
+     제4회 리더보드 — 데이터 소스: Firebase Firestore
      ========================================================= */
 
-  // 👉 [핵심] 대회 종료 후 이 값을 true 로 바꾸면 정답과 도파민이 짠! 하고 공개됩니다.
-  const IS_PUBLIC = false; 
+  /* =========================================================
+     ▼▼▼ 채점 설정 — 여기만 수정하면 됩니다 ▼▼▼
+
+     [ANSWERS] 우화하여 성별이 확인된 고치만 입력하세요.
+       'F'    = 암컷
+       'M'    = 수컷
+       ''     = 아직 우화 안 함  → 채점 보류, '?'로 표시
+       'DEAD' = 폐사하여 성별 확인 불가 → 채점 제외
+       · 일반/특수(황금·미믹·함정)는 번호로 자동 구분되어 규칙대로 채점됩니다.
+       · 21·22(보너스/예비)는 평소엔 빈칸으로 두고, 1~20 중 고치가
+         폐사(DEAD)했을 때만 정답을 채워 '대체 채점'하세요. (최종 20개 유지)
+
+     [CLUTCH_Q] '가장 마지막에 우화한 고치' 번호 → 점수 2배.
+       대회가 끝나기 전(또는 미사용)에는 0 으로 두세요.
+     ========================================================= */
+  const ANSWERS = {
+    1:'',  2:'',  3:'',  4:'',  5:'',  6:'',  7:'',  8:'',  9:'',  10:'M',
+    11:'', 12:'M', 13:'', 14:'M', 15:'', 16:'', 17:'', 18:'', 19:'', 20:'',
+    21:'', 22:''     // 21·22 = 보너스(예비)
+  };
+  const CLUTCH_Q = 0;
+
+  /* [폐사 안내] 고치 안에서 우화하지 못한 고치 → 보너스로 대체.
+     고치가 죽으면 ANSWERS는 그대로 두고 아래에 한 줄만 추가하세요.
+     자동으로 ①폐사 처리(채점 제외) ②도파민 이동 ③상단 공지가 함께 반영됩니다.
+        { dead: 죽은번호, name: '이름', bonus: 대체보너스번호 }
+  */
+  const DEAD_NOTICE = [
+    { dead:2, name:'누전차단기', bonus:21 },
+    { dead:3, name:'누갈!',      bonus:22 }
+  ];
+  /* ▲▲▲ 채점 설정 끝 ▲▲▲ */
+
+  /* DEAD_NOTICE → 폐사 표시(채점 제외) + 도파민 이동 맵 자동 생성 */
+  const REPLACED = {};
+  DEAD_NOTICE.forEach(d => { ANSWERS[d.dead] = 'DEAD'; REPLACED[d.dead] = d.bonus; });
+
+  /* 점수 규칙 (제출 폼과 동일) */
+  const SCORE_RULE = {
+    normal: { ok:+1, no:0  },
+    gold:   { ok:+3, no:0  },
+    mimic:  { ok:+2, no:-2 },
+    trap:   { ok:0,  no:-3 },
+    bonus:  { ok:+1, no:0  }   // 폐사 대체 시: 일반과 동일 규칙(원하면 수정)
+  };
+  const DOPA_RULE = { ok:+3, no:-3 };   // 도파민 고치 (정답 +3 / 오답 −3)
 
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyD9TrwN_6ReC4eKdDYshf9VgPAybvhUXw0",
@@ -166,6 +281,35 @@
   const norm = v => (v==='F'||v==='M') ? v : '';
   const $ = s => document.querySelector(s);
 
+  /* 누에 이름·사진 (제출 데이터의 q{n}_name / q{n}_imageUrl 에서 채움) */
+  const NAMES  = Array(Q_TOTAL).fill('');
+  const IMAGES = Array(Q_TOTAL).fill('');
+  const cleanName = n => (n||'').replace(/^\s*\d+\s*[.\-_)]+\s*/,'').trim();   // "02. 누전차단기" → "누전차단기"
+  const HAS_HOVER = window.matchMedia('(hover: hover)').matches;
+
+  /* ===== 채점 헬퍼 ===== */
+  const isRevealed = q => { const a=ANSWERS[q]; return a==='F'||a==='M'; };
+  const isDead     = q => ANSWERS[q]==='DEAD';
+  function revealedCount(){ let n=0; for(let q=1;q<=Q_TOTAL;q++) if(isRevealed(q)) n++; return n; }
+
+  // 한 참가자의 한 문항 점수 (미공개/폐사면 null = 채점 안 함)
+  function scoreOne(person, q){
+    if(!isRevealed(q)) return null;
+    const correct = ANSWERS[q];
+    const guess   = person.ans[q-1];               // 'F'/'M'/''
+    const ok      = !!guess && guess === correct;
+    const isDopa  = person.dopaPick === q;         // 도파민은 일반 고치에만 지정됨
+    const rule    = isDopa ? DOPA_RULE : SCORE_RULE[catOf(q)];
+    let pts = ok ? rule.ok : rule.no;
+    if(q === CLUTCH_Q) pts *= 2;                    // 클러치 2배
+    return pts;
+  }
+  function totalScore(person){
+    let sum=0;
+    for(let q=1;q<=Q_TOTAL;q++){ const s=scoreOne(person,q); if(s!=null) sum+=s; }
+    return sum;
+  }
+
   function fmtDate(v){
     if(!v) return '?';
     try{
@@ -176,20 +320,40 @@
     }catch(_){ return String(v); }
   }
 
-  function chipFor(i1, ans, dopaPick){
-    const idx=i1-1, c=CATS[idx], a=norm(ans?ans[idx]:'');
-    let cls='unknown', label='?';
-    
-    // IS_PUBLIC이 true일 때만 실제 정답 클래스(f, m) 적용, false면 무조건 '?' 유지
-    if(a && IS_PUBLIC){ label=a; cls = (a==='F')?'f':'m'; }
-    
-    const dopa = (IS_PUBLIC && dopaPick===i1) ? ' dopa' : '';
-    return `<span class="chip ${cls}${dopa}" data-cat="${c}" data-qi="${idx}">${label}</span>`;
+  /* 칸(chip) 렌더 — 채점 상태 반영 */
+  function chipFor(person, q){
+    const idx = q-1, c = CATS[idx], guess = norm(person.ans[idx]);
+    const dopa   = (person.dopaPick === q) ? ' dopa' : '';
+    const clutch = (q === CLUTCH_Q)         ? ' clutch' : '';
+    const mark   = dopa + clutch;
+
+    if(isDead(q))
+      return `<span class="chip dead${mark}" data-cat="${c}" data-qi="${idx}">✕</span>`;
+    if(!isRevealed(q))
+      return `<span class="chip unknown${mark}" data-cat="${c}" data-qi="${idx}">?</span>`;
+
+    const ok    = !!guess && guess === ANSWERS[q];
+    const cls   = ok ? 'right' : 'wrong';
+    const label = guess || '–';
+    return `<span class="chip ${cls}${mark}" data-cat="${c}" data-qi="${idx}" data-ok="${ok?1:0}">${label}</span>`;
+  }
+
+  function rankBadge(r){
+    if(r==null) return '<span class="text-gray-300">–</span>';
+    if(r===1) return '<span class="medal">🥇</span>';
+    if(r===2) return '<span class="medal">🥈</span>';
+    if(r===3) return '<span class="medal">🥉</span>';
+    return `<span class="rank-num">${r}</span>`;
+  }
+  function scoreBadge(s){
+    const cls = s>0 ? 'pos' : s<0 ? 'neg' : 'zero';
+    const sign = s>0 ? '+' : '';
+    return `<span class="score ${cls}">${sign}${s}</span>`;
   }
 
   let ROWS = [];
 
-  function renderTable(rows){
+  function renderTable(rows, scoring){
     if(!rows.length){
       $('#tableWrap').innerHTML = '<div class="p-6 text-center text-sm text-gray-400">아직 참여자가 없습니다.</div>';
       return;
@@ -197,66 +361,180 @@
     let body='';
     rows.forEach(p=>{
       let cells='';
-      for(let i=1;i<=Q_TOTAL;i++) cells += chipFor(i, p.ans, p.dopaPick);
-      
-      let dopaCell;
-      if (!IS_PUBLIC) {
-        // 공개 전: 모두 '?' 로 표시
-        dopaCell = '<span class="text-gray-400 font-bold text-base">?</span>';
-      } else {
-        // 공개 후: 지정한 도파민 번호 표시
-        if(p.nick==='?') dopaCell = '<span class="text-gray-400">?</span>';
-        else if(p.dopaPick) dopaCell = `<span class="dopa-tag">🔥 ${p.dopaPick}번</span>`;
-        else dopaCell = '<span class="text-gray-300">—</span>';
-      }
+      for(let q=1;q<=Q_TOTAL;q++) cells += chipFor(p, q);
 
-      body += `<tr data-nick="${(p.displayNick||'').toLowerCase()}"><td class="col-date">${fmtDate(p.date)}</td><td class="col-name">${p.displayNick}</td><td class="col-dopa text-center">${dopaCell}</td><td><div class="answers">${cells}</div></td></tr>`;
+      const rankCell  = scoring ? rankBadge(p.rank)  : '<span class="text-gray-300">–</span>';
+      const scoreCell = scoring ? scoreBadge(p.score): '<span class="text-gray-300 text-sm font-semibold">대기</span>';
+      const dopaBadge = p.dopaPick ? `<span class="dopa-mini">🔥${p.dopaPick}</span>` : '';
+
+      body += `<tr data-nick="${(p.displayNick||'').toLowerCase()}">`
+            +   `<td class="col-rank">${rankCell}</td>`
+            +   `<td class="col-name"><div class="nick-main">${p.displayNick}${dopaBadge}</div><span class="nick-date">${fmtDate(p.date)}</span></td>`
+            +   `<td class="col-score">${scoreCell}</td>`
+            +   `<td class="col-ans"><div class="answers">${cells}</div></td>`
+            + `</tr>`;
     });
     $('#tableWrap').innerHTML =
-      `<table><thead><tr><th class="col-date">참여 일자</th><th>닉네임</th><th class="col-dopa text-center">🔥 도파민</th><th>제출지</th></tr></thead><tbody>${body}</tbody></table>`;
-
-    const card = $('#hovercard'), wrapEl = $('#tableWrap');
-    wrapEl.addEventListener('mousemove', e=>{
-      const chip = e.target.closest('.chip[data-qi]');
-      if(!chip){ card.classList.remove('show'); return; }
-      const i = +chip.dataset.qi;
-      const label = BONUS.has(i+1) ? `보너스 ${i+1}` : `문항 ${i+1}`;
-      const dp = chip.classList.contains('dopa') ? ' · 🔥도파민' : '';
-      card.textContent = `${label} · ${catKor[CATS[i]]}${dp}`;
-      const pad=14, vw=innerWidth, vh=innerHeight;
-      card.style.left=(e.clientX+pad)+'px'; card.style.top=(e.clientY+pad)+'px'; card.classList.add('show');
-      requestAnimationFrame(()=>{ const rc=card.getBoundingClientRect(); let l=rc.left,t=rc.top;
-        if(rc.right>vw-8) l=e.clientX-rc.width-pad; if(rc.bottom>vh-8) t=e.clientY-rc.height-pad;
-        card.style.left=Math.max(8,l)+'px'; card.style.top=Math.max(8,t)+'px'; });
-    });
-    wrapEl.addEventListener('mouseleave', ()=>card.classList.remove('show'));
+      `<table><thead><tr>`
+      + `<th class="col-rank">순위</th>`
+      + `<th>닉네임</th>`
+      + `<th class="col-score">점수</th>`
+      + `<th class="col-ans">제출지</th>`
+      + `</tr></thead><tbody>${body}</tbody></table>`;
   }
 
-  function setStats(n){
+  function setStats(n, revealed){
     $('#stats').innerHTML =
       `<span>참여 <b class="text-gray-900">${n==null?'?':n}</b>명</span>` +
-      `<span>누에 <b class="text-gray-900">${Q_TOTAL}</b>마리</span>`;
+      `<span>누에 <b class="text-gray-900">${Q_TOTAL}</b>마리</span>` +
+      `<span>채점 반영 <b class="text-gray-900">${revealed==null?'?':revealed}</b>개</span>`;
+  }
+
+  function setBanner(revealed){
+    const el = $('#status-banner');
+    if(revealed > 0){
+      el.className = 'mt-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 text-sm font-semibold px-4 py-2';
+      el.textContent = `🦋 우화 진행 중 — 현재 ${revealed}개 고치 채점 반영 (우화할수록 순위가 바뀝니다)`;
+    } else {
+      el.className = 'mt-5 inline-flex items-center gap-2 rounded-full bg-gray-100 text-gray-600 text-sm font-semibold px-4 py-2';
+      el.textContent = '🔒 우화 대기 중 — 우화가 시작되면 채점과 순위가 자동 반영됩니다.';
+    }
   }
 
   function placeholderRows(n){
-    return Array.from({length:n}, ()=>({ date:null, displayNick:'?', ans:null, dopaPick:0 }));
+    return Array.from({length:n}, ()=>({ date:null, displayNick:'?', ans:Array(Q_TOTAL).fill(''), dopaPick:0, score:0, rank:null }));
   }
+
+  /* 점수 계산 + 순위 부여 */
+  function rankRows(rows){
+    const scoring = revealedCount() > 0;
+    rows.forEach(r => r.score = totalScore(r));
+    if(scoring){
+      // 점수 내림차순 · 동점은 먼저 제출한 사람을 위로(표시는 공동 순위)
+      rows.sort((a,b)=> b.score - a.score || (new Date(a.date||0) - new Date(b.date||0)));
+      let lastScore=null, lastRank=0;
+      rows.forEach((r,i)=>{
+        if(r.score !== lastScore){ lastRank=i+1; lastScore=r.score; }
+        r.rank = lastRank;
+      });
+    } else {
+      // 채점 전: 참여 일자 빠른 순, 순위 없음
+      rows.sort((a,b)=> (new Date(a.date||0) - new Date(b.date||0)));
+      rows.forEach(r => r.rank = null);
+    }
+    return scoring;
+  }
+
+  /* ===== 누에 사진 모달 (고치 + 나방) ===== */
+  const pModal = $('#photo-modal'), pCap = $('#photo-cap');
+  const pImgC = $('#photo-img-cocoon'), pNoC = $('#noimg-cocoon');   // 고치
+  const pImgM = $('#photo-img-moth'),   pNoM = $('#noimg-moth');     // 나방
+  const MOTH_SUFFIX = '_' + encodeURIComponent('나방');               // _%EB%82%98%EB%B0%A9
+  // 고치 URL의 확장자 앞에 _나방 삽입:  03_누갈!.jpg → 03_누갈!_나방.jpg
+  const toMoth = u => u ? u.replace(/(\.[^./?#]+)$/, MOTH_SUFFIX + '$1') : '';
+
+  function showSlot(imgEl, noEl, url, alt){
+    if(url){
+      noEl.style.display = 'none';
+      imgEl.style.display = '';
+      imgEl.onerror = ()=>{ imgEl.style.display='none'; imgEl.removeAttribute('src'); noEl.style.display=''; }; // 파일 없으면 ?
+      imgEl.alt = alt; imgEl.src = url;
+    } else {
+      imgEl.style.display='none'; imgEl.removeAttribute('src');
+      noEl.style.display='';      // ?
+    }
+  }
+  function openPhoto(idx){
+    const q = idx+1;
+    const nm = cleanName(NAMES[idx]) || `문항 ${q}`;
+    const cocoon = IMAGES[idx] || '';
+    const meta = `${BONUS.has(q)?'보너스':'문항'} ${q} · ${catKor[CATS[idx]]}`;
+    pCap.innerHTML = `${nm}<span class="pc-meta">${meta}</span>`;
+    showSlot(pImgC, pNoC, cocoon,         `${nm} 고치`);
+    showSlot(pImgM, pNoM, toMoth(cocoon), `${nm} 나방`);   // 나방 사진 없으면 ?
+    pModal.classList.add('open'); pModal.setAttribute('aria-hidden','false');
+  }
+  function closePhoto(){
+    pModal.classList.remove('open'); pModal.setAttribute('aria-hidden','true');
+    pImgC.removeAttribute('src'); pImgM.removeAttribute('src');
+  }
+  $('#photo-close').addEventListener('click', closePhoto);
+  pModal.addEventListener('click', e=>{ if(e.target === pModal) closePhoto(); });   // 바깥 탭 시 닫기
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closePhoto(); });
+
+  /* ===== 칸 상호작용 (한 번만 등록) =====
+     · 마우스 환경: 올리면 이름·종류·정답여부 툴팁
+     · 클릭/탭(모바일 포함): 누에 사진 모달 */
+  function setupChipInteractions(){
+    const wrapEl = $('#tableWrap'), card = $('#hovercard');
+
+    if(HAS_HOVER){
+      wrapEl.addEventListener('mousemove', e=>{
+        const chip = e.target.closest('.chip[data-qi]');
+        if(!chip){ card.classList.remove('show'); return; }
+        const i = +chip.dataset.qi, q = i+1;
+        const nm = cleanName(NAMES[i]);
+        let txt = `${BONUS.has(q)?'보너스':'문항'} ${q}`;
+        if(nm) txt += ` · ${nm}`;
+        txt += ` · ${catKor[CATS[i]]}`;
+        if(chip.classList.contains('dopa'))   txt += ' · 🔥도파민';
+        if(chip.classList.contains('clutch')) txt += ' · ⚡클러치(2배)';
+        if(isDead(q))          txt += ' · 폐사(채점 제외)';
+        else if(isRevealed(q)){
+          txt += ` · 정답 ${ANSWERS[q]==='F'?'암':'수'}`;
+          txt += (chip.dataset.ok==='1') ? ' · 정답 ✓' : ' · 오답 ✗';
+        } else txt += ' · 미공개';
+        card.textContent = txt;
+        const pad=14, vw=innerWidth, vh=innerHeight;
+        card.style.left=(e.clientX+pad)+'px'; card.style.top=(e.clientY+pad)+'px'; card.classList.add('show');
+        requestAnimationFrame(()=>{ const rc=card.getBoundingClientRect(); let l=rc.left,t=rc.top;
+          if(rc.right>vw-8) l=e.clientX-rc.width-pad; if(rc.bottom>vh-8) t=e.clientY-rc.height-pad;
+          card.style.left=Math.max(8,l)+'px'; card.style.top=Math.max(8,t)+'px'; });
+      });
+      wrapEl.addEventListener('mouseleave', ()=>card.classList.remove('show'));
+    }
+
+    wrapEl.addEventListener('click', e=>{
+      const chip = e.target.closest('.chip[data-qi]');
+      if(!chip) return;
+      openPhoto(+chip.dataset.qi);
+    });
+  }
+  setupChipInteractions();
 
   /* 닉네임 검색 */
   const search = document.getElementById('search');
   if(search){
     search.addEventListener('input', ()=>{
-      const q = search.value.trim().toLowerCase();
+      const qy = search.value.trim().toLowerCase();
       document.querySelectorAll('#tableWrap tbody tr').forEach(tr=>{
-        tr.style.display = !q || (tr.dataset.nick||'').includes(q) ? '' : 'none';
+        tr.style.display = !qy || (tr.dataset.nick||'').includes(qy) ? '' : 'none';
       });
     });
   }
 
+  /* 상단 공지 (폐사/대체 안내) */
+  function renderNotice(){
+    const sec = document.getElementById('notice-sec');
+    const box = document.getElementById('notice');
+    if(!DEAD_NOTICE.length){ sec.style.display='none'; return; }
+    const deadList = DEAD_NOTICE.map(d=>`<b>${d.dead}번 ‘${d.name}’</b>`).join(', ');
+    const mapList  = DEAD_NOTICE.map(d=>`${d.dead}번 → <b>${d.bonus}번</b>`).join(', ');
+    box.className = 'rounded-2xl border border-amber-200 bg-amber-50 text-amber-900 px-5 py-4 text-sm leading-relaxed';
+    box.innerHTML =
+      `📢 <b>폐사 안내</b><br>` +
+      `사육 중 ${deadList}이(가) 고치 안에서 우화하지 못했습니다. ` +
+      `규칙에 따라 보너스 고치로 대체 채점됩니다 — ${mapList}.<br>` +
+      `해당 고치를 <span class="text-orange-600 font-bold">🔥 도파민</span>으로 지정하신 분은 자동으로 대체 번호로 이동되어 채점됩니다.`;
+    sec.style.display = '';
+  }
+
   async function main(){
+    renderNotice();
     if (!FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey.startsWith('PASTE')){
-      setStats(null);
-      renderTable(placeholderRows(6));
+      setStats(null, revealedCount());
+      setBanner(revealedCount());
+      renderTable(placeholderRows(6), false);
       return;
     }
     try{
@@ -267,47 +545,52 @@
       const db = getFirestore(app);
       const snap = await getDocs(collection(db, SUBMISSIONS_COLLECTION));
       ROWS = [];
-      
-      // 1. 데이터 먼저 불러오기
+
+      // 1. 데이터 불러오기
       snap.forEach(s=>{
         const d = s.data();
         const ans = Array.from({length:Q_TOTAL}, (_,k)=> norm(d['q'+(k+1)+'_gender'] ?? d['q'+(k+1)]));
-        const dp = d.dopamine_pick ? parseInt(String(d.dopamine_pick).replace(/[^0-9]/g,''),10) : 0;
-        ROWS.push({ 
-          rawNick: d.nickname || '익명', 
-          phoneLast: d.phone_last || '', // 이전 단계에서 추가한 뒷자리 필드
-          date: d.submittedAt || d.createdAt || null, 
-          ans, 
-          dopaPick: dp||0 
+        let dp = d.dopamine_pick ? parseInt(String(d.dopamine_pick).replace(/[^0-9]/g,''),10) : 0;
+        if (REPLACED[dp]) dp = REPLACED[dp];   // 폐사로 대체된 고치면 도파민을 대체 번호로 이동
+        ROWS.push({
+          rawNick: d.nickname || '익명',
+          phoneLast: d.phone_last || '',
+          date: d.submittedAt || d.createdAt || null,
+          ans,
+          dopaPick: dp||0
         });
-      });
 
-      // 2. 닉네임 중복 횟수 카운트
-      const nickCounts = {};
-      ROWS.forEach(r => {
-        nickCounts[r.rawNick] = (nickCounts[r.rawNick] || 0) + 1;
-      });
-
-      // 3. 중복된 경우에만 뒤에 (전화번호 뒷자리) 붙여주기
-      ROWS.forEach(r => {
-        if (nickCounts[r.rawNick] > 1 && r.phoneLast) {
-          r.displayNick = `${r.rawNick} (${r.phoneLast})`;
-        } else {
-          r.displayNick = r.rawNick;
+        // 누에 이름·사진 채우기 (모든 참가자 동일 값 → 처음 발견되는 값 사용)
+        for(let k=1;k<=Q_TOTAL;k++){
+          if(!NAMES[k-1]  && d['q'+k+'_name'])     NAMES[k-1]  = d['q'+k+'_name'];
+          if(!IMAGES[k-1] && d['q'+k+'_imageUrl']) IMAGES[k-1] = d['q'+k+'_imageUrl'];
         }
       });
 
-      // 4. 참여 일자 빠른 순(오래된 → 최신) 정렬
-      ROWS.sort((a,b)=> new Date(a.date||0) - new Date(b.date||0));
-      
-      setStats(ROWS.length);
-      renderTable(ROWS);
-      $('#status-banner').style.display = 'none';
+      // 2. 닉네임 중복 카운트
+      const nickCounts = {};
+      ROWS.forEach(r => { nickCounts[r.rawNick] = (nickCounts[r.rawNick] || 0) + 1; });
+
+      // 3. 중복일 때만 (전화 뒷자리) 붙이기
+      ROWS.forEach(r => {
+        r.displayNick = (nickCounts[r.rawNick] > 1 && r.phoneLast)
+          ? `${r.rawNick} (${r.phoneLast})`
+          : r.rawNick;
+      });
+
+      // 4. 채점 + 순위
+      const scoring = rankRows(ROWS);
+
+      const revealed = revealedCount();
+      setStats(ROWS.length, revealed);
+      setBanner(revealed);
+      renderTable(ROWS, scoring);
     }catch(err){
       console.error(err);
+      $('#status-banner').className = 'mt-5 inline-flex items-center gap-2 rounded-full bg-red-50 text-red-600 text-sm font-semibold px-4 py-2';
       $('#status-banner').textContent = '⚠️ 명단을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.';
-      setStats(null);
-      renderTable(placeholderRows(6));
+      setStats(null, revealedCount());
+      renderTable(placeholderRows(6), false);
     }
   }
   main();
