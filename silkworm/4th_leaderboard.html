@@ -410,12 +410,12 @@
     const scoring = revealedCount() > 0;
     rows.forEach(r => r.score = totalScore(r));
     if(scoring){
-      // 점수 내림차순 · 동점은 먼저 제출한 사람을 위로(표시는 공동 순위)
+      // 점수 내림차순 · 동점은 같은 순위(공동), 다음 순위는 건너뛰지 않고 연속 (예: 1, 2, 2, 3)
       rows.sort((a,b)=> b.score - a.score || (new Date(a.date||0) - new Date(b.date||0)));
-      let lastScore=null, lastRank=0;
-      rows.forEach((r,i)=>{
-        if(r.score !== lastScore){ lastRank=i+1; lastScore=r.score; }
-        r.rank = lastRank;
+      let lastScore=null, rank=0;
+      rows.forEach((r)=>{
+        if(r.score !== lastScore){ rank++; lastScore=r.score; }
+        r.rank = rank;
       });
     } else {
       // 채점 전: 참여 일자 빠른 순, 순위 없음
