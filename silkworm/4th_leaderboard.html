@@ -97,6 +97,31 @@
     .photo-noimg{ color:#cbd5e1; font-weight:800; font-size:46px; line-height:1; }
     .photo-cap{ padding:13px 16px; text-align:center; font-weight:800; color:#111827; border-top:1px solid #f1f5f9; }
     .photo-cap .pc-meta{ display:block; margin-top:3px; font-size:12px; font-weight:600; color:#6b7280; }
+
+    /* ===== 모바일: 채점표를 PC 크기로 보고 좌우 슬라이드(스와이프) ===== */
+    @media (max-width: 640px){
+      /* 칸을 폭에 맞춰 줄이지 말고 PC 크기로 고정 → 넘치는 만큼 가로 스크롤 */
+      .table-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+      .answers{ grid-template-columns:repeat(22, 28px); width:max-content; }
+      .chip{ font-size:12px; }
+
+      /* 폭 계산을 정확히 하려고 border-box + 좌우 패딩 축소 */
+      thead th, tbody td{ box-sizing:border-box; padding-left:6px; padding-right:6px; }
+
+      /* 왼쪽 3열(순위·닉네임·점수)을 고정 → 칸을 넘겨봐도 누구 줄인지 보임 */
+      .col-rank { width:44px;  position:sticky; left:0;    z-index:2; background:#fff; }
+      .col-name { width:128px; position:sticky; left:44px;  z-index:2; background:#fff; }
+      .col-score{ width:52px;  position:sticky; left:172px; z-index:2; background:#fff;
+                  border-right:1px solid #e5e7eb; }   /* 고정 영역 경계선 */
+      .col-ans  { width:auto; }
+      .nick-main{ max-width:108px; }
+
+      /* 고정 헤더(상단) + 고정 열(왼쪽)이 겹치는 셀은 더 위로 */
+      thead th.col-rank { left:0;    z-index:4; background:#f8fafc; }
+      thead th.col-name { left:44px;  z-index:4; background:#f8fafc; }
+      thead th.col-score{ left:172px; z-index:4; background:#f8fafc; border-right:1px solid #e5e7eb; }
+      thead th.col-ans  { z-index:3; }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
@@ -377,7 +402,7 @@
     $('#tableWrap').innerHTML =
       `<table><thead><tr>`
       + `<th class="col-rank">순위</th>`
-      + `<th>닉네임</th>`
+      + `<th class="col-name">닉네임</th>`
       + `<th class="col-score">점수</th>`
       + `<th class="col-ans">제출지</th>`
       + `</tr></thead><tbody>${body}</tbody></table>`;
