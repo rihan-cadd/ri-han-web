@@ -100,27 +100,32 @@
 
     /* ===== 모바일: 채점표를 PC 크기로 보고 좌우 슬라이드(스와이프) ===== */
     @media (max-width: 640px){
-      /* 칸을 폭에 맞춰 줄이지 말고 PC 크기로 고정 → 넘치는 만큼 가로 스크롤 */
-      .table-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+      /* 가로 스크롤(스와이프) 컨테이너 */
+      .table-wrap{ overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
+
+      /* 열 너비를 픽셀로 '정확히' 고정 → 고정열이 어긋나 칸이 비치는 현상 방지
+         (총합 = 44 + 132 + 54 + 700 = 930px) */
+      table{ table-layout:fixed; width:930px; }
+      thead th, tbody td{ box-sizing:border-box; padding-left:6px; padding-right:6px; }
+
+      /* 칸은 폭에 맞춰 줄이지 않고 PC 크기(28px)로 고정 */
       .answers{ grid-template-columns:repeat(22, 28px); width:max-content; }
       .chip{ font-size:12px; }
 
-      /* 폭 계산을 정확히 하려고 border-box + 좌우 패딩 축소 */
-      thead th, tbody td{ box-sizing:border-box; padding-left:6px; padding-right:6px; }
+      /* 왼쪽 3열(순위·닉네임·점수) 고정 */
+      .col-rank { width:44px;  position:sticky; left:0;    z-index:3; background:#fff; }
+      .col-name { width:132px; position:sticky; left:44px;  z-index:3; background:#fff; }
+      .col-score{ width:54px;  position:sticky; left:176px; z-index:3; background:#fff;
+                  border-right:1px solid #e5e7eb; }       /* 고정 영역 경계선 */
+      /* 제출지 칸은 고정열보다 '아래' 레이어로 격리 → 절대 위로 안 비침 */
+      .col-ans  { width:700px; position:relative; z-index:0; }
+      .nick-main{ max-width:112px; }
 
-      /* 왼쪽 3열(순위·닉네임·점수)을 고정 → 칸을 넘겨봐도 누구 줄인지 보임 */
-      .col-rank { width:44px;  position:sticky; left:0;    z-index:2; background:#fff; }
-      .col-name { width:128px; position:sticky; left:44px;  z-index:2; background:#fff; }
-      .col-score{ width:52px;  position:sticky; left:172px; z-index:2; background:#fff;
-                  border-right:1px solid #e5e7eb; }   /* 고정 영역 경계선 */
-      .col-ans  { width:auto; }
-      .nick-main{ max-width:108px; }
-
-      /* 고정 헤더(상단) + 고정 열(왼쪽)이 겹치는 셀은 더 위로 */
-      thead th.col-rank { left:0;    z-index:4; background:#f8fafc; }
-      thead th.col-name { left:44px;  z-index:4; background:#f8fafc; }
-      thead th.col-score{ left:172px; z-index:4; background:#f8fafc; border-right:1px solid #e5e7eb; }
-      thead th.col-ans  { z-index:3; }
+      /* 헤더의 고정열은 본문/스크롤 칸보다 더 위 레이어 */
+      thead th.col-rank { z-index:5; background:#f8fafc; }
+      thead th.col-name { z-index:5; background:#f8fafc; }
+      thead th.col-score{ z-index:5; background:#f8fafc; border-right:1px solid #e5e7eb; }
+      thead th.col-ans  { z-index:4; }
     }
   </style>
 </head>
