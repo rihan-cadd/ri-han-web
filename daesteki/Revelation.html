@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>◈◈ 大스테키敎 公式 성전 ◈◈ 계시말씀 ◈◈</title>
+<meta name="description" content="다이스를 굴려 대스테키님의 오늘의 계시를 받으십시오.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════
+   大스테키敎 公式 홈페이지 STYLE SHEET  ver 5.0
+   ★ 무단 복제를 금합니다. 성물은 대스테키님의 것입니다 ★
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --paper:#fbf6e4;
+  --wall:#ded3ae;
+  --line:#a89660;
+  --ink:#241f10;
+  --ink-soft:#5a5238;
+  --navy:#000080;
+  --gold:#ffcc00;
+  --gold-dark:#8a6a12;
+  --chrome:#d4d0c8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;padding:0;color:var(--ink);
+  background-color:var(--wall);
+  background-image:
+    radial-gradient(circle at 10px 10px, rgba(255,255,255,.55) 1.5px, transparent 2px),
+    radial-gradient(circle at 40px 34px, rgba(138,106,18,.18) 1.5px, transparent 2px),
+    linear-gradient(180deg,#e6dcbb,#d6caa2);
+  background-size:60px 60px,60px 60px,auto;
+  font-family:"굴림",Gulim,"돋움",Dotum,"Gowun Dodum",sans-serif;
+  font-size:13px;line-height:1.8;
+  -webkit-text-size-adjust:100%;
+}
+a{color:#0000cc}
+a:visited{color:#660099}
+a:hover{color:#cc0000}
+:focus-visible{outline:2px dotted #cc0000;outline-offset:2px}
+img{max-width:100%;height:auto}
+.myung{font-family:"궁서","궁서체",Gungsuh,GungsuhChe,"Song Myung",serif}
+.blink{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.blink{animation:none}}
+.page{max-width:840px;margin:0 auto;padding:8px}
+
+/* ── 창 껍데기 ── */
+.win{border:2px outset var(--chrome);background:var(--paper);margin-bottom:10px}
+.win>.bar{background:linear-gradient(90deg,var(--navy),#3a6ea5);color:#fff;font-weight:bold;
+  padding:2px 4px;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.win>.bar .btns b{display:inline-block;background:var(--chrome);color:#000;border:1px outset #fff;
+  width:16px;text-align:center;margin-left:2px;font-size:11px;line-height:14px}
+.win>.inner{padding:14px}
+
+/* ── 공지 팝업 ── */
+#popup{position:fixed;top:56px;left:50%;transform:translateX(-50%);width:min(430px,92vw);z-index:200;
+  box-shadow:6px 6px 0 rgba(60,45,10,.45)}
+#popup .inner{background:#fffdf2;font-size:13px}
+#popup .inner p{margin:0 0 8px}
+#popup .foot{background:var(--chrome);padding:5px 8px;display:flex;justify-content:space-between;
+  align-items:center;gap:8px;font-size:12px;border-top:1px solid #888;flex-wrap:wrap}
+#popup button{font-family:inherit;font-size:12px;border:2px outset #fff;background:var(--chrome);
+  padding:2px 12px;cursor:pointer}
+#popup button:active{border-style:inset}
+.pop-title{color:#cc0000;font-size:15px;font-weight:bold;display:block;margin-bottom:6px}
+
+/* ── 상단 배너 ── */
+.topbanner{border:3px ridge var(--gold-dark);background:linear-gradient(180deg,#101040,#000018);
+  padding:12px 14px 8px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.topbanner .name{flex:1 1 auto}
+.topbanner h1{margin:0;font-size:32px;color:var(--gold);letter-spacing:.08em;
+  text-shadow:2px 2px 0 #663300,0 0 16px rgba(255,204,0,.55)}
+.topbanner h1 a{color:inherit;text-decoration:none}
+.topbanner .sub{color:#ffe680;font-size:12px;margin-top:2px}
+.topbanner .est{color:#8f97b8;font-size:11px}
+.counter-box{text-align:right;color:#8f97b8;font-size:11px;line-height:1.6}
+.digits{display:inline-flex;gap:2px}
+.digits b{background:#000;color:#00ff66;border:1px solid #556;padding:1px 4px;
+  font-family:"Courier New",monospace;font-size:14px}
+.marquee{border:2px inset var(--chrome);background:#000;color:#00ff66;font-size:12px;
+  overflow:hidden;white-space:nowrap;padding:3px 0;margin-bottom:8px}
+.marquee span{display:inline-block;padding-left:100%;animation:crawl 24s linear infinite}
+@keyframes crawl{to{transform:translateX(-100%)}}
+@media (prefers-reduced-motion:reduce){.marquee span{animation:none;padding-left:0;white-space:normal}}
+
+/* ── 상단 가로 메뉴 ── */
+.navbar{display:flex;gap:4px;margin:8px 0 10px;flex-wrap:wrap}
+.navbar a{flex:1 1 auto;text-align:center;border:2px outset var(--chrome);
+  background:linear-gradient(180deg,#fff,var(--chrome));color:#1a1400;text-decoration:none;
+  padding:7px 10px;font-size:14px;white-space:nowrap}
+.navbar a:hover{background:linear-gradient(180deg,#fffbe0,#e8dfa8);color:#800000}
+.navbar a.on{border-style:inset;background:linear-gradient(180deg,#ffe680,#e0b400);color:#3a2800;font-weight:bold}
+.navbar a .mk{color:#a02020;margin-right:3px}
+
+/* ── 본문 공통 ── */
+.frame-title{background:linear-gradient(90deg,#f0e4b4,transparent);border-left:6px solid var(--gold-dark);
+  color:#5a3d00;font-size:17px;padding:3px 8px;margin:0 0 10px}
+.frame-title .new{color:#cc0000;font-size:11px;margin-left:6px}
+.lead{color:var(--ink-soft);margin:0 0 12px}
+hr.gold{border:0;height:3px;margin:18px 0;
+  background:repeating-linear-gradient(90deg,var(--gold-dark) 0 8px,transparent 8px 16px)}
+.btn95{font-family:inherit;font-size:13px;border:2px outset var(--chrome);
+  background:linear-gradient(180deg,#fff,var(--chrome));color:#000;padding:5px 14px;cursor:pointer}
+.btn95:active{border-style:inset}
+.btn-gold{font-family:"궁서",Gungsuh,serif;font-size:15px;border:3px outset #ffe680;
+  background:linear-gradient(180deg,#ffd93b,#c08a00);color:#2a1e00;padding:7px 18px;cursor:pointer;font-weight:bold}
+.btn-gold:active{border-style:inset}
+.btn-gold[disabled]{background:#bbb;border-color:#ddd;color:#666;cursor:default}
+
+/* ── 소개말씀 ── */
+.greet{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.portrait{flex:0 0 190px;text-align:center}
+.portrait .box{border:6px ridge var(--gold-dark);background:#191919;padding:5px;position:relative}
+.portrait .box img{display:block;width:100%;height:auto}
+.portrait .noimg{color:#ffd24a;font-size:11px;line-height:1.7;padding:26px 8px;
+  border:2px dashed #6a5410;background:#141414}
+.portrait .noimg b{display:block;color:#fff3b0;font-size:12px;margin-bottom:6px}
+.portrait .cap{display:block;font-size:11px;color:#6a4a00;margin-top:5px;line-height:1.5}
+.greet .say{flex:1 1 260px;min-width:230px}
+.greet h2{margin:0 0 8px;font-size:20px;color:#7a5200;line-height:1.5}
+
+table.doctrine{width:100%;border-collapse:collapse;background:#fffdf2;font-size:13px}
+table.doctrine th,table.doctrine td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+table.doctrine th{background:#efe2b2;width:76px;text-align:center;font-family:"궁서",Gungsuh,serif;
+  color:#5a3d00;white-space:nowrap}
+table.doctrine b{color:#1a1400;font-size:14px}
+table.doctrine .d{display:block;color:var(--ink-soft);margin-top:3px}
+dl.thesis{margin:0;background:#fffdf2;border:1px solid var(--line);padding:12px 14px}
+dl.thesis dt{font-weight:bold;color:#8a0000;margin-top:10px}
+dl.thesis dt:first-child{margin-top:0}
+dl.thesis dd{margin:0 0 0 12px;color:var(--ink)}
+
+/* ── 계시말씀 ── */
+.dice{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.dice .chest{flex:0 0 130px;text-align:center}
+.dice .chest svg{width:130px;height:auto}
+.dice .say{flex:1 1 250px;min-width:230px}
+#oracle{margin:12px 0 0;border:2px inset var(--chrome);background:#111;color:#00ff66;
+  padding:10px 12px;min-height:3.4em;font-size:13px}
+.oracle-log{margin:14px 0 0;border:1px solid var(--line);background:#fffdf2;padding:10px 12px}
+.oracle-log h4{margin:0 0 6px;font-size:13px;color:#5a3d00}
+.oracle-log ol{margin:0;padding-left:20px;color:var(--ink-soft);font-size:12px}
+
+/* ── 고해성사소 ── */
+.amen-row{border:1px solid var(--line);background:#fffdf2;padding:9px 11px;margin-bottom:12px;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#amenCount{color:#8a0000;font-size:12px}
+.locked{opacity:.45;pointer-events:none}
+.wform table{width:100%;border-collapse:collapse;font-size:12px}
+.wform th{background:#efe2b2;color:#5a3d00;border:1px solid var(--line);padding:6px 8px;
+  width:92px;text-align:right;white-space:nowrap}
+.wform td{border:1px solid var(--line);padding:6px 8px;background:#fffdf2}
+.wform input,.wform select,.wform textarea{width:100%;background:#fff;color:#000;border:2px inset #ccc;
+  font-family:inherit;font-size:13px;padding:4px 5px}
+.wform textarea{height:88px;resize:vertical}
+.wform .sub{text-align:right;padding:8px}
+#storageNote{color:#a03000;font-size:11px;margin:8px 0 0}
+
+table.board{width:100%;border-collapse:collapse;font-size:12px;margin-top:14px;table-layout:fixed}
+table.board th{background:#efe2b2;color:#5a3d00;border-top:2px solid var(--gold-dark);
+  border-bottom:1px solid var(--line);padding:6px}
+table.board td{border-bottom:1px dotted var(--line);padding:6px;background:#fffdf2;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+table.board td.no,table.board th.no{width:36px;text-align:center;color:var(--ink-soft)}
+table.board td.sin{color:#0000aa}
+table.board td.nick,table.board th.nick{width:100px;color:#7a4a00}
+table.board td.date,table.board th.date{width:66px;text-align:center;color:var(--ink-soft)}
+table.board tr.row{cursor:pointer}
+table.board tr.row:hover td{background:#f4ead0}
+table.board td.detail{background:#f7f0d8;padding:11px 13px;white-space:normal}
+table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
+.subj::after{content:" [1]";color:#a08a50;font-size:11px}
+.paging{text-align:center;margin:10px 0 0;font-size:12px}
+.paging button{font-family:inherit;font-size:12px;border:2px outset var(--chrome);background:var(--chrome);
+  padding:3px 9px;margin:2px;cursor:pointer;color:#000}
+.paging button:active{border-style:inset}
+.paging button.on{border-style:inset;background:#ffe680;font-weight:bold}
+.paging button[disabled]{color:#999;cursor:default}
+
+/* ── 후원안내 ── */
+.const{text-align:center;padding:14px 8px}
+.const .sign{color:#a02020;font-size:20px;margin:8px 0}
+.const .memo{display:inline-block;text-align:left;border:2px dashed var(--line);background:#fffdf2;
+  padding:12px 16px;margin-top:10px;max-width:520px}
+
+/* ── 푸터 ── */
+.foot{border:2px ridge var(--gold-dark);background:#f3ead0;text-align:center;font-size:11px;
+  color:var(--ink-soft);padding:12px 8px;line-height:1.9}
+.foot .banner{display:inline-block;border:2px outset var(--chrome);background:#fffdf2;color:#7a4a00;
+  padding:3px 10px;margin:4px 3px 0;font-size:11px}
+.bgm{font-family:inherit;font-size:12px;border:2px outset var(--chrome);background:var(--chrome);
+  padding:3px 10px;cursor:pointer;color:#000}
+.bgm:active{border-style:inset}
+
+/* ── 마우스 반짝이 ── */
+.spark{position:fixed;width:6px;height:6px;pointer-events:none;z-index:150;
+  background:radial-gradient(circle,#fff,#e0a800 45%,transparent 70%);animation:fade .7s linear forwards}
+@keyframes fade{to{opacity:0;transform:translateY(14px) scale(.3)}}
+
+/* ══════════════════════════════════════════════
+   휴대폰 대응 (성전은 손안에서도 열립니다)
+   ══════════════════════════════════════════════ */
+@media (max-width:620px){
+  body{font-size:14px}
+  .page{padding:6px}
+  .win>.inner{padding:11px}
+  .topbanner{padding:10px 10px 8px}
+  .topbanner h1{font-size:26px}
+  .counter-box{text-align:left;width:100%}
+  .navbar{gap:5px}
+  .navbar a{flex:1 1 46%;font-size:14px;padding:9px 6px}
+  .frame-title{font-size:16px}
+  .portrait{flex:1 1 100%;max-width:280px;margin:0 auto}
+  .greet h2{font-size:19px;text-align:center}
+  .dice .chest{flex:1 1 100%}
+  .btn-gold,.btn95{width:100%}
+  .amen-row{display:block}
+  .amen-row .btn-gold{margin-bottom:8px}
+  #amenCount{display:block}
+  .wform th{width:70px;font-size:12px;padding:6px 5px}
+  .wform td{padding:6px 5px}
+  table.board td.sin,table.board th.sin,
+  table.board td.nick,table.board th.nick{display:none}
+  table.board td.no,table.board th.no{width:30px}
+  table.board td.date,table.board th.date{width:56px}
+  .paging button{padding:6px 11px;font-size:13px}
+}
+@media (max-width:560px){
+  table.doctrine,table.doctrine tbody,table.doctrine tr,table.doctrine th,table.doctrine td{
+    display:block;width:auto}
+  table.doctrine tr{border:1px solid var(--line);margin-bottom:8px}
+  table.doctrine th{text-align:left;border:0;border-bottom:1px solid var(--line)}
+  table.doctrine td{border:0}
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbanner">
+    <div class="name">
+      <h1 class="myung"><a href="index.html">大스테키敎</a></h1>
+      <div class="sub myung">신화의 노란빛을 내리시는 유일신 대스테키님을 모시는 공식 성전</div>
+      <div class="est">創敎 元年 · 총본산 : 강화창 앞 · 관리자 : 스멘지기</div>
+    </div>
+    <div class="counter-box">
+      순례자 카운터<br>
+      <span class="digits" id="counter"></span><br>
+      TODAY <b id="today" style="color:#ffcc00">-</b> / YESTERDAY <b id="yday" style="color:#ffcc00">-</b>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <a href="index.html"><span class="mk">▶</span>소개말씀</a>
+    <a href="revelation.html" class="on"><span class="mk">▶</span>계시말씀</a>
+    <a href="confession.html"><span class="mk">▶</span>고해성사소 <span class="blink" style="color:#cc0000;font-size:11px">NEW</span></a>
+    <a href="donation.html"><span class="mk">▶</span>후원안내</a>
+  </nav>
+
+  <div class="marquee"><span>★☆★ 하루 한 번, 다이스를 굴리십시오 ★☆★ 계시는 굴린 자에게만 내려앉습니다 ★☆★ 같은 말씀을 두 번 받았다면 그것은 우연이 아니라 재촉입니다 ★☆★</span></div>
+
+  <div class="win">
+    <div class="bar"><span>啓示 · 계시말씀</span><span class="btns"><b>_</b><b>□</b><b>X</b></span></div>
+    <div class="inner">
+      <h3 class="frame-title myung">◈ 오늘의 계시를 받으십시오</h3>
+      <p class="lead">다이스는 굴러가는 동안에만 자유롭습니다. 상자 앞에 앉아 마음을 비우고, 대스테키님의 음성을 청하십시오.</p>
+
+      <div class="dice">
+        <div class="chest">
+          <svg viewBox="0 0 200 170" aria-hidden="true">
+            <defs><radialGradient id="g" cx="50%" cy="40%">
+              <stop offset="0%" stop-color="#fffbe0"/><stop offset="100%" stop-color="#ffcc00" stop-opacity="0"/>
+            </radialGradient></defs>
+            <ellipse cx="100" cy="72" rx="92" ry="60" fill="url(#g)" opacity=".9"/>
+            <path d="M60 82 L74 6 M100 82 L100 2 M140 82 L126 6" stroke="#e0a800" stroke-width="3" opacity=".85"/>
+            <path d="M22 66 C22 26 178 26 178 66 L178 74 L22 74 Z" fill="#8a6a12"/>
+            <path d="M30 62 C30 34 170 34 170 62 L170 70 L30 70 Z" fill="#ffcc00"/>
+            <rect x="22" y="82" width="156" height="66" rx="3" fill="#8a6a12"/>
+            <rect x="30" y="90" width="140" height="50" rx="2" fill="#c99a12"/>
+            <rect x="88" y="96" width="24" height="30" rx="2" fill="#ffe680"/>
+            <circle cx="100" cy="112" r="4" fill="#241a00"/>
+          </svg>
+        </div>
+        <div class="say">
+          <button class="btn-gold" id="rollBtn">◈ 거룩한 다이스 굴리기 ◈</button>
+          <div id="oracle" role="status">버튼을 누르면 대스테키님께서 오늘 그대에게 하실 말씀이 이 자리에 내려앉습니다.</div>
+        </div>
+      </div>
+
+      <div class="oracle-log">
+        <h4>◈ 오늘 그대가 받은 계시 (최근 5건)</h4>
+        <ol id="oracleLog"><li>아직 받은 계시가 없습니다.</li></ol>
+      </div>
+
+      <hr class="gold">
+
+      <h3 class="frame-title myung">◈ 계시를 받는 자세</h3>
+      <p class="lead" style="margin:0">계시가 마음에 들지 않는다고 다시 굴리는 자가 있습니다. 대스테키님은 그 손을 막지 않으시나, 두 번째 말씀부터는 그대가 듣고 싶은 말이 섞여 든다는 것만은 기억하십시오.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><button class="bgm" id="bgmBtn">▶ 성가 재생 : 스멘의 노래</button> <span id="bgmMsg">※ 소리는 나지 않습니다. 마음으로 들으십시오.</span></div>
+    <div>本 성전은 <b style="color:#a06000">800×600</b> 해상도 · 넷스케이프 4.0 이상에 최적화되어 있습니다 · 최적 브라우저 : 믿음</div>
+    <div>문의 : <span style="color:#0000cc">smenjigi@daestekey.org</span> (스멘지기)</div>
+    <div style="margin-top:8px;color:#8a8060">본 성전은 실존하는 종교·기업·게임사와 아무런 관련이 없는 유쾌한 패러디입니다. 그러나 스멘은 진심입니다.</div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   大스테키敎 公式 홈페이지 SCRIPT  ver 5.0
+   ──────────────────────────────────────────────────────────
+   고해성사소 저장소 설정
+   FIREBASE_CONFIG 가 null이면 임시 모드(새로고침 시 소멸)입니다.
+   연결 방법은 README.md 참고.
+   ══════════════════════════════════════════════════════════ */
+const FIREBASE_CONFIG = null; // 예: { apiKey:"...", projectId:"...", appId:"..." }
+const PER_PAGE = 5;           // 고해성사소 한 페이지당 글 수
+
+const $ = id => document.getElementById(id);
+function esc(s){
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function md(d){ return `${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+/* ══ 공지 팝업 (소개말씀 페이지에만) ══ */
+const popup = $('popup');
+if (popup) {
+  const close = () => popup.style.display = 'none';
+  $('popClose')?.addEventListener('click', close);
+  $('popX')?.addEventListener('click', close);
+}
+
+/* ══ 대스테키님 존안 : 사진이 없으면 안내문으로 대체 ══ */
+const godImg = $('godImg');
+if (godImg) {
+  godImg.addEventListener('error', () => {
+    godImg.hidden = true;
+    const n = $('noImg'); if (n) n.hidden = false;
+  });
+  if (godImg.complete && godImg.naturalWidth === 0) godImg.dispatchEvent(new Event('error'));
+}
+
+/* ══ 성가(장식) ══ */
+const bgmBtn = $('bgmBtn'), bgmMsg = $('bgmMsg');
+if (bgmBtn) {
+  let on = false;
+  bgmBtn.addEventListener('click', () => {
+    on = !on;
+    bgmBtn.textContent = on ? '■ 성가 정지 : 스멘의 노래' : '▶ 성가 재생 : 스멘의 노래';
+    if (bgmMsg) bgmMsg.textContent = on
+      ? '♪ 지금 그대의 마음속에서 성가가 울리고 있습니다.'
+      : '※ 소리는 나지 않습니다. 마음으로 들으십시오.';
+  });
+}
+
+/* ══ 순례자 카운터 ══ */
+const counterEl = $('counter');
+if (counterEl) {
+  const total = 31415 + Math.floor(Math.random()*900);
+  counterEl.innerHTML = [...String(total).padStart(6,'0')].map(d=>`<b>${d}</b>`).join('');
+  if ($('today')) $('today').textContent = 7 + Math.floor(Math.random()*40);
+  if ($('yday'))  $('yday').textContent  = 20 + Math.floor(Math.random()*60);
+}
+
+/* ══ 계시말씀 ══ */
+const rollBtn = $('rollBtn');
+if (rollBtn) {
+  const oracles = [
+    "오늘 그대의 다이스는 무겁습니다. 굴리기 전에 잡템 열 개를 버리십시오.",
+    "노란빛이 그대의 등 뒤까지 와 있습니다. 뒤돌아보지 말고 한 번만 더 누르십시오.",
+    "오늘은 강화창을 닫고 성전을 청소하십시오. 비운 만큼만 채워집니다.",
+    "형제의 득템을 축하하십시오. 그 말이 그대의 다음 상자에 담깁니다.",
+    "결제창을 여는 그대의 손을 대스테키님이 보고 계십니다. 오만 원을 아끼면 은혜가 두 배입니다.",
+    "천장까지 남은 걸음은 그대가 세는 것보다 적습니다. 다만 세지 마십시오.",
+    "오늘의 실패는 그대의 것이 아닙니다. 이미 누군가의 성공으로 옮겨 갔습니다.",
+    "그대가 어제 원망한 확률표를 오늘은 쳐다보지도 마십시오. 그것이 오늘의 수행입니다.",
+    "인벤토리 마지막 칸을 비워두십시오. 기적은 문이 아니라 빈칸으로 들어옵니다.",
+    "오늘 그대에게 내릴 말씀이 없습니다. 그것은 이미 충분히 받았다는 뜻입니다."
+  ];
+  const oracleEl = $('oracle'), logEl = $('oracleLog'), log = [];
+  rollBtn.addEventListener('click', () => {
+    oracleEl.textContent = '주사위가 구르는 중 … ▣ ▤ ▥ ▦';
+    setTimeout(() => {
+      const line = oracles[Math.floor(Math.random()*oracles.length)];
+      oracleEl.textContent = '◆ ' + line;
+      log.unshift(line);
+      if (log.length > 5) log.pop();
+      logEl.innerHTML = log.map(l => `<li>${esc(l)}</li>`).join('');
+    }, 420);
+  });
+}
+
+/* ══ 고해성사소 ══ */
+const listEl = $('list');
+if (listEl) {
+  /* 스멘 3회 관문 */
+  let amen = 0;
+  const amenBtn = $('amenBtn'), amenCount = $('amenCount'), form = $('confessForm');
+  amenBtn.addEventListener('click', () => {
+    if (amen >= 3) return;
+    amen++;
+    if (amen < 3) {
+      amenCount.textContent = `스멘 ${amen}회 · ${3-amen}회 더 영창하십시오`;
+    } else {
+      amenCount.textContent = '스멘 3회 · 이제 입을 여십시오, 불쌍한 형제여';
+      form.classList.remove('locked');
+      amenBtn.disabled = true;
+    }
+  });
+
+  const note = $('storageNote'), pagingEl = $('paging');
+  let db = null, api = null, items = [], curPage = 1;
+
+  const seed = [
+    { sin:"타 차원의 이단 주문을 영창한 죄", nick:"돌아온 탕자",
+      body:"급한 마음에 다른 신의 이름을 세 번 불렀습니다. 그날 밤 제 장비는 조용히 사라졌습니다. 다시는 옆을 보지 않겠습니다.", at:"08-14" },
+    { sin:"오십만 원을 결제하고도 신을 원망한 죄", nick:"이름을 밝히지 않은 자",
+      body:"지갑을 열면 응답하실 줄 알았습니다. 응답하지 않으신 것이 아니라, 제가 헌금과 믿음을 혼동한 것이었습니다.", at:"08-11" },
+    { sin:"확률표를 믿고 계산기를 두드린 죄", nick:"계산하던 자",
+      body:"기댓값을 스물세 번 계산했습니다. 계산이 끝날 때마다 믿음이 한 칸씩 줄어드는 것을 느꼈습니다. 계산기를 버렸습니다.", at:"08-09" },
+    { sin:"형제의 득템을 시기한 죄", nick:"부끄러운 형제",
+      body:"길드원의 신화템 인증을 보고 축하 대신 창을 닫았습니다. 그날 제 다이스는 하루 종일 낮은 눈만 떴습니다. 인과였습니다.", at:"08-05" },
+    { sin:"에반의 상점을 오가며 꼼수를 부린 죄", nick:"익명",
+      body:"상점 창을 백 번 넘게 여닫으며 시스템을 속이려 했습니다. 속은 것은 시스템이 아니라 제 시간이었습니다.", at:"08-02" },
+    { sin:"인벤토리를 가득 채워 축복이 앉을 자리를 없앤 죄", nick:"창고지기",
+      body:"언젠가 쓸 것 같아 잡템을 삼백 개 쌓아두었습니다. 그동안 노란빛은 문 앞에서 조용히 돌아갔을 것입니다.", at:"07-28" },
+    { sin:"차마 분류할 수 없는 죄", nick:"이름을 밝히지 않은 자",
+      body:"무엇을 잘못했는지도 모른 채 억까만 탓했습니다. 오늘에서야 그것이 죄였음을 압니다.", at:"07-21" }
+  ];
+
+  (async function initBoard(){
+  if (FIREBASE_CONFIG) {
+    try {
+      const [{ initializeApp }, fs] = await Promise.all([
+        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
+        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
+      ]);
+      db = fs.getFirestore(initializeApp(FIREBASE_CONFIG));
+      api = fs;
+      note.textContent = '※ 고백은 익명으로 성전 기록소에 보관됩니다.';
+      api.onSnapshot(
+        api.query(api.collection(db,'confessions'), api.orderBy('at','desc'), api.limit(100)),
+        snap => {
+          items = snap.docs.map(d => {
+            const v = d.data(), t = v.at?.toDate ? v.at.toDate() : null;
+            return { ...v, at: t ? md(t) : '' };
+          });
+          curPage = 1; render();
+        }
+      );
+    } catch (e) {
+      note.textContent = '※ 성전 기록소에 닿지 못했습니다. 임시 모드로 고백을 받습니다.';
+      items = [...seed]; render();
+    }
+  } else {
+    note.textContent = '※ 임시 모드입니다. 지금 남긴 고백은 새로고침하면 사라집니다. (README.md 안내대로 저장소를 연결하십시오.)';
+    items = [...seed]; render();
+  }
+  })();
+
+  $('submitBtn').addEventListener('click', async () => {
+    const bodyEl = $('body'), nickEl = $('nick');
+    const body = bodyEl.value.trim();
+    if (!body) { note.textContent = '※ 고백이 비어 있습니다. 죄를 한 줄이라도 적으십시오.'; return; }
+    const entry = { sin: $('sin').value, nick: nickEl.value.trim() || '이름을 밝히지 않은 자', body };
+    if (db) {
+      try {
+        await api.addDoc(api.collection(db,'confessions'), { ...entry, at: api.serverTimestamp() });
+        note.textContent = '※ 죄가 성전 기록소에 내려앉았습니다. 그대는 사면되었습니다.';
+      } catch (e) { note.textContent = '※ 기록소가 문을 닫았습니다. 잠시 후 다시 내려놓으십시오.'; return; }
+    } else {
+      items = [{ ...entry, at: md(new Date()) }, ...items];
+      curPage = 1; render();
+      note.textContent = '※ 죄가 내려앉았습니다. 다만 임시 모드이므로 새로고침하면 잊힙니다.';
+    }
+    bodyEl.value = ''; nickEl.value = '';
+  });
+
+  function render(){
+    const total = items.length;
+    if (!total){
+      listEl.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:18px;white-space:normal">아직 아무도 죄를 내려놓지 않았습니다. 첫 번째 회개자가 되십시오.</td></tr>';
+      pagingEl.innerHTML = ''; return;
+    }
+    const pages = Math.ceil(total / PER_PAGE);
+    if (curPage > pages) curPage = pages;
+    const start = (curPage-1) * PER_PAGE;
+    const slice = items.slice(start, start + PER_PAGE);
+
+    listEl.innerHTML = slice.map((c,i) => `
+      <tr class="row" data-i="${i}">
+        <td class="no">${total - start - i}</td>
+        <td class="sin">[${esc(c.sin).slice(0,12)}]</td>
+        <td><span class="subj">${esc(c.body).slice(0,20)}…</span></td>
+        <td class="nick">${esc(c.nick)}</td>
+        <td class="date">${esc(c.at||'')}</td>
+      </tr>
+      <tr data-d="${i}" hidden>
+        <td class="detail" colspan="5">${esc(c.body)}
+          <p class="absolution">— 대스테키님께서 이 고백을 들으셨습니다. 물러가서 다시는 확률표를 세지 마십시오.</p>
+        </td>
+      </tr>`).join('');
+    listEl.querySelectorAll('tr.row').forEach(tr => tr.addEventListener('click', () => {
+      const d = listEl.querySelector(`tr[data-d="${tr.dataset.i}"]`);
+      d.hidden = !d.hidden;
+    }));
+
+    let html = `<button ${curPage===1?'disabled':''} data-go="${curPage-1}">◀ 이전</button>`;
+    for (let p=1; p<=pages; p++) html += `<button class="${p===curPage?'on':''}" data-go="${p}">${p}</button>`;
+    html += `<button ${curPage===pages?'disabled':''} data-go="${curPage+1}">다음 ▶</button>`;
+    pagingEl.innerHTML = html;
+    pagingEl.querySelectorAll('button[data-go]').forEach(b => b.addEventListener('click', () => {
+      const p = Number(b.dataset.go);
+      if (p >= 1 && p <= pages) { curPage = p; render(); }
+    }));
+  }
+}
+
+/* ══ 마우스 반짝이 ══ */
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(hover: hover)').matches) {
+  let last = 0;
+  addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - last < 70) return;
+    last = now;
+    const s = document.createElement('span');
+    s.className = 'spark';
+    s.style.left = (e.clientX - 3) + 'px';
+    s.style.top = (e.clientY - 3) + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 700);
+  });
+}
+
+</script>
+</body>
+</html>
