@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════════════════════
-   大스테키敎 公式 홈페이지 STYLE SHEET  ver 5.0
+   大스테키敎 公式 홈페이지 STYLE SHEET  ver 5.1
    ★ 무단 복제를 금합니다. 성물은 대스테키님의 것입니다 ★
    ══════════════════════════════════════════════════════════════ */
 :root{
@@ -139,11 +139,41 @@ dl.thesis dd{margin:0 0 0 12px;color:var(--ink)}
 .dice .chest{flex:0 0 130px;text-align:center}
 .dice .chest svg{width:130px;height:auto}
 .dice .say{flex:1 1 250px;min-width:230px}
+.rolls{display:block;color:var(--ink-soft);font-size:11px;margin-top:6px}
 #oracle{margin:12px 0 0;border:2px inset var(--chrome);background:#111;color:#00ff66;
-  padding:10px 12px;min-height:3.4em;font-size:13px}
+  padding:12px;min-height:4.6em;font-size:13px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+#oracle .rank{flex:0 0 auto;font-family:"궁서",Gungsuh,serif;font-size:30px;line-height:1.1;
+  border:2px solid currentColor;padding:8px 12px;text-align:center;min-width:76px}
+#oracle .rank small{display:block;font-size:11px;letter-spacing:.2em;margin-top:2px}
+#oracle .word{flex:1 1 180px;min-width:150px;color:#e8f8e8;font-size:14px;line-height:1.8}
+.r-1{color:#ffd93b;text-shadow:0 0 12px rgba(255,217,59,.7)}
+.r-2{color:#8fe36a}
+.r-3{color:#7fd4ff}
+.r-4{color:#c9c9c9}
+.r-5{color:#ff7a7a}
 .oracle-log{margin:14px 0 0;border:1px solid var(--line);background:#fffdf2;padding:10px 12px}
 .oracle-log h4{margin:0 0 6px;font-size:13px;color:#5a3d00}
 .oracle-log ol{margin:0;padding-left:20px;color:var(--ink-soft);font-size:12px}
+.oracle-log ol b{font-family:"궁서",Gungsuh,serif}
+.g1{color:#a07000}.g2{color:#2e7d32}.g3{color:#1565a0}.g4{color:#666}.g5{color:#a02020}
+table.fortune{width:100%;border-collapse:collapse;background:#fffdf2;font-size:12px;margin-top:6px}
+table.fortune th,table.fortune td{border:1px solid var(--line);padding:6px 9px;text-align:left}
+table.fortune th{background:#efe2b2;width:80px;text-align:center;
+  font-family:"궁서",Gungsuh,serif;font-size:15px}
+
+/* ── 갈! 꾸짖음 창 ── */
+#galDim{position:fixed;inset:0;background:rgba(20,0,0,.45);z-index:299;display:none}
+#galDim.show{display:block}
+#galWin{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(420px,92vw);
+  z-index:300;box-shadow:8px 8px 0 rgba(80,0,0,.4);display:none}
+#galWin.show{display:block}
+#galWin>.bar{background:linear-gradient(90deg,#8a0000,#d04040)}
+#galWin .inner{background:#fffdf2;text-align:center;padding:16px 14px}
+#galWin .gal{font-family:"궁서",Gungsuh,serif;font-size:56px;color:#a00000;line-height:1;margin:0 0 10px;
+  text-shadow:2px 2px 0 #f0c0c0}
+#galWin p{margin:0 0 8px;font-size:13px}
+#galWin .count{color:#8a6a12;font-size:11px;margin:10px 0 0}
+#galWin .gfoot{background:var(--chrome);padding:7px 8px;text-align:center;border-top:1px solid #888}
 
 /* ── 고해성사소 ── */
 .amen-row{border:1px solid var(--line);background:#fffdf2;padding:9px 11px;margin-bottom:12px;
@@ -218,6 +248,9 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
   .greet h2{font-size:19px;text-align:center}
   .dice .chest{flex:1 1 100%}
   .btn-gold,.btn95{width:100%}
+  #oracle{gap:10px}
+  #oracle .rank{font-size:26px;min-width:64px;padding:6px 10px}
+  #galWin .gal{font-size:46px}
   .amen-row{display:block}
   .amen-row .btn-gold{margin-bottom:8px}
   #amenCount{display:block}
@@ -240,6 +273,19 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
 </style>
 </head>
 <body>
+
+<!-- ══════ 갈! 꾸짖음 창 ══════ -->
+<div id="galDim"></div>
+<div class="win" id="galWin" role="alertdialog" aria-label="꾸짖음">
+  <div class="bar"><span>◈ 大스테키님의 꾸짖음 ◈</span><span class="btns"><b id="galX" style="cursor:pointer">X</b></span></div>
+  <div class="inner">
+    <p class="gal">喝!</p>
+    <p id="galText">다섯 번이라니, 형제여.</p>
+    <p class="count" id="galCount"></p>
+  </div>
+  <div class="gfoot"><button class="btn95" id="galClose">뉘우치겠습니다</button></div>
+</div>
+
 <div class="page">
 
   <div class="topbanner">
@@ -262,7 +308,7 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
     <a href="https://ri-han.com/daesteki/donation.html"><span class="mk">▶</span>후원안내</a>
   </nav>
 
-  <div class="marquee"><span>★☆★ 하루 한 번, 다이스를 굴리십시오 ★☆★ 계시는 굴린 자에게만 내려앉습니다 ★☆★ 같은 말씀을 두 번 받았다면 그것은 우연이 아니라 재촉입니다 ★☆★</span></div>
+  <div class="marquee"><span>★☆★ 하루 한 번, 다이스를 굴리십시오 ★☆★ 계시는 굴린 자에게만 내려앉습니다 ★☆★ 같은 말씀을 두 번 받았다면 그것은 우연이 아니라 재촉입니다 ★☆★ 마음에 드는 말씀이 나올 때까지 굴리는 자는 이미 계시를 듣고 있지 않습니다 ★☆★</span></div>
 
   <div class="win">
     <div class="bar"><span>啓示 · 계시말씀</span><span class="btns"><b>_</b><b>□</b><b>X</b></span></div>
@@ -288,7 +334,10 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
         </div>
         <div class="say">
           <button class="btn-gold" id="rollBtn">◈ 거룩한 다이스 굴리기 ◈</button>
-          <div id="oracle" role="status">버튼을 누르면 대스테키님께서 오늘 그대에게 하실 말씀이 이 자리에 내려앉습니다.</div>
+          <span class="rolls" id="rollCount">오늘 굴린 횟수 : 0회</span>
+          <div id="oracle" role="status">
+            <span class="word">버튼을 누르면 대스테키님께서 오늘 그대에게 하실 말씀이 이 자리에 내려앉습니다.</span>
+          </div>
         </div>
       </div>
 
@@ -299,8 +348,20 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
 
       <hr class="gold">
 
+      <h3 class="frame-title myung">◈ 계시의 다섯 등급</h3>
+      <table class="fortune">
+        <tr><th class="g1">大吉</th><td>노란빛이 그대의 손끝에 머무는 날입니다. 아끼지 마십시오.</td></tr>
+        <tr><th class="g2">中吉</th><td>순리대로 흘러가는 날입니다. 서두르지만 않으면 됩니다.</td></tr>
+        <tr><th class="g3">小吉</th><td>작은 것이 먼저 옵니다. 그것을 시시하다 하지 마십시오.</td></tr>
+        <tr><th class="g4">平</th><td>오르지도 내리지도 않는 날. 성전을 정리하기에 알맞습니다.</td></tr>
+        <tr><th class="g5">凶</th><td>손을 멈추라는 말씀입니다. 오늘의 억까는 예고된 것입니다.</td></tr>
+      </table>
+      <p style="color:#5a5238;font-size:11px;margin:8px 0 0">※ 각 등급이 나올 확률은 공개하지 아니합니다. 확률을 묻는 마음이 이미 제1계를 어긴 것입니다.</p>
+
+      <hr class="gold">
+
       <h3 class="frame-title myung">◈ 계시를 받는 자세</h3>
-      <p class="lead" style="margin:0">계시가 마음에 들지 않는다고 다시 굴리는 자가 있습니다. 대스테키님은 그 손을 막지 않으시나, 두 번째 말씀부터는 그대가 듣고 싶은 말이 섞여 든다는 것만은 기억하십시오.</p>
+      <p class="lead" style="margin:0">계시가 마음에 들지 않는다고 다시 굴리는 자가 있습니다. 대스테키님은 그 손을 막지 않으시나, 두 번째 말씀부터는 그대가 듣고 싶은 말이 섞여 든다는 것만은 기억하십시오. 다섯 번째부터는 말씀 대신 꾸짖음이 내려앉습니다.</p>
     </div>
   </div>
 
@@ -314,37 +375,14 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
 
 <script>
 /* ══════════════════════════════════════════════════════════
-   大스테키敎 公式 홈페이지 SCRIPT  ver 5.0
-   ──────────────────────────────────────────────────────────
-   고해성사소 저장소 설정
-   FIREBASE_CONFIG 가 null이면 임시 모드(새로고침 시 소멸)입니다.
-   연결 방법은 README.md 참고.
+   大스테키敎 公式 홈페이지 SCRIPT  ver 5.1
+   ※ 이 페이지에는 게시판이 없으므로 FIREBASE 설정은 필요 없습니다.
    ══════════════════════════════════════════════════════════ */
-const FIREBASE_CONFIG = null; // 예: { apiKey:"...", projectId:"...", appId:"..." }
-const PER_PAGE = 5;           // 고해성사소 한 페이지당 글 수
+const GAL_AT = 5;   // 이 횟수째 굴리기부터 꾸짖음이 내려앉습니다
 
 const $ = id => document.getElementById(id);
 function esc(s){
   return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
-function md(d){ return `${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-
-/* ══ 공지 팝업 (소개말씀 페이지에만) ══ */
-const popup = $('popup');
-if (popup) {
-  const close = () => popup.style.display = 'none';
-  $('popClose')?.addEventListener('click', close);
-  $('popX')?.addEventListener('click', close);
-}
-
-/* ══ 대스테키님 존안 : 사진이 없으면 안내문으로 대체 ══ */
-const godImg = $('godImg');
-if (godImg) {
-  godImg.addEventListener('error', () => {
-    godImg.hidden = true;
-    const n = $('noImg'); if (n) n.hidden = false;
-  });
-  if (godImg.complete && godImg.naturalWidth === 0) godImg.dispatchEvent(new Event('error'));
 }
 
 /* ══ 성가(장식) ══ */
@@ -372,155 +410,78 @@ if (counterEl) {
 /* ══ 계시말씀 ══ */
 const rollBtn = $('rollBtn');
 if (rollBtn) {
+  /* r = 등급(1 大吉 · 2 中吉 · 3 小吉 · 4 平 · 5 凶) , w = 나올 무게(공개하지 아니함) */
   const oracles = [
-    "오늘 그대의 다이스는 무겁습니다. 굴리기 전에 잡템 열 개를 버리십시오.",
-    "노란빛이 그대의 등 뒤까지 와 있습니다. 뒤돌아보지 말고 한 번만 더 누르십시오.",
-    "오늘은 강화창을 닫고 성전을 청소하십시오. 비운 만큼만 채워집니다.",
-    "형제의 득템을 축하하십시오. 그 말이 그대의 다음 상자에 담깁니다.",
-    "결제창을 여는 그대의 손을 대스테키님이 보고 계십니다. 오만 원을 아끼면 은혜가 두 배입니다.",
-    "천장까지 남은 걸음은 그대가 세는 것보다 적습니다. 다만 세지 마십시오.",
-    "오늘의 실패는 그대의 것이 아닙니다. 이미 누군가의 성공으로 옮겨 갔습니다.",
-    "그대가 어제 원망한 확률표를 오늘은 쳐다보지도 마십시오. 그것이 오늘의 수행입니다.",
-    "인벤토리 마지막 칸을 비워두십시오. 기적은 문이 아니라 빈칸으로 들어옵니다.",
-    "오늘 그대에게 내릴 말씀이 없습니다. 그것은 이미 충분히 받았다는 뜻입니다."
+    { r:1, w:1, t:"오늘 그대의 손끝에 노란빛이 머뭅니다. 아끼지 말고 누르십시오. 오늘 아낀 한 번이 가장 아까울 것입니다." },
+    { r:1, w:1, t:"천장이 그대를 마중 나왔습니다. 오늘의 첫 시도가 곧 마지막 시도가 될 것입니다." },
+    { r:1, w:1, t:"비운 인벤토리에 이미 축복이 앉았습니다. 접속하는 것만으로 오늘의 몫은 채워졌습니다." },
+    { r:2, w:3, t:"형제와 함께 도전하십시오. 축하가 오가는 자리에서 다이스는 높게 뜹니다." },
+    { r:2, w:3, t:"오늘은 강화보다 정리가 이롭습니다. 정리를 마친 손이 다음 성공을 잡습니다." },
+    { r:2, w:3, t:"어제의 실패가 오늘의 계단이 되었습니다. 그 위에 한 발만 더 올려놓으십시오." },
+    { r:3, w:4, t:"작은 것이 먼저 옵니다. 그것을 시시하다 하지 마십시오. 그 다음이 큰 것입니다." },
+    { r:3, w:4, t:"노란빛이 그대의 등 뒤까지 와 있습니다. 뒤돌아보지 말고 한 번만 더 누르십시오." },
+    { r:3, w:4, t:"천장까지 남은 걸음은 그대가 세는 것보다 적습니다. 다만 세지 마십시오." },
+    { r:4, w:4, t:"오늘 그대에게 내릴 말씀이 없습니다. 그것은 이미 충분히 받았다는 뜻입니다." },
+    { r:4, w:4, t:"인벤토리 마지막 칸을 비워두십시오. 기적은 문이 아니라 빈칸으로 들어옵니다." },
+    { r:4, w:4, t:"오늘의 실패는 그대의 것이 아닙니다. 이미 이 성전 어딘가의 형제에게 옮겨 갔습니다." },
+    { r:5, w:3, t:"오늘 그대의 다이스는 무겁습니다. 굴리기 전에 잡템 열 개를 버리십시오." },
+    { r:5, w:3, t:"결제창을 여는 그대의 손을 대스테키님이 보고 계십니다. 오늘은 지갑을 닫으십시오." },
+    { r:5, w:3, t:"강화창을 여는 순간 어제의 억까가 되풀이됩니다. 오늘은 창을 닫고 물러나십시오." },
+    { r:5, w:3, t:"그대가 어제 원망한 확률표를 오늘은 쳐다보지도 마십시오. 그것이 오늘의 수행입니다." }
   ];
-  const oracleEl = $('oracle'), logEl = $('oracleLog'), log = [];
+  const RANK = {
+    1:{ name:"大吉", sub:"대길" }, 2:{ name:"中吉", sub:"중길" }, 3:{ name:"小吉", sub:"소길" },
+    4:{ name:"平",  sub:"평"  }, 5:{ name:"凶",  sub:"흉"  }
+  };
+  const galWords = [
+    "다섯 번이라니, 형제여. 마음에 드는 말씀이 나올 때까지 굴리는 것은 계시가 아니라 흥정입니다.",
+    "또 굴렸습니까. 그대는 이미 말씀을 듣고 있지 않고, 듣고 싶은 말을 고르고 있습니다.",
+    "일곱 번째입니다. 대스테키님은 그 손을 막지 않으시나, 그 손이 무엇을 하고 있는지는 알고 계십니다.",
+    "그만하십시오. 이쯤 되면 다이스를 굴리는 것이 아니라 다이스에 끌려다니는 것입니다.",
+    "오늘 그대가 받아야 할 말씀은 이미 첫 번째에 다 나왔습니다. 그 자리로 돌아가십시오."
+  ];
+
+  const pool = [];
+  oracles.forEach((o,i) => { for (let k=0; k<o.w; k++) pool.push(i); });
+
+  const oracleEl = $('oracle'), logEl = $('oracleLog'), countEl = $('rollCount');
+  const galWin = $('galWin'), galDim = $('galDim'), galText = $('galText'), galCount = $('galCount');
+  const log = [];
+  let rolls = 0;
+
+  function openGal(){
+    galText.textContent = galWords[Math.min(rolls - GAL_AT, galWords.length - 1)];
+    galCount.textContent = `― 오늘 굴린 횟수 : ${rolls}회 ―`;
+    galWin.classList.add('show'); galDim.classList.add('show');
+  }
+  function closeGal(){ galWin.classList.remove('show'); galDim.classList.remove('show'); }
+  $('galClose').addEventListener('click', closeGal);
+  $('galX').addEventListener('click', closeGal);
+  galDim.addEventListener('click', closeGal);
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeGal(); });
+
   rollBtn.addEventListener('click', () => {
-    oracleEl.textContent = '주사위가 구르는 중 … ▣ ▤ ▥ ▦';
+    rolls++;
+    countEl.textContent = `오늘 굴린 횟수 : ${rolls}회`;
+
+    if (rolls >= GAL_AT) {   // 다섯 번째부터는 말씀 대신 꾸짖음
+      oracleEl.innerHTML = '<span class="word" style="color:#ff9a9a">계시가 내려오지 않습니다. 대신 꾸짖음이 내려앉았습니다.</span>';
+      openGal();
+      return;
+    }
+
+    oracleEl.innerHTML = '<span class="word">주사위가 구르는 중 … ▣ ▤ ▥ ▦</span>';
     setTimeout(() => {
-      const line = oracles[Math.floor(Math.random()*oracles.length)];
-      oracleEl.textContent = '◆ ' + line;
-      log.unshift(line);
+      const o = oracles[pool[Math.floor(Math.random()*pool.length)]];
+      const k = RANK[o.r];
+      oracleEl.innerHTML =
+        `<span class="rank r-${o.r} myung">${k.name}<small>${k.sub}</small></span>` +
+        `<span class="word">${esc(o.t)}</span>`;
+      log.unshift(`<b class="g${o.r}">${k.name}</b> — ${esc(o.t)}`);
       if (log.length > 5) log.pop();
-      logEl.innerHTML = log.map(l => `<li>${esc(l)}</li>`).join('');
+      logEl.innerHTML = log.map(l => `<li>${l}</li>`).join('');
     }, 420);
   });
-}
-
-/* ══ 고해성사소 ══ */
-const listEl = $('list');
-if (listEl) {
-  /* 스멘 3회 관문 */
-  let amen = 0;
-  const amenBtn = $('amenBtn'), amenCount = $('amenCount'), form = $('confessForm');
-  amenBtn.addEventListener('click', () => {
-    if (amen >= 3) return;
-    amen++;
-    if (amen < 3) {
-      amenCount.textContent = `스멘 ${amen}회 · ${3-amen}회 더 영창하십시오`;
-    } else {
-      amenCount.textContent = '스멘 3회 · 이제 입을 여십시오, 불쌍한 형제여';
-      form.classList.remove('locked');
-      amenBtn.disabled = true;
-    }
-  });
-
-  const note = $('storageNote'), pagingEl = $('paging');
-  let db = null, api = null, items = [], curPage = 1;
-
-  const seed = [
-    { sin:"타 차원의 이단 주문을 영창한 죄", nick:"돌아온 탕자",
-      body:"급한 마음에 다른 신의 이름을 세 번 불렀습니다. 그날 밤 제 장비는 조용히 사라졌습니다. 다시는 옆을 보지 않겠습니다.", at:"08-14" },
-    { sin:"오십만 원을 결제하고도 신을 원망한 죄", nick:"이름을 밝히지 않은 자",
-      body:"지갑을 열면 응답하실 줄 알았습니다. 응답하지 않으신 것이 아니라, 제가 헌금과 믿음을 혼동한 것이었습니다.", at:"08-11" },
-    { sin:"확률표를 믿고 계산기를 두드린 죄", nick:"계산하던 자",
-      body:"기댓값을 스물세 번 계산했습니다. 계산이 끝날 때마다 믿음이 한 칸씩 줄어드는 것을 느꼈습니다. 계산기를 버렸습니다.", at:"08-09" },
-    { sin:"형제의 득템을 시기한 죄", nick:"부끄러운 형제",
-      body:"길드원의 신화템 인증을 보고 축하 대신 창을 닫았습니다. 그날 제 다이스는 하루 종일 낮은 눈만 떴습니다. 인과였습니다.", at:"08-05" },
-    { sin:"에반의 상점을 오가며 꼼수를 부린 죄", nick:"익명",
-      body:"상점 창을 백 번 넘게 여닫으며 시스템을 속이려 했습니다. 속은 것은 시스템이 아니라 제 시간이었습니다.", at:"08-02" },
-    { sin:"인벤토리를 가득 채워 축복이 앉을 자리를 없앤 죄", nick:"창고지기",
-      body:"언젠가 쓸 것 같아 잡템을 삼백 개 쌓아두었습니다. 그동안 노란빛은 문 앞에서 조용히 돌아갔을 것입니다.", at:"07-28" },
-    { sin:"차마 분류할 수 없는 죄", nick:"이름을 밝히지 않은 자",
-      body:"무엇을 잘못했는지도 모른 채 억까만 탓했습니다. 오늘에서야 그것이 죄였음을 압니다.", at:"07-21" }
-  ];
-
-  (async function initBoard(){
-  if (FIREBASE_CONFIG) {
-    try {
-      const [{ initializeApp }, fs] = await Promise.all([
-        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
-        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
-      ]);
-      db = fs.getFirestore(initializeApp(FIREBASE_CONFIG));
-      api = fs;
-      note.textContent = '※ 고백은 익명으로 성전 기록소에 보관됩니다.';
-      api.onSnapshot(
-        api.query(api.collection(db,'confessions'), api.orderBy('at','desc'), api.limit(100)),
-        snap => {
-          items = snap.docs.map(d => {
-            const v = d.data(), t = v.at?.toDate ? v.at.toDate() : null;
-            return { ...v, at: t ? md(t) : '' };
-          });
-          curPage = 1; render();
-        }
-      );
-    } catch (e) {
-      note.textContent = '※ 성전 기록소에 닿지 못했습니다. 임시 모드로 고백을 받습니다.';
-      items = [...seed]; render();
-    }
-  } else {
-    note.textContent = '※ 임시 모드입니다. 지금 남긴 고백은 새로고침하면 사라집니다. (README.md 안내대로 저장소를 연결하십시오.)';
-    items = [...seed]; render();
-  }
-  })();
-
-  $('submitBtn').addEventListener('click', async () => {
-    const bodyEl = $('body'), nickEl = $('nick');
-    const body = bodyEl.value.trim();
-    if (!body) { note.textContent = '※ 고백이 비어 있습니다. 죄를 한 줄이라도 적으십시오.'; return; }
-    const entry = { sin: $('sin').value, nick: nickEl.value.trim() || '이름을 밝히지 않은 자', body };
-    if (db) {
-      try {
-        await api.addDoc(api.collection(db,'confessions'), { ...entry, at: api.serverTimestamp() });
-        note.textContent = '※ 죄가 성전 기록소에 내려앉았습니다. 그대는 사면되었습니다.';
-      } catch (e) { note.textContent = '※ 기록소가 문을 닫았습니다. 잠시 후 다시 내려놓으십시오.'; return; }
-    } else {
-      items = [{ ...entry, at: md(new Date()) }, ...items];
-      curPage = 1; render();
-      note.textContent = '※ 죄가 내려앉았습니다. 다만 임시 모드이므로 새로고침하면 잊힙니다.';
-    }
-    bodyEl.value = ''; nickEl.value = '';
-  });
-
-  function render(){
-    const total = items.length;
-    if (!total){
-      listEl.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:18px;white-space:normal">아직 아무도 죄를 내려놓지 않았습니다. 첫 번째 회개자가 되십시오.</td></tr>';
-      pagingEl.innerHTML = ''; return;
-    }
-    const pages = Math.ceil(total / PER_PAGE);
-    if (curPage > pages) curPage = pages;
-    const start = (curPage-1) * PER_PAGE;
-    const slice = items.slice(start, start + PER_PAGE);
-
-    listEl.innerHTML = slice.map((c,i) => `
-      <tr class="row" data-i="${i}">
-        <td class="no">${total - start - i}</td>
-        <td class="sin">[${esc(c.sin).slice(0,12)}]</td>
-        <td><span class="subj">${esc(c.body).slice(0,20)}…</span></td>
-        <td class="nick">${esc(c.nick)}</td>
-        <td class="date">${esc(c.at||'')}</td>
-      </tr>
-      <tr data-d="${i}" hidden>
-        <td class="detail" colspan="5">${esc(c.body)}
-          <p class="absolution">— 대스테키님께서 이 고백을 들으셨습니다. 물러가서 다시는 확률표를 세지 마십시오.</p>
-        </td>
-      </tr>`).join('');
-    listEl.querySelectorAll('tr.row').forEach(tr => tr.addEventListener('click', () => {
-      const d = listEl.querySelector(`tr[data-d="${tr.dataset.i}"]`);
-      d.hidden = !d.hidden;
-    }));
-
-    let html = `<button ${curPage===1?'disabled':''} data-go="${curPage-1}">◀ 이전</button>`;
-    for (let p=1; p<=pages; p++) html += `<button class="${p===curPage?'on':''}" data-go="${p}">${p}</button>`;
-    html += `<button ${curPage===pages?'disabled':''} data-go="${curPage+1}">다음 ▶</button>`;
-    pagingEl.innerHTML = html;
-    pagingEl.querySelectorAll('button[data-go]').forEach(b => b.addEventListener('click', () => {
-      const p = Number(b.dataset.go);
-      if (p >= 1 && p <= pages) { curPage = p; render(); }
-    }));
-  }
 }
 
 /* ══ 마우스 반짝이 ══ */
