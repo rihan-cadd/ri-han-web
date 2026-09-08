@@ -417,13 +417,13 @@ if (counterEl) {
       const ref = fs.doc(db, 'stats', 'visits');
       const day = new Date().toLocaleDateString('sv-SE', { timeZone:'Asia/Seoul' });
       const fresh = !sessionStorage.getItem('steki-visit');
-      if (fresh) sessionStorage.setItem('steki-visit', '1');
-
+      
       const snap = await fs.getDoc(ref);
       const d = snap.exists() ? snap.data() : { total:0, today:0, yesterday:0, day };
       if (d.day !== day) { d.yesterday = d.today || 0; d.today = 0; d.day = day; }
       if (fresh) { d.total = (d.total||0) + 1; d.today = (d.today||0) + 1; }
       await fs.setDoc(ref, d);
+      if (fresh) sessionStorage.setItem('steki-visit', '1');
       paint(d.total, d.today, d.yesterday);
     } catch (e) {
       console.error('카운터 실패:', e.code, e.message);
