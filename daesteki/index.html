@@ -395,10 +395,6 @@ if (bgmBtn) {
 /* ══ 순례자 카운터 (Firestore 연동) ══ */
 const counterEl = $('counter');
 if (counterEl) {
-  const FB = {   // confession.html에 넣으신 것과 같은 값
-    apiKey: "...", authDomain: "...", projectId: "...",
-    storageBucket: "...", messagingSenderId: "...", appId: "..."
-  };
   const paint = (t, d, y) => {
     counterEl.innerHTML = [...String(t).padStart(6,'0')].map(n=>`<b>${n}</b>`).join('');
     if ($('today')) $('today').textContent = d;
@@ -410,23 +406,21 @@ if (counterEl) {
         import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
         import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
       ]);
-      const db  = fs.getFirestore(initializeApp(FB, 'counter'));
+      const db  = fs.getFirestore(initializeApp(FIREBASE_CONFIG, 'counter'));
       const ref = fs.doc(db, 'stats', 'visits');
-      const day = new Date().toLocaleDateString('sv-SE', { timeZone:'Asia/Seoul' }); // 2026-09-09
+      const day = new Date().toLocaleDateString('sv-SE', { timeZone:'Asia/Seoul' });
       const fresh = !sessionStorage.getItem('steki-visit');
       if (fresh) sessionStorage.setItem('steki-visit', '1');
 
-      const out = await fs.runTransaction(db, async tx => {
-        const s = await tx.get(ref);
-        const d = s.exists() ? s.data() : { total:0, today:0, yesterday:0, day };
-        if (d.day !== day) { d.yesterday = d.today || 0; d.today = 0; d.day = day; }
-        if (fresh) { d.total = (d.total||0) + 1; d.today = (d.today||0) + 1; }
-        tx.set(ref, d);
-        return d;
-      });
-      paint(out.total, out.today, out.yesterday);
+      const snap = await fs.getDoc(ref);
+      const d = snap.exists() ? snap.data() : { total:0, today:0, yesterday:0, day };
+      if (d.day !== day) { d.yesterday = d.today || 0; d.today = 0; d.day = day; }
+      if (fresh) { d.total = (d.total||0) + 1; d.today = (d.today||0) + 1; }
+      await fs.setDoc(ref, d);
+      paint(d.total, d.today, d.yesterday);
     } catch (e) {
-      paint(0, '-', '-');   // 기록소에 닿지 못하면 0으로
+      console.error('카운터 실패:', e.code, e.message);
+      paint(0, '-', '-');
     }
   })();
 }
