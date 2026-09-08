@@ -318,7 +318,15 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
    FIREBASE_CONFIG 가 null이면 임시 모드(새로고침 시 소멸)입니다.
    연결 방법은 README.md 참고.
    ══════════════════════════════════════════════════════════ */
-const FIREBASE_CONFIG = null; // 예: { apiKey:"...", projectId:"...", appId:"..." }
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDg2T1U4AfVVRms7NPDVI-xOpkiOcytJwM",
+  authDomain: "steki-f113f.firebaseapp.com",
+  projectId: "steki-f113f",
+  storageBucket: "steki-f113f.firebasestorage.app",
+  messagingSenderId: "1036057931718",
+  appId: "1:1036057931718:web:8f0724de74cf14f7904cc7",
+  measurementId: "G-WN0E30GTC7"
+};
 const PER_PAGE = 5;           // 고해성사소 한 페이지당 글 수
 
 const $ = id => document.getElementById(id);
