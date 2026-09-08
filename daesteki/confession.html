@@ -279,8 +279,8 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
         <table>
           <tr><th>죄 목</th><td><select id="sin">
             <option>에반의 상점을 오가며 꼼수를 부린 죄</option>
-            <option>타 차원의 이단 주문(도막사라무 등)을 영창한 죄</option>
-            <option>오십만 원을 결제하고도 신을 원망한 죄</option>
+            <option>타 차원의 이단 주문을 영창한 죄</option>
+            <option>대스테키를 원망한 죄</option>
             <option>확률표를 믿고 계산기를 두드린 죄</option>
             <option>형제의 득템을 시기한 죄</option>
             <option>인벤토리를 가득 채워 축복이 앉을 자리를 없앤 죄</option>
@@ -303,10 +303,10 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
   </div>
 
   <div class="foot">
-    <div><button class="bgm" id="bgmBtn">▶ 성가 재생 : 스멘의 노래</button> <span id="bgmMsg">※ 소리는 나지 않습니다. 마음으로 들으십시오.</span></div>
+    <div><button class="bgm" id="bgmBtn">▶ 성가 재생 : 스멘의 축복</button> <span id="bgmMsg">※ 소리는 나지 않습니다. 마음으로 들으십시오.</span></div>
     <div>本 성전은 <b style="color:#a06000">800×600</b> 해상도 · 넷스케이프 4.0 이상에 최적화되어 있습니다 · 최적 브라우저 : 믿음</div>
     <div>문의 : <span style="color:#0000cc">smenjigi@daestekey.org</span> (스멘지기)</div>
-    <div style="margin-top:8px;color:#8a8060">본 성전은 실존하는 종교·기업·게임사와 아무런 관련이 없는 유쾌한 패러디입니다. 그러나 스멘은 진심입니다.</div>
+    <div style="margin-top:8px;color:#8a8060">본 성전은, 스멘은 진심입니다.</div>
   </div>
 </div>
 
@@ -351,7 +351,7 @@ if (bgmBtn) {
   let on = false;
   bgmBtn.addEventListener('click', () => {
     on = !on;
-    bgmBtn.textContent = on ? '■ 성가 정지 : 스멘의 노래' : '▶ 성가 재생 : 스멘의 노래';
+    bgmBtn.textContent = on ? '■ 성가 정지 : 스멘의 축복' : '▶ 성가 재생 : 스멘의 축복';
     if (bgmMsg) bgmMsg.textContent = on
       ? '♪ 지금 그대의 마음속에서 성가가 울리고 있습니다.'
       : '※ 소리는 나지 않습니다. 마음으로 들으십시오.';
