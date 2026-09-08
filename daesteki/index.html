@@ -236,7 +236,25 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
   table.doctrine th{text-align:left;border:0;border-bottom:1px solid var(--line)}
   table.doctrine td{border:0}
 }
-
+   
+/* ── 이달의 형제/자매 팝업 ── */
+#popup2{position:fixed;bottom:18px;right:18px;width:min(340px,92vw);z-index:201;
+  box-shadow:6px 6px 0 rgba(60,45,10,.45)}
+#popup2>.bar{background:linear-gradient(90deg,#8a6a12,#e0b400)}
+#popup2 .inner{background:#fffdf2;font-size:12px;padding:12px}
+#popup2 .award{text-align:center;border:3px double var(--gold-dark);background:#fff8dc;
+  padding:10px 8px;margin-bottom:10px}
+#popup2 .award .when{display:block;color:#7a5f1a;font-size:11px}
+#popup2 .award .who{display:block;font-family:"궁서",Gungsuh,serif;font-size:26px;color:#8a0000;
+  line-height:1.3;margin-top:2px}
+#popup2 .award .role{display:block;color:#5a3d00;font-size:11px;margin-top:2px}
+#popup2 p{margin:0 0 8px;line-height:1.75}
+#popup2 .sign{color:#7a5f1a;font-size:11px;text-align:right;margin:0}
+#popup2 .p2foot{background:var(--chrome);padding:6px 8px;text-align:right;border-top:1px solid #888}
+@media (max-width:620px){
+  #popup2{bottom:8px;right:4%;left:4%;width:auto}
+}
+   
 </style>
 </head>
 <body>
@@ -252,6 +270,23 @@ table.board .absolution{color:#8a6a12;font-size:11px;margin:8px 0 0}
   </div>
   <div class="foot"><label><input type="checkbox" id="popChk"> 오늘 하루 이 창을 열지 않음</label><button id="popClose">닫 기</button></div>
 </div>
+<!-- ══════ 이달의 형제/자매 팝업 ══════ -->
+<div class="win" id="popup2" role="dialog" aria-label="이달의 형제자매">
+  <div class="bar"><span>◈ 이달의 형제/자매님 ◈</span><span class="btns"><b>_</b><b id="pop2X" style="cursor:pointer">X</b></span></div>
+  <div class="inner">
+    <div class="award">
+      <span class="when">創敎 元年 九月</span>
+      <span class="who myung">바코드</span>
+      <span class="role">형제님</span>
+    </div>
+    <p>바코드 형제는 다이스를 까기 전 단 한 번도 스멘을 거른 적이 없으며, 연달아 터지는 밤에도 끝내 확률표를 들추지 아니하였습니다.</p>
+    <p>길드원의 득템에는 언제나 가장 먼저 축하를 보냈고, 제 인벤토리는 늘 비워 축복이 앉을 자리를 마련해 두었습니다. 그 믿음이 어찌 독실하지 아니하겠습니까.</p>
+    <p>형제자매들이여, 본받으십시오. 다음 달의 영광은 그대의 것일 수도 있습니다.</p>
+    <p class="sign">― 스멘지기 올림</p>
+  </div>
+  <div class="p2foot"><button class="btn95" id="pop2Close">본받겠습니다</button></div>
+</div>
+
 
 <div class="page">
 
@@ -375,7 +410,13 @@ if (popup) {
   $('popClose')?.addEventListener('click', close);
   $('popX')?.addEventListener('click', close);
 }
-
+/* ══ 이달의 형제/자매 팝업 ══ */
+const popup2 = $('popup2');
+if (popup2) {
+  const close2 = () => popup2.style.display = 'none';
+  $('pop2Close')?.addEventListener('click', close2);
+  $('pop2X')?.addEventListener('click', close2);
+}
 /* ══ 대스테키님 존안 ══ */
 const godImg = $('godImg');
 if (godImg) {
